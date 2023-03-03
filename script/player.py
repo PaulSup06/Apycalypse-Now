@@ -6,7 +6,7 @@ class Player(Entite):
     def __init__(self, x, y, groupes, collision_blocks):
         self.image = player_img
         super().__init__(x, y, self.image, groupes)
-        self.rect = None
+        self.rect = self.image.get_rect()
         self.surface = pygame.Rect(self.x, self.y, 64, 40) #à modif
         self.collision_blocks = collision_blocks
         

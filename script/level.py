@@ -27,10 +27,27 @@ class Camera(pygame.sprite.Group):
     def __init__(self, world):
         super().__init__()
         self.screen = pygame.display.get_surface()
-        self.bg_img = world_bg[world]
+        self.half_width = self.screen.get_size()[0] // 2
+        self.half_height = self.screen.get_size()[1] // 2
+        self.offset = pygame.math.Vector2()
+        self.bg_img = world_bg[world].convert()
+        self.bg_rect = self.bg_img.get_rect(topleft = (0,0))
 
-    def draw_visible(self):   
-        self.screen.blit(self.bg_img, (0,0))
+    def draw_visible(self, player):   
+
+        #calcul de l'offset pour garder le joueur au centre
+        self.offset.x = player.surface.centerx - self.half_width
+        self.offset.y = player.surface.centery - self.half_height
+
+        bg_offset_pos = self.bg_rect.topleft - self.offset
+        self.screen.blit(self.bg_img, bg_offset_pos)
+
         for sprite in self.sprites():
-            pos = sprite.surface.topleft
-            self.screen.blit(sprite.image, pos)
+            offset_pos = sprite.surface.topleft - self.offset
+            self.screen.blit(sprite.image, offset_pos)
+
+         #debug
+        #for entite in self.collision_blocks:
+        #    pygame.draw.rect(self.screen, "white", entite.surface, width=2)
+        #pygame.draw.rect(self.screen, "white", self.player.surface, width=2)
+        ##debug([self.player.movement.length(),self.player.x,self.player.y, len(self.level.visible_blocks.sprites())])
