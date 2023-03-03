@@ -5,6 +5,7 @@ import os
 WIDTH = 1250
 HEIGHT = 700
 FPS = 60
+CASE_SIZE = 64
 
 
 #variables de gameplay
@@ -16,3 +17,12 @@ playerspeed = 5
 #player_img = {"bas":pygame.image.load(os.path.join("textures","player","down","down_0.png"))}
 player_img = pygame.image.load("textures\\test\\player.png")
 rock_img = pygame.image.load(os.path.join("textures","test","rock.png"))
+
+#temp
+test_world = [[1,1,1,1,1,1,1,1],
+         [1,0,0,0,0,0,0,1],
+         [1,0,0,0,0,0,0,1],
+         [1,0,0,2,0,0,0,1],
+         [1,0,0,0,0,0,0,1],
+         [1,0,0,0,0,0,0,1],
+         [1,1,1,1,1,1,1,1],]

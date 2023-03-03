@@ -3,6 +3,7 @@ from settings import *
 from player import Player
 from level import Level
 from debug import *
+import sys
 
 class Game:
     def __init__(self):
@@ -29,7 +30,7 @@ class Game:
                     self.running = False
                     #TODO éventuellement sauvegarder ici
                     pygame.quit()
-                    break
+                    sys.exit()
             
             self.player.move(pygame.key.get_pressed())
             self.player.draw(self.screen) #TODO temporaire, à déplacer dans la classe Camera avec le reste de l'affichage
