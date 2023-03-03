@@ -34,14 +34,11 @@ class Player(Entite):
         #TODO collisions
         if self.check_collision(self.collision_blocks, "horizontal", self.movement.x * playerspeed) == False:
             self.x += self.movement.x * playerspeed
-            debug(["False"])
-        else:
-            debug(["True"])
+            
         if self.check_collision(self.collision_blocks, "vertical", self.movement.y * playerspeed) == False:
             self.y += self.movement.y * playerspeed
-            debug(["False"])
-        else:
-            debug(["True"])
+            
+        
         
         self.x = round(self.x)
         self.y = round(self.y)

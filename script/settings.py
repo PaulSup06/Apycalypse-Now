@@ -10,7 +10,7 @@ CASE_SIZE = 64
 
 #variables de gameplay
 playerspeed = 5
-hitbox_margin = 0 #marge de 2px pour les collisions
+hitbox_margin = 0 #marge pour les collisions
 
 #textures
 #TODO ajouter et modifier système de load d'images 
@@ -21,10 +21,10 @@ rock_img = pygame.image.load(os.path.join("textures","test","rock.png"))
 world_bg = {0:pygame.image.load("textures\\test\\ground.png")}
 
 #temp
-test_world = [[1,1,1,1,1,1,1,1],
-         [1,0,0,0,0,0,0,1],
-         [1,0,0,0,0,0,0,1],
-         [1,0,0,2,0,0,0,1],
-         [1,0,0,1,0,0,0,1],
-         [1,0,0,0,0,0,0,1],
-         [1,1,1,1,1,1,1,1],]
+test_world = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+         [1,0,0,2,0,0,0,0,0,0,0,0,0,0,1],
+         [1,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
+         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+         [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],]
