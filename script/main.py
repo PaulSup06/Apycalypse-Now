@@ -33,8 +33,10 @@ class Game:
                     sys.exit()
             
             self.player.move(pygame.key.get_pressed())
+            self.level.visible_blocks.draw_visible()
             self.player.draw(self.screen) #TODO temporaire, à déplacer dans la classe Camera avec le reste de l'affichage
-            debug([self.player.movement.length(),self.player.x,self.player.y], self.screen)
+            
+            debug([self.player.movement.length(),self.player.x,self.player.y, len(self.level.visible_blocks.sprites())], self.screen)
             pygame.display.update()
             self.clock.tick(FPS)
 

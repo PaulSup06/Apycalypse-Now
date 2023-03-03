@@ -6,6 +6,7 @@ class Player:
         self.y = y
         self.rect = None
         self.hitbox = pygame.Rect(self.x, self.y + 12, 64, 40) #à modif
+        self.image = player_img
         
 
     def move(self, keys):
