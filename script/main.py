@@ -33,13 +33,9 @@ class Game:
                     sys.exit()
             
             self.player.move(pygame.key.get_pressed())
-            self.level.visible_blocks.draw_visible()
+            self.level.visible_blocks.draw_visible(self.player)
 
-            #debug
-            for entite in self.level.collision_blocks:
-                pygame.draw.rect(self.screen, "white", entite.surface, width=2)
-            pygame.draw.rect(self.screen, "white", self.player.surface, width=2)
-            #debug([self.player.movement.length(),self.player.x,self.player.y, len(self.level.visible_blocks.sprites())])
+           
 
             pygame.display.update()
             self.clock.tick(FPS)
