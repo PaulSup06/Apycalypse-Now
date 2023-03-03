@@ -10,6 +10,7 @@ CASE_SIZE = 64
 
 #variables de gameplay
 playerspeed = 5
+hitbox_margin = 0 #marge de 2px pour les collisions
 
 #textures
 #TODO ajouter et modifier système de load d'images 
@@ -24,6 +25,6 @@ test_world = [[1,1,1,1,1,1,1,1],
          [1,0,0,0,0,0,0,1],
          [1,0,0,0,0,0,0,1],
          [1,0,0,2,0,0,0,1],
-         [1,0,0,0,0,0,0,1],
+         [1,0,0,1,0,0,0,1],
          [1,0,0,0,0,0,0,1],
          [1,1,1,1,1,1,1,1],]

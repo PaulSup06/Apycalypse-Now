@@ -19,7 +19,7 @@ class Level:
                 if col==1:
                     Case(col_num*CASE_SIZE, row_num*CASE_SIZE, [self.collision_blocks, self.visible_blocks], rock_img)
                 if col==2:
-                    self.player = Player(int(col_num*CASE_SIZE), int(row_num*CASE_SIZE))
+                    self.player = Player(int(col_num*CASE_SIZE), int(row_num*CASE_SIZE), self.visible_blocks, self.collision_blocks)
         
 
 
