@@ -33,10 +33,11 @@ class Game:
                     sys.exit()
             
             self.player.move(pygame.key.get_pressed())
+            self.player.update()
             self.level.visible_blocks.draw_visible(self.player)
 
            
-            debug([self.clock.get_fps()])
+            debug(["FPS : " + str(self.clock.get_fps()), self.player.movement.length()])
             pygame.display.update()
             self.clock.tick(FPS)
 
