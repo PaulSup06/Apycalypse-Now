@@ -1,4 +1,5 @@
 ## TODO :
+#### Se reporter à la Roadmap ouverte dans l'onglet "Issues", le Readme étant destiné à ne plus contenir ces sections
 - [x] Ajout des animations
 - [ ] Ajout d'un menu au lancement du jeu
 - [ ] Menu choix des touches (codage des touches dynamique)
