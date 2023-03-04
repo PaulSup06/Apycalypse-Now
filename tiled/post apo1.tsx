@@ -5,7 +5,12 @@
   <wangset name="sol/chemin" type="edge" tile="-1">
    <wangcolor name="sol" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="chemin" color="#00ff00" tile="-1" probability="1"/>
+   <wangtile tileid="81" wangid="1,0,1,0,1,0,1,0"/>
+   <wangtile tileid="82" wangid="1,0,1,0,1,0,1,0"/>
    <wangtile tileid="121" wangid="1,0,1,0,1,0,1,0"/>
+   <wangtile tileid="122" wangid="1,0,1,0,1,0,1,0"/>
+   <wangtile tileid="161" wangid="1,0,1,0,1,0,1,0"/>
+   <wangtile tileid="162" wangid="1,0,1,0,1,0,1,0"/>
    <wangtile tileid="320" wangid="1,0,1,0,2,0,1,0"/>
    <wangtile tileid="321" wangid="1,0,2,0,2,0,1,0"/>
    <wangtile tileid="322" wangid="1,0,2,0,1,0,2,0"/>
@@ -59,7 +64,7 @@
    <wangtile tileid="331" wangid="0,1,0,2,0,2,0,1"/>
    <wangtile tileid="332" wangid="0,1,0,1,0,2,0,1"/>
    <wangtile tileid="333" wangid="0,2,0,1,0,2,0,1"/>
-   <wangtile tileid="335" wangid="0,1,0,2,0,2,0,2"/>
+   <wangtile tileid="335" wangid="0,1,0,2,0,2,0,1"/>
    <wangtile tileid="366" wangid="0,2,0,2,0,1,0,1"/>
    <wangtile tileid="367" wangid="0,2,0,2,0,2,0,2"/>
    <wangtile tileid="368" wangid="0,2,0,2,0,2,0,2"/>

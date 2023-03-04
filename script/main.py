@@ -36,7 +36,7 @@ class Game:
             self.level.visible_blocks.draw_visible(self.player)
 
            
-
+            debug([self.clock.get_fps()])
             pygame.display.update()
             self.clock.tick(FPS)
 

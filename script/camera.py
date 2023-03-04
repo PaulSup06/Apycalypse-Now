@@ -14,8 +14,14 @@ class Camera(pygame.sprite.Group):
     def draw_visible(self, player):   
 
         #calcul de l'offset pour garder le joueur au centre
-        self.offset.x = player.surface.centerx - self.half_width
-        self.offset.y = player.surface.centery - self.half_height
+        if player.surface.centerx >self.half_width:
+            self.offset.x = player.surface.centerx - self.half_width
+        else:
+            self.offset.x = 0
+        if player.surface.centery >self.half_height:
+            self.offset.y = player.surface.centery - self.half_height
+        else:
+            self.offset.y = 0
 
         bg_offset_pos = self.bg_rect.topleft - self.offset
         self.screen.blit(self.bg_img, bg_offset_pos)
