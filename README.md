@@ -7,16 +7,23 @@ TODO :
     - [ ] attaques
     - [ ] inventaire ? (optionnel)
 - [ ] UI:
-    -vie/armure/items
+    - [ ] vie/armure/items
+    - [ ] Menu de dialogues
 - [ ] Textures :
     - [ ] Joueur (animations)
     - [ ] Monde 
     - [ ] Mobs
     - [ ] Armes (optionnel textures sur le joueur)
+- [ ] Entités (mobs et interactions joueur):
+    - [ ] Mobs agressifs de base (déplacements en ligne)
+    - [ ] Mobs agressifs intelligents (pathfinding)
+    - [ ] Mobs tir à distance ?
+    - [ ] Autres personnages interactifs (menu ? + dialogues + cinématiques ? + quêtes ?)
 - [ ] Génération du/des mondes :
     - [ ] Convertion fichiers csv en python
     - [ ] décodage des csv et génération map
     - [ ] ajout items/mobs dynamiquement (modification du csv ?) (optionnel)
+- [ ] Ajout énigmes via pages Internet
 - [ ] Sauvegarde de la position du joueur/son monde actuel à la fermeture du jeu 
 
 
