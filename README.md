@@ -1,9 +1,9 @@
 TODO :
-- [ ] Ajout des animations
+- [x] Ajout des animations
 - [ ] Ajout d'un menu au lancement du jeu
 - [ ] Menu choix des touches (codage des touches dynamique)
 - [ ] Joueur:
-    - [ ] animations
+    - [x] animations
     - [ ] attaques
     - [ ] inventaire ? (optionnel)
 - [ ] UI:
