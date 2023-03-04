@@ -42,11 +42,11 @@ class Camera(pygame.sprite.Group):
         bg_offset_pos = self.bg_rect.topleft - self.offset
         self.screen.blit(self.bg_img, bg_offset_pos)
 
-        for sprite in self.sprites():
+        for sprite in sorted(self.sprites(),key = lambda sprite: sprite.basey):
             offset_pos = sprite.surface.topleft - self.offset
             self.screen.blit(sprite.image, offset_pos)
 
-         #debug
+        #debug
         #for entite in self.collision_blocks:
         #    pygame.draw.rect(self.screen, "white", entite.surface, width=2)
         #pygame.draw.rect(self.screen, "white", self.player.surface, width=2)

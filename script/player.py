@@ -9,6 +9,7 @@ class Player(Entite):
         self.rect = self.image.get_rect()
         self.surface = pygame.Rect(self.x, self.y, 64, 40) #à modif
         self.collision_blocks = collision_blocks
+        self.basey = self.surface.centery
         
 
     def move(self, keys):
@@ -44,6 +45,7 @@ class Player(Entite):
         self.y = round(self.y)
         
         self.surface.topleft = (self.x,self.y)
+        self.basey = self.surface.centery
 
 #    def draw(self, surface):
 #        """Méthode : affiche le joueur à l'écran et gère les animations

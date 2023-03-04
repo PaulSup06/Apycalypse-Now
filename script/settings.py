@@ -18,7 +18,7 @@ hitbox_margin = 0 #marge pour les collisions
 #player_img = {"bas":pygame.image.load(os.path.join("textures","player","down","down_0.png"))}
 player_img = pygame.image.load("textures\\test\\player.png")
 rock_img = pygame.image.load(os.path.join("textures","test","rock.png"))
-world_bg = {0:pygame.image.load("textures\\test\\ground.png")}
+world_bg = {0:pygame.image.load("textures\\test\\essai carte1.png")}
 
 #temp
 test_world = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
