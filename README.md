@@ -17,7 +17,7 @@ TODO :
     -Convertion fichiers csv en python
     -décodage des csv et génération map
     -ajout items/mobs dynamiquement (modification du csv ?) (optionnel)
--Sauvegarde de la position du joueur/son monde actuel à la fermeture du jeu
+-Sauvegarde de la position du joueur/son monde actuel à la fermeture du jeu 
 
 
 MISC :
