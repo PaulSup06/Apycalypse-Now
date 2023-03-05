@@ -30,3 +30,7 @@
 
 ## MISC :
 -Police d'écriture des menus pygame : https://dennisbusch-de.itch.io/0xdbs-terminal-chonker-8x8-1bpp-bitmap-font
+-Ressources en ligne d'asset :
+(itch.io)[https://itch.io/c/133871/tiled-resources]
+(opengameart)[https://opengameart.org/]
+(hamsterrpublic)[https://rpg.hamsterrepublic.com/ohrrpgce/Free_Tilemaps]
