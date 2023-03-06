@@ -31,6 +31,20 @@
 ## MISC :
 - Police d'écriture des menus pygame : https://dennisbusch-de.itch.io/0xdbs-terminal-chonker-8x8-1bpp-bitmap-font
 
+## DIALOGMAKER :
+- [ ] Historique :
+    - [ ] Affichage des derniers dialogues créé
+- [ ] Éditeur
+    - [ ] Visuelle de à quoi le dialogue ressemblera in-game
+    - [ ] Trouver un moyen d'associer un dialogue avec un ID pour les différencier in-game
+    - [ ] Création de réplique
+    - [ ] Ajout de style d'écriture au texte (italique, gras, souligné, ...)
+    - [ ] Ajout de choix de réponse (s'il y en a) pour les dialogues
+- [ ] Sauvegarde
+    - [ ] Sauvegarder les dialogues dans un ou des fichiers .dm (.**d**ialog**m**aker)
+- [ ] Structure des données
+    - [ ] Trouver une structure de fichier efficace pour stocker les dialogues
+
 - Ressources en ligne d'asset :
 [itch.io](https://itch.io/c/133871/tiled-resources)
 [opengameart](https://opengameart.org/)
