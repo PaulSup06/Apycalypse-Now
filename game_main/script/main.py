@@ -50,7 +50,8 @@ class Game:
         drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL,
         )
         self.settings = get_actual_settings() #décodage du fichier CSV de paramètres du jeu
-        
+        self.npc_states = {}
+        self.changin_world = False
         self.generate_menus()
 
     def generate_menus(self):
@@ -227,7 +228,7 @@ class Game:
                 if ui_return['npc_update']:
                     for npc in self.level.npcs:
                         if npc.name == self.ui.current_npc:
-                            npc.change_state(ui_return["npc_update"])
+                            npc.change_state(*ui_return["npc_update"])
 
             elif self.game_state == "menu":
                 
@@ -264,16 +265,14 @@ class Game:
         Args:
             file_name (str, optional): Path au fichier dans lequel sera enregistré la position. Defaults to "latest.json".
         """
-        npc_state = {}
-        for npc in self.level.npcs:
-            npc_state[npc.name] = npc.get_state()
+
         pos = {"x":self.player.x,
                "y":self.player.y,
                "life":self.player.life,
                "level":self.level.world_id,
                "weapon":self.player.weapon,
                "inventory":self.inventaire.inventory,
-               "npcs":npc_state}
+               "npcs":self.npc_states}
         
         file_path = os.path.join("..\\","saves",file_name)
         with open(file_path,'w') as file:
@@ -296,10 +295,7 @@ class Game:
         self.main_menu.disable()
         self.level = Level(self,params["level"],False)
 
-        for key,value in params["npcs"].items():
-            for npc in self.level.npcs:
-                if npc.name == key:
-                    npc.change_state(*value)
+        self.npc_states = params["npcs"]
 
         self.player = Player(params["x"],params["y"],(self.level.visible_blocks),
                              self.level.collision_blocks,params["life"],params["weapon"])  
@@ -338,10 +334,18 @@ class Game:
         """
         #rend le paramètre optionnel en utilisant la valeur de la classe Game
         self.ui = UI()   #reset l'ui lors du chargement (fix bug ui ouvert lors de fermeture d'une précédente page)
+        self.changing_world = False 
+
         if not current_world:
             current_world = self.current_world
             
         self.level = Level(self,current_world,)
+        if self.npc_states.get(current_world):
+            for npc in self.level.npcs:
+                npc_status = self.npc_states.get(current_world).get(npc.name)
+                if npc_status:
+                    npc.change_state(*npc_status)
+
         self.player = self.level.player
         if pos:
             pos = eval(pos)
@@ -365,8 +369,12 @@ class Game:
         Args:
             level (int): niveau de destination
         """
-        self.current_world = level
-        self.ui.add_transition_close(self.generate_world,level,pos)
+        if not self.changing_world:
+            self.changing_world = True
+            self.save_npc_states(self.current_world)
+            print(self.npc_states)
+            self.current_world = level
+            self.ui.add_transition_close(self.generate_world,level,pos)
 
     def reprendre_partie(self):
         """Fonction liée au bouton "reprendre la partie" du menu de pause
@@ -374,6 +382,17 @@ class Game:
         self.escape_menu.disable()
         self.game_state = "playing"
     
+    def save_npc_states(self,world):
+        """Enregistre les états des pnjs actifs sur le monde quitté par le joueur (et rechargés s'il revient)
+
+        Args:
+            world (int): id du monde quitté par le joueur
+        """
+        for npc in self.level.npcs:
+            if not self.npc_states.get(world):
+                self.npc_states[world] = {}
+            self.npc_states[world][npc.name]=npc.get_state() 
+        
     def save_and_quit(self,save=True, name=None):
         """Fonction liée au bouton "Sauvegarder et quitter" du menu de pause
 
@@ -455,8 +474,7 @@ class Game:
             else:
                 pygame.mixer.music.set_endevent(pygame.USEREVENT)
                 pygame.mixer.music.fadeout(4000)
-                
-                
+        
     def change_music_volume(self, volume):
         """Change le volume pygame de la musique
 

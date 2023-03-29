@@ -55,7 +55,6 @@ class Trigger(Case):
         if player.rect.colliderect(self.surface):
             if self.activated==False:
                 self.activated = True
-                print(self.args)
                 return self.func(*self.args)
         elif self.activated:
             self.activated = False
