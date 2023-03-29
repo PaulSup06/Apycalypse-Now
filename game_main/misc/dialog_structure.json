@@ -1,0 +1,25 @@
+
+{
+    
+    "1":{
+            "type": "sans_choix",
+            "goto": "2"
+        },
+    "2":{
+            "type": "avec_choix",
+            "choix":[
+                {"index":1,
+                "texte_du_choix": "choix1",
+                "goto_number":"1"
+                },
+                {"index":2,
+                "texte_du_choix": "choix2",
+                "goto_number":"3"
+                }
+            ]
+        },
+    "3":{
+        "type": "sans_choix",
+        "goto": "-1"
+    }
+}
