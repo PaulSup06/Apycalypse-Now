@@ -36,7 +36,6 @@ class Npc(Entity):
         self.is_talkable = state
         self.indicator = indicator
         self.next_dialog = next_dialog_id
-        self.is_inrange = False
         self.indicator_rendered = font1.render(self.indicator,1,"black").convert_alpha()
 
     def get_state(self):
@@ -47,7 +46,7 @@ class Npc(Entity):
         """
         return self.is_talkable, self.indicator, self.next_dialog
     
-    def show_indicator(self, surface, offset, settings):
+    def show_indicator(self, surface, offset, settings,player):
         """Affiche l'en-tête du npc
 
         Args:
@@ -61,7 +60,7 @@ class Npc(Entity):
         surface.blit(indicator_rect_surf, indicator_rect)
         pygame.draw.rect(surface,"black",indicator_rect,1,5)
         surface.blit(self.indicator_rendered, (self.x + self.surface.width + 10 - offset.x, self.y - 10 - offset.y))
-        if self.is_talkable:
+        if self.is_talkable and self.check_distance_to((player.x,player.y),interact_distance):
             surface.blit(font2.render(f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour parler",1,"black"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + indicator_rect.height - offset.y))
 
     def interact(self):

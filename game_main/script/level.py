@@ -5,6 +5,7 @@ from camera import Camera
 from player import *
 from npc import Npc, Door
 from ui import Button
+from browser import Terminal
 import pytmx
 import pygame
 import os
@@ -39,6 +40,7 @@ class Level:
         self.npcs = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.doors = pygame.sprite.Group()
+        self.terminals = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
 
         self.player = None
@@ -53,11 +55,14 @@ class Level:
                         tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
                         if tile_properties["id"] == 1013 and player_gen:
                             self.player = Player(x*CASE_SIZE,y*CASE_SIZE, self.visible_blocks, self.collision_blocks, default_player_life)
-                        elif tile_properties["id"] == 0:
+                        elif tile_properties["class"][:4] == 'npc':
                             #NPC de test (Fairy)
-                            Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],"John",'True', first_dialog="1")
+                            Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][5:],'True', first_dialog="1")
                         elif tile_properties["id"] == 29:
                             Door(x*CASE_SIZE,y*CASE_SIZE,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,False)
+                        elif tile_properties["class"][:8]=="terminal":
+                            Terminal(x*CASE_SIZE,y*CASE_SIZE,[self.visible_blocks,self.collision_blocks,self.terminals], 1,False)
+
             if layer.name == "ground props":
                 for x,y,gid in layer.iter_data():
                     if gid!=0:

@@ -55,7 +55,8 @@ hitbox_offset = 15 #marge pour les collisions du joueur
 walk_anim_duration = 12 #nombre de frames que dure 1 image de l'animation de marche
 default_player_life = 5
 default_player_attack_cooldown = 20 #cooldown par défaut quand main vide
-distance_affichage_npc_prompt = 100
+distance_affichage_npc_prompt = 300
+interact_distance = 100
 dialog_cooldown = 2 #nombre de frames entre l'affichage de chaque caractère du dialogue
 door_unlock_range = 3*CASE_SIZE
 stackable_range = 100
@@ -63,7 +64,7 @@ stackable_range = 100
 #textures
 player_img_folder = "..\\textures\\player"
 enemy_img_folder = "..\\textures\\enemies"
-door_folder = "..\\textures\\door"
+misc_folder = "..\\textures\\misc"
 items_folder="..\\textures\\items"
 def load_imgs():
     """Charge les textures principales du jeu (appellée après initialisation vidéo pygame car convertion)
@@ -106,7 +107,7 @@ def load_enemy_imgs():
 def load_door_imgs():
     door_imgs = []
     for i in range(5):
-        door_imgs.append(pygame.image.load(os.path.join(door_folder,f"door{i}.png")).convert_alpha())
+        door_imgs.append(pygame.image.load(os.path.join(misc_folder,f"door{i}.png")).convert_alpha())
     
     return door_imgs
 
@@ -119,6 +120,23 @@ def load_item_imgs():
 
     return item_images
 
+def load_terminal_img():
+    """Possibilité de rajouter une animation si besoin 
+    """
+    return pygame.image.load(os.path.join(misc_folder,"terminal.png")).convert()
+
+#HTML
+def load_html(id):
+    """Charge un fichier html en string pour l'affichage avec pywebview
+
+    Args:
+        id (int): id du terminal/du site à afficher
+
+    Returns:
+        str: html décodé du fichier
+    """
+    with open(f"..\\web\\terminal_{id}.html") as f:
+        return f.read()
 #fonts
 pygame.font.init()
 font1 = pygame.font.SysFont("sans-serif",30)

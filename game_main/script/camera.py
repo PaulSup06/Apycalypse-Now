@@ -76,9 +76,7 @@ class Camera(pygame.sprite.Group):
             self.screen.blit(sprite.image, offset_pos)
         
         for npc in npcs:
-            if npc.check_distance_to([player.x,player.y],distance_affichage_npc_prompt):
-                npc.is_inrange = True   
+            if npc.check_distance_to([player.x,player.y],distance_affichage_npc_prompt):  
                 npc.show_indicator(self.screen, self.offset, get_actual_settings())  
-            else:
-                npc.is_inrange = False
+
                 

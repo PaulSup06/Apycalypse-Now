@@ -146,7 +146,7 @@ class Game:
                                 self.player.attack()
                         elif event.key == int(self.settings["k_interact"]):
                             for npc in self.level.npcs:
-                                if npc.is_inrange:
+                                if npc.check_distance_to((self.player.x,self.player.y),interact_distance):
                                     if not self.ui.current_dialog:
                                         self.ui.load_dialog(*npc.interact())
                                     elif self.ui.ongoing_dialog:
@@ -158,6 +158,9 @@ class Game:
                                             self.change_level(fin_dialogue.get("change_level"))
                                         if fin_dialogue.get("npc_update"):
                                             npc.change_state(*fin_dialogue.get("npc_update"))
+                            for terminal in self.level.terminals:
+                                if self.player.check_distance_to(terminal.surface.midbottom,interact_distance) and not terminal.locked and not terminal.using:
+                                    renvoi_terminal = terminal.interact()
 
                         elif event.key == int(self.settings["k_escape"]):
                             self.game_state = "menu"
@@ -205,6 +208,8 @@ class Game:
                 self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx)
                 for door in self.level.doors:
                     door.update(self.player)
+                for term in self.level.terminals:
+                    term.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings)
                 for trigger in self.level.trigger_blocks:
                     trigger.handle(self.player)
                 for item in self.level.items:
