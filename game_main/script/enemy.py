@@ -1,8 +1,9 @@
 from entity import Entity
 import pygame
+from settings import *
 
 class Enemy(Entity):
-    def __init__(self, x, y, image, groupes, collision_blocks, textures, movement_type, name, speed, movement_condition=True):
+    def __init__(self, x, y, image, groupes, collision_blocks, textures, movement_type, name, speed=None, damages=None, health=None, movement_condition=True):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:
@@ -24,15 +25,58 @@ class Enemy(Entity):
         self.movement_type = movement_type
         self.name = name
         self.textures = textures[name]
-        self.speed = speed
+        if speed:
+            self.speed = speed
+        else:
+            self.speed = enemy_caracteristics[self.name]["speed"]
+        if damages:    
+            self.damages = damages
+        else:
+            self.damages = enemy_caracteristics[self.name]["damages"]
+        if health:    
+            self.health = health
+        else:
+            self.health = enemy_caracteristics[self.name]["health"]
+        self.attack_cooldown = 60
         self.movement_condition = movement_condition
         self.direction=1
         self.action = "idle"
+        self.animation_counter = 0
+        #gestion fin de la vie de l'ennemi
+        self.death_cooldown = 40
+        self.stunt_cooldown = 20 
         
     def move(self, player):
+        """Gestion du mouvement de l'ennemi ainsi que de ses collisions et états
+
+        Args:
+            player (player object): objet du joueur pour les colisions et la gestion des dégats
+
+        Returns:
+            int: dégats infligés
+        """
+        if self.rect.colliderect(player.rect) and self.action !="attack" and self.action!="death" and self.action !='stunt':            
+            self.action = "attack"
+            self.animate()
+            return self.damages
         
+        if self.action == "attack":            
+            self.attack_cooldown -= 1
+            if self.attack_cooldown<=0:
+                self.attack_cooldown = 60
+                self.action = "idle"
         
-        if self.movement_condition:
+        elif self.action == "death":
+            self.death_cooldown -= 1
+            if self.death_cooldown <= 0:
+                self.kill()
+
+        elif self.action == "stunt":
+            self.stunt_cooldown -= 1
+            if self.stunt_cooldown <= 0:
+                self.action = "idle"
+
+        elif self.movement_condition:
             self.movement = pygame.Vector2()
             
             if self.movement_type == "ligne_h":
@@ -49,12 +93,49 @@ class Enemy(Entity):
                 self.x += self.movement.x * self.speed
             else:
                 self.change_direction()
-            if not self.check_collision(self.collision_blocks, "horizontal", self.movement.x * self.speed):
+
+            if not self.check_collision(self.collision_blocks, "vertical", self.movement.x * self.speed):
                 self.y += self.movement.y * self.speed
             else:
                 self.change_direction()
                 
             self.rect.topleft = (self.x,self.y)
+            self.action = "move"
+
+        else:
+            self.action = "idle"
         
+        
+
+        self.animate()
+
+    def animate(self):
+        """Sous fonction de move(), s'occupe plus précisément des animations de l'ennemi
+        """
+        if self.action == "attack" or self.action == "death":
+            self.image = self.textures[self.action][0]
+        elif self.action == "stunt":
+            self.image = self.textures["idle"][0]
+        else:
+            self.image = self.textures[self.action][self.animation_counter//enemy_anim_duration]
+            self.animation_counter +=1  
+            if self.animation_counter//enemy_anim_duration > len(self.textures[self.action])-1:
+                self.animation_counter = 0
+
     def change_direction(self):
+        """Change la direction de déplacement de l'ennemi (utilisé seulement pour déplacements en ligne droite)
+        """
         self.direction *= -1
+
+    def hit(self,damages,stunt=20):
+        """Méthode appelée pour infliger des dégats à l'ennemi (généralement par le joueur)
+
+        Args:
+            damages (int): nombre de dégats à infliger
+            stunt (int, optional): nombre de frames pendant lesquels l'ennemi ne pourra pas bouger (étourdi). Defaults to 20.
+        """
+        self.health -= damages
+        self.action = "stunt"
+        self.stunt_cooldown = stunt
+        if self.health <= 0:
+            self.action = "death"

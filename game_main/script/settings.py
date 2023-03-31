@@ -55,11 +55,17 @@ hitbox_offset = 15 #marge pour les collisions du joueur
 walk_anim_duration = 12 #nombre de frames que dure 1 image de l'animation de marche
 default_player_life = 5
 default_player_attack_cooldown = 20 #cooldown par défaut quand main vide
+default_player_attack_range = 32 #nombre de pixels du range de l'attaque avec les mains vides
+default_player_damages = 2
+enemy_anim_duration = 8 #nombre de frames pour chaque image de l'animation des enemies 
 distance_affichage_npc_prompt = 300
 interact_distance = 100
 dialog_cooldown = 2 #nombre de frames entre l'affichage de chaque caractère du dialogue
 door_unlock_range = 3*CASE_SIZE
 stackable_range = 100
+enemy_caracteristics = {"bamboo":{"speed":5,
+                                  "damages":1,
+                                  "health":3}}
 
 #textures
 player_img_folder = "..\\textures\\player"
@@ -97,10 +103,10 @@ def load_enemy_imgs():
     enemy_imgs = {}
     for type in os.listdir(enemy_img_folder):
         enemy_imgs[type] = {}
-        for folder in os.listdir(type):
-           enemy_imgs[type][folder] = {}
-           for file in os.listdir(folder):
-               enemy_imgs[type][folder][file] = pygame.image.load(os.path.join(enemy_img_folder,type,folder,file)).convert_alpha()
+        for folder in os.listdir(os.path.join(enemy_img_folder, type)):
+           enemy_imgs[type][folder] = []
+           for file in os.listdir(os.path.join(enemy_img_folder,type,folder)):
+               enemy_imgs[type][folder].append(pygame.image.load(os.path.join(enemy_img_folder,type,folder,file)).convert_alpha())
                
     return enemy_imgs
 

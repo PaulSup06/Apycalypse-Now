@@ -143,7 +143,7 @@ class Game:
                     if self.game_state == "playing":
                         if event.key == int(self.settings["k_attack"]): #TODO ajouter touches dynamiques
                             if not self.ui.current_dialog:
-                                self.player.attack()
+                                self.player.attack(self.level.enemies)
                         elif event.key == int(self.settings["k_interact"]):
                             for npc in self.level.npcs:
                                 if npc.check_distance_to((self.player.x,self.player.y),interact_distance):
@@ -205,7 +205,12 @@ class Game:
                 if not self.ui.current_dialog and not self.inventaire.enabled:
                     self.player.move(pygame.key.get_pressed(),self.settings)
                 self.player.update()
-                self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx)
+                for enemy in self.level.enemies:
+                    damages = enemy.move(self.player)
+                    if damages:
+                        self.player.life -= damages
+                        print(self.player.life)
+                self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx, self.settings)
                 for door in self.level.doors:
                     door.update(self.player)
                 for term in self.level.terminals:

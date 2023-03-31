@@ -100,12 +100,32 @@ class Player(Entity):
             if self.attack_counter >= self.attack_cooldown:
                 self.attacking = False
     
-    def attack(self):
+    def attack(self, enemies):
         if not self.attacking:
             self.attacking = True
             self.attack_counter=0
             #check ennemi touché ou départ d'un projectile
 
+            if not self.weapon:
+                attack_range = default_player_attack_range
+                damages = default_player_damages
+            else:
+                attack_range = self.weapon.attack_range
+                damages = self.weapon.damages
+            
+
+            if self.direction == "up":
+                hit_rect = pygame.Rect(self.rect.centerx - 1, self.y - attack_range, 2, attack_range)
+            elif self.direction == "down":
+                hit_rect = pygame.Rect(self.rect.centerx - 1, self.rect.bottom, 2, attack_range)
+            elif self.direction == "left":
+                hit_rect = pygame.Rect(self.x - attack_range, self.surface.centery - 1, attack_range, 2)
+            elif self.direction == "right":
+                hit_rect = pygame.Rect(self.rect.right, self.surface.centery - 1, attack_range, 2)
+
+            for enemy in enemies:
+                if hit_rect.colliderect(enemy.rect):
+                    enemy.hit(damages)
 
 #    def draw(self, surface):
 #        """Méthode : affiche le joueur à l'écran et gère les animations

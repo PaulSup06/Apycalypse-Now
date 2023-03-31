@@ -4,6 +4,7 @@ from debug import debug
 from camera import Camera
 from player import *
 from npc import Npc, Door
+from enemy import Enemy
 from ui import Button
 from browser import Terminal
 import pytmx
@@ -30,7 +31,7 @@ class Level:
         self.world_tmx = pytmx.load_pygame(self.world_tmx_path)
         
         #textures
-        #self.enemy_imgs = load_enemy_imgs()
+        self.enemy_imgs = load_enemy_imgs()
         self.door_imgs = load_door_imgs()
         
         #pygame sprite groups
@@ -53,11 +54,15 @@ class Level:
                 for x,y,gid in layer.iter_data():
                     if gid!=0:
                         tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
-                        if tile_properties["id"] == 1013 and player_gen:
+                        if tile_properties["class"] == "player" and player_gen:
                             self.player = Player(x*CASE_SIZE,y*CASE_SIZE, self.visible_blocks, self.collision_blocks, default_player_life)
-                        elif tile_properties["class"][:4] == 'npc':
+                        elif tile_properties["class"][:3] == 'npc':
                             #NPC de test (Fairy)
-                            Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][5:],'True', first_dialog="1")
+                            Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][4:],'True', first_dialog="1")
+                        elif tile_properties["class"][:5] == 'enemy':
+                            
+                            Enemy(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.enemies],self.collision_blocks, self.enemy_imgs, "ligne_h",tile_properties["class"][6:])
+                        
                         elif tile_properties["id"] == 29:
                             Door(x*CASE_SIZE,y*CASE_SIZE,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,False)
                         elif tile_properties["class"][:8]=="terminal":

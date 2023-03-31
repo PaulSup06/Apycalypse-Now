@@ -47,7 +47,7 @@ class Camera(pygame.sprite.Group):
             return None 
     #=======================================================================
 
-    def draw_visible(self, player,npcs,enemies, tilemap):   
+    def draw_visible(self, player,npcs,enemies, tilemap, settings):   
         """Affiche les éléments à l'écran en fonction de la position du joueur
 
         Args:
@@ -77,6 +77,6 @@ class Camera(pygame.sprite.Group):
         
         for npc in npcs:
             if npc.check_distance_to([player.x,player.y],distance_affichage_npc_prompt):  
-                npc.show_indicator(self.screen, self.offset, get_actual_settings())  
+                npc.show_indicator(self.screen, self.offset, settings, player)  
 
                 
