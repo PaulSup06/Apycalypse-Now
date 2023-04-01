@@ -97,7 +97,7 @@
 
 <script>
 
-    let debug = false;
+    let debug = true;
 
 
     function delay(milliseconds){
@@ -107,21 +107,52 @@
     }
 
 
-    // écris du texte lettre par lettre
-    async function typeText(selector, text, whatNext) {
+    async function typeText(selector, text, whatNext, waitSecondBeforeWhatNext = true, fast_writing = false) {
     const element = document.querySelector(selector);
     let index = 0;
     const sound = new Howl({
         src: ['assets/key1_press.wav']
     });
 
-        async function writeText() {
-            element.textContent += text.charAt(index);
+    async function writeText() {
+        let currentChar = text.substring(index, index + 1);
 
-            sound.play(); // joue son de touche de clavier
+        element.innerHTML += currentChar.replace(/\n/g, "<br>");
+
+        if (!fast_writing) {
+            sound.play();
+        }
+
+        index++;
+        if (index > text.length - 1) {
+            clearInterval(timer);
+
+            // prochain évènement
+            if (waitSecondBeforeWhatNext) {
+                await delay(650);
+            }
+            whatNext();
+        }
+    }
+
+    const timer = setInterval(writeText, debug || fast_writing ? 5 : 100);
+}
+
+
+    async function progressBarText(selector, whatNext) {
+    const element = document.querySelector(selector);
+    let index = 0;
+
+        async function progressText() {
+            element.textContent = "> [" + "█".repeat(index) + "░".repeat(15 - index) + "] " + parseInt(((index / 15) * 100), 10) + "%"
 
             index++;
-            if (index > text.length - 1) {
+
+            clearInterval(timer);
+            timer =  setInterval(progressText, debug ? 150 : getRandomInt(450));
+
+
+            if (index > 15) {
                 clearInterval(timer);
 
                 // prochain évènement
@@ -129,8 +160,28 @@
                 whatNext();
             }
         }
-        const timer = setInterval(writeText, debug ? 10 : 100);
+        timer = setInterval(progressText, debug ? 100 : 100);
     }
+
+    async function typeCursorForMs(selector, cursor, whatNext, count = 5) {
+        const element = document.querySelector(selector);
+        let index = 0;
+        async function cursorAppear() {
+            element.textContent = index % 2 == 0 ? "⠀" : cursor;
+            index++;
+
+            if (index > count) {
+                clearInterval(timer);
+
+                // prochain évènement
+                await delay(150);
+                whatNext();
+            }
+        }
+
+        const timer = setInterval(cursorAppear, debug ? 250 : 680);
+    }
+    
 
     function opacityAnim(idElement) {
         var element = document.getElementById(idElement);
@@ -188,16 +239,43 @@
             document.getElementById("computer_screen_py").style.visibility = "visible";
             document.getElementById("progressBarConnexionServeur").style.visibility = "collapse";
             document.getElementById("computer_screen").style.visibility = "collapse";
+
+            login();
         }
     }
 </script>
 <body>
 
     
-    <!--<img src="assets/screen.jpg" style="object-fit: fill; width: 100%; height: 100%; height: 100vh;" />-->
+    <!-- code 1 -->
+    <p style="visibility: collapse; display: none;" id="code1_text">
+┌───────────────────────────────────────────────────────────────────────────┐
+│ def check_door():                                                         │
+│     inventory = ["clé", "lampe"]                                          │
+│     is_door_opened = map.get_data_from_coordinate(16, _____, "is_opened") │
+│                                                                           │
+│     if "clé" _____ inventory and is_door_opened == False:                 │
+│         open_door()                                                       │
+│     elif is_door_opened == ________:                                      │
+│         pass                                                              │
+│     else:                                                                 │
+│         message.show("Vous devez avoir la clé.")                          │
+│                                                                           │
+│ Traceback (most recent call last):                                        │
+│   File "/server/download/s_down.py", line 4, in "module"                  │
+│     download_code('check_door')                                           │
+│                                                                           │
+│ Connection Interrupted: le serveur n'a pas eu le temps de traité votre    │
+│ requête complètement.                                                     │
+│                                                                           │
+│ Message: Il semblerai que vous devriez compléter ce code. La porte se     │
+│ trouve aux coordonnées suivantes : X:16 Y:-53                             │
+└───────────────────────────────────────────────────────────────────────────┘       
+    </p>
 
-    <!--<div id="computer_screen" style="background-color: transparent; max-width: calc(100% - 460px); height: 100%; position: absolute; top: 0; left: 250px; right: 230px; margin-top: 170px;">
-    -->
+
+
+
     <div id="computer_screen">
     
         <p id="title" style="color: green; font-size: 3em; text-align: center;"></p>
@@ -213,10 +291,10 @@
 
         <form >
             <input type="text" id="txt_username" class="centered" name="username" placeholder="username"
-                style="height: 35px; width: 300px; opacity: 0;" />
+                style="height: 35px; width: 300px; opacity: 0;" value="admin" />
                 <br/>
             <input type="password" id="txt_password" class="centered" name="password" placeholder="password"
-                style="height: 35px; width: 300px; opacity: 0;" />
+                style="height: 35px; width: 300px; opacity: 0;" value="password" />
                 <br/>
             <input type="button" id="button_sendLogIn" class="centered" style="width: 150px; opacity: 0;" onclick="button_login_clicked()" value="login"/>
         </form> 
@@ -244,10 +322,35 @@
 
 
     <div id="computer_screen_py" style="visibility: collapse;">
+        <p id="recupServ" style="color: green; font-size: 26px; text-align: left;"></p>
+        <p id="servProgress" style="color: green; font-size: 26px; text-align: left;"></p>
 
-        <p>surdevelopper</p>
+        <p id="code_delimiter_top" style="color: green; font-size: 26px; text-align: left;white-space: pre; line-height: 30px;"></p>
+
         <script>
+            function login(){
+                opacityAnim("recupServ");
 
+                typeCursorForMs("#recupServ", ">", () =>{
+                    typeText("#recupServ"," Récupération du code du serveur", () => {
+
+                        typeCursorForMs("#servProgress", ">", () =>{
+                            progressBarText("#servProgress", () => {
+
+                                typeCursorForMs("#code_delimiter_top", ">", () =>{
+
+                                    code = document.getElementById("code1_text").innerHTML;
+                                    typeText("#code_delimiter_top", code, () => {
+
+                                    }, false, true);
+                                }, 3);
+
+                             });
+                        });
+
+                     }, false);
+                });
+            }
         </script>
 
     </div>

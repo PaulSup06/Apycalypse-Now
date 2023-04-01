@@ -1,0 +1,22 @@
+ ┌───────────────────────────────────────────────────────────────────────────┐
+ │ def check_door():                                                         │
+ │     inventory = ["clé", "lampe"]                                          │
+ │     is_door_opened = map.get_data_from_coordinate(16, _____, "is_opened") │
+ │                                                                           │
+ │     if "clé" _____ inventory and is_door_opened == False:                 │
+ │         open_door()                                                       │
+ │     elif is_door_opened == ________:                                      │
+ │         pass                                                              │
+ │     else:                                                                 │
+ │         message.show("Vous devez avoir la clé.")                          │
+ │                                                                           │
+ │ Traceback (most recent call last):                                        │
+ │   File "/server/download/s_down.py", line 4, in <module>                  │
+ │     download_code('check_door')                                           │
+ │                                                                           │ 
+ │ Connection Interrupted: le serveur n'a pas eu le temps de traité votre    │
+ │ requête complètement.                                                     │
+ │                                                                           │
+ │ Message: Il semblerai que vous devriez compléter ce code. La porte se     │
+ │ trouve aux coordonnées suivantes : X:16 Y:-53                             │
+ └───────────────────────────────────────────────────────────────────────────┘
