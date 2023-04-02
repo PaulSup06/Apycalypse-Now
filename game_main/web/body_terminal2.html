@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terminal</title>
+</head>
+
+<style>
+    h1 {
+        font-family: Consolas, monaco, monospace;
+        font-size: 23px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
+
+    h3 {
+        font-family: Consolas, monaco, monospace;
+        font-size: 17px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 23px;
+    }
+
+    p {
+        font-family: Consolas, monaco, monospace;
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
+
+    blockquote {
+        font-family: Consolas, monaco, monospace;
+        font-size: 17px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
+
+    pre {
+        font-family: Consolas, monaco, monospace;
+        font-size: 11px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
+
+    progress::-webkit-progress-value {
+        background: darkgreen;
+    }
+
+
+    #computer_screen {
+        background-color: transparent;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 30px;
+        right: 20px;
+        margin-top: 20px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 85vh;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        background-color: black;
+        border: 1px solid white;
+        color: green;
+        padding-left: 10px;
+        font-size: 20px;
+
+        font-family: Consolas;
+    }
+
+    input[type="button"] {
+        background-color: green;
+        border: 3px solid darkgreen;
+        color: lightgreen;
+        padding-left: 10px;
+        font-size: 20px;
+        cursor: pointer;
+
+        font-family: Consolas;
+
+    }
+
+    .centered {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    html {
+        overflow-y: hidden;
+        font-family: Consolas;
+    }
+
+    body {
+        background: linear-gradient(to bottom, #000000, #180f0f);
+        background-size: 100% 150%;
+        animation: animateBackground 5s ease-in-out infinite;
+        font-family: 'Consolas', Times, serif, sans-serif;
+    }
+
+    @keyframes animateBackground {
+        0% {
+            background-position: 0 0;
+        }
+
+        50% {
+            background-position: 0 -250%;
+        }
+
+        100% {
+            background-position: 0 0;
+        }
+    }
+
+    .texte {
+        font-size: 50px;
+    }
+
+    .title {
+        font-size: 50px;
+        font-style: normal;
+    }
+</style>
+
+<!--<script src="..\web\node_modules\howler\dist\howler.js"></script>-->
+
+<script>
+
+    // Vitesse d'affichage +
+    let debug = false;
+
+    /** 
+    * Créé une pause dans le code
+    * @param {int} milliseconds - Temps en miliseconde 
+    */      
+    function delay(milliseconds) {
+        return new Promise(resolve => {
+            setTimeout(resolve, debug ? 10 : milliseconds);
+        });
+    }
+
+    /** 
+    * Génère un nombre aléatoire
+    * @param {int} max - Entre 0 et max
+    */   
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * max);
+    }
+
+    /** 
+    * Affiche du texte avec une animation style "écriture progressive"
+    * @param {str} selector - L'élément dans lequel écrire
+    * @param {str} text - Le texte à écrire
+    * @param {event} whatNext - Code à éxecuter à la fin de l'écriture
+    * @param {bool} waitSecondBeforeWhatNext - Une pause entre la fin du texte et la prochaine action?
+    * @param {bool} fast_writing - Accélerer l'écriture ?
+    */  
+    async function typeText(selector, text, whatNext, waitSecondBeforeWhatNext = true, fast_writing = false) {
+
+        // Élément à modifier
+        const element = document.querySelector(selector);
+
+        // Caractère à écrire
+        let index = 0;
+
+        // Zone de texte actuelle s'il y en a
+        let index_input = 0;
+
+        // Son "touche de clavier"
+        //const sound = new Howl({
+        //    src: ['assets/key1_press.wav']
+        //});
+
+        // Fonction appelé chaque x temps pour écrire la prochaine lettre
+        async function writeText() {
+
+            // Prochaine lettre à écrire
+            let currentChar = text.substring(index, index + 1);
+
+            // @ signifie une zone de saisie
+            if (currentChar == "@") {
+                // Place un input de type texte
+                element.innerHTML += "<input type='text' onkeyup='input_text_changed(this.name)' class='input_code' name='" + index_input.toString() + "' style='height: 30px; width: 86px; background-color: black; border: 1px solid green; color: green; font-size: 26px; font-family: Consolas;' />";
+                index_input++;
+            }
+            else {
+                // Place la prochaine lettre / nouvelle ligne
+                element.innerHTML += currentChar.replace(/\n/g, "<br>");
+            }
+
+            // Joue le son uniquement si on est pas en écriture accélérer 
+            if (!fast_writing) {
+                //sound.play();
+                //window.api.play_key_sound();
+            }
+
+            index++;
+
+            // Vérifie si le texte a fini d'être écrit
+            if (index > text.length - 1) {
+                clearInterval(timer);
+
+                // prochain évènement
+                if (waitSecondBeforeWhatNext) {
+                    await delay(650);
+                }
+                whatNext();
+            }
+        }
+
+        // Timer qui gère l'écriture du texte 
+        const timer = setInterval(writeText, debug ? 1 : (fast_writing ? 5 : 100));
+    }
+
+    
+    /** 
+    * Supprime du texte de manière progressive
+    * @param {str} selector - L'élément dans lequel supprimer le texte
+    * @param {event} whatNext - Code à éxecuter à la fin de la suppression 
+    */  
+    async function eraseText(selector, whatNext) {
+        // Élément dans lequelle supprimer le texte
+        const element = document.querySelector(selector);
+
+        // Fonction qui supprime le dernier caractère du texte
+        async function eraseText() {
+            // Supprime le dernier caractère du texte
+            element.innerHTML = element.innerHTML.substring(0, element.innerHTML.length - 1)
+
+            // Si le texte est entièrement supprimé (4 car &sn;)
+            if (element.innerHTML.length <= 4) {
+                clearInterval(timer);
+
+                // prochain évènement
+                await delay(650);
+
+                whatNext();
+            }
+        }
+
+        // Timer gérant la suppression progressive
+        const timer = setInterval(eraseText, 5);
+    }
+
+    /** 
+    * Affiche une progressbar jusqu'à ses 100%
+    * @param {str} selector - L'élément dans lequel écrire la progressbar
+    * @param {event} whatNext - Code à éxecuter à la fin de la progression
+    */  
+    async function progressBarText(selector, whatNext) {
+        // Élément dans lequel afficher la progressbar
+        const element = document.querySelector(selector);
+
+        // progression
+        let progression = 0;
+
+        // progression max
+        const progress_max = 15;
+
+        // Fonction qui affiche la barre de progression selon sa progression
+        async function progressText() {
+            // Affiche la barre de progression
+            element.textContent = "> [" + "█".repeat(progression) + "░".repeat(progress_max - progression) + "] " + parseInt(((progression / progress_max) * 100), 10) + "%"
+
+            progression++;
+
+            clearInterval(timer);
+
+            // Temps aléatoire pour une barre de progression plus réaliste
+            timer = setInterval(progressText, debug ? 20 : getRandomInt(450));
+
+            // Si la progressbar est à 100%
+            if (progression > progress_max) {
+                clearInterval(timer);
+
+                // prochain évènement
+                await delay(1000);
+                whatNext();
+            }
+        }
+
+        // Timer gérant l'avancement de la barre de progression
+        timer = setInterval(progressText, debug ? 100 : 100);
+    }
+
+    /** 
+    * Affiche un curseur qui apparait et disparait x fois
+    * @param {str} selector - L'élément dans lequel écrire le curseur
+    * @param {str} cursor - Le curseur
+    * @param {event} whatNext - Code à éxecuter à la fin de l'anim
+    * @param {int} count_total - Combien de fois afficher le clignotement du curseur 
+    */  
+    async function typeCursorForMs(selector, cursor, whatNext, count_total = 5) {
+        // Élément dans lequel afficher le curseur
+        const element = document.querySelector(selector);
+
+        // Nombre de fois que le curseur s'est affiché 
+        let counter = 0;
+
+        // Affiche/Enlève le curseur
+        async function cursorAppear() {
+            element.textContent = counter % 2 == 0 ? "⠀" : cursor;
+            counter++;
+
+            if (counter > count_total) {
+                clearInterval(timer);
+
+                // prochain évènement
+                whatNext();
+            }
+        }
+
+        const timer = setInterval(cursorAppear, debug ? 250 : 680);
+    }
+
+    /** 
+    * Affiche un élément avec une animation d'opacité 
+    * @param {str} idElement - L'id de l'élément à afficher
+    */  
+    function opacityAnim(idElement) {
+        var element = document.getElementById(idElement);
+        var opacite = 0;
+        element.style.opacity = opacite;
+
+        // Timer qui incrémente l'opacité de l'élément
+        var intervalId = setInterval(function () {
+            if (opacite >= 1) {
+                clearInterval(intervalId);
+            } else {
+                opacite += 0.1;
+                element.style.opacity = opacite;
+            }
+        }, 50);
+    }
+
+    /** 
+    * Vérifie le contenue d'une zone de saisie
+    * @param {str} name - Le nom de la zone de saisie
+    * @param {str} correct_answer - Contenu attendu 
+    */    
+    function check_input(name, correct_answer) {
+        return document.getElementsByName(name)[0].value.trim().replace(" ", "").toLowerCase() == correct_answer.toLowerCase();
+    }
+
+    // Réponse du code à compléter
+    answers = ["-53", "in", "False"];
+    answers_bool = [false, false, false];
+
+    /** 
+    * Trigger: Une zone de saisie à vue son contenue changé
+    * Vérifie les réponses du code à compléter
+    */    
+    function input_text_changed(input_name) {
+
+        // Vérifie toutes les réponses
+        for(let i =0; i < answers.length; i++)
+        {
+            answers_bool[i] =  check_input(i.toString(), answers[i]);
+        }
+
+        // si bonne réponse
+        if (answers_bool.every(v => v === true)) {
+            // anim code disparait
+            eraseText("#code_text", () => {
+                // curseur
+                typeCursorForMs("#code_text", ">", () => {
+                    // épreuve terminée
+                    typeText("#code_text", " Code fonctionnel. Sortie du terminal code : 0.", () => {
+                        window.pywebview.api.terminal_completed();
+                    }, true);
+                }, 3);
+            });
+        }
+
+
+
+    }
+</script>
+
+<body>
+
+
+    <!-- code. 
+        @ = zone de texte. Ne pas oublié de compter 5 espaces (width de l'input) afin d'avoir un contour parfait
+        Les réponses sont à mettre dans le js, dans l'ordre des @. (recherchez la variable 'answers')      
+     -->
+    <p style="visibility: collapse; display: none;" id="code1_text">
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Traceback (most recent call last):                                         │
+│   File "/server/download/s_down.py", line 4, in "module"                   │
+│     download_code('check_door')                                            │
+│                                                                            │
+│ Connection Interrupted: le serveur n'a pas eu le temps de traiter votre    │
+│ requête complètement.                                                      │
+│                                                                            │
+│ Message: Il semblerait que vous devriez compléter le code vous même. La    │
+│ porte se trouve aux coordonnées suivantes : X:16 Y:-53                     │
+│                                                                            │
+│ def check_door():                                                          │
+│     inventory = ["trophee", "clé", "lampe"]                                │
+│     is_door_opened = map.get_data_from_coordinate(16, @, "is_opened")│
+│                                                                            │
+│     if "clé" @ inventory and is_door_opened == False:                │
+│         open_door()                                                        │
+│     elif is_door_opened == @:                                        │
+│         pass                                                               │
+│     else:                                                                  │
+│         message.show("Vous devez avoir la clé.")                           │
+└────────────────────────────────────────────────────────────────────────────┘   
+    </p>
+
+    <div id="computer_screen_py" style="visibility: visible;">
+        <p id="recupServText" style="color: green; font-size: 24px; text-align: left; margin:5px"></p>
+        <p id="servProgressText" style="color: green; font-size: 24px; text-align: left; margin:5px"></p>
+
+        <p id="code_text"
+            style="color: green; font-size: 26px; text-align: left;white-space: pre; line-height: 30px; margin:5px"></p>
+
+        <script>
+            opacityAnim("recupServText");
+
+            // Affichage du curseur
+            typeCursorForMs("#recupServText", ">", () => {
+                // Affichage du texte
+                typeText("#recupServText", " Récupération du code du serveur", () => {
+                    // Affichage du curseur
+                    typeCursorForMs("#servProgressText", ">", () => {
+                        // Affichage d'une barre de progression
+                        progressBarText("#servProgressText", () => {
+                            // Affiche du curseur
+                            typeCursorForMs("#code_text", ">", () => {
+                                // Affichage du code qui se trouve dans la balise <p> d'id "code1_text"
+                                code = document.getElementById("code1_text").innerHTML;
+                                typeText("#code_text", code, () => {
+                                }, false, true);
+                            }, 3);
+                        });
+                    });
+                }, false);
+            });
+            
+        </script>
+
+    </div>
+
+
+</body>
+
+</html>

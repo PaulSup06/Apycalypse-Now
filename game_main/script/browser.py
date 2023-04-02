@@ -57,5 +57,13 @@ class Browser:
         # épreuve réussie 
         pass
 
+    def plau_key_sound(self):
+        # joue son clavier
+        pass
+
+    def connexion_reussie(self):
+        # terminal 1 : réussie
+        pass
+
 # appel de "pythonFunction" dans JS
 # window.pywebview.api.pythonFunction("arg");
