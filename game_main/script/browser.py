@@ -53,6 +53,9 @@ class Browser:
     def close_window(self):
         self.window.destroy()
 
+    def terminal_completed(self):
+        # épreuve réussie 
+        pass
 
 # appel de "pythonFunction" dans JS
 # window.pywebview.api.pythonFunction("arg");

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +9,54 @@
 </head>
 
 <style>
-    h1 { font-family: Consolas, monaco, monospace; font-size: 23px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } h3 { font-family: Consolas, monaco, monospace; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 700; line-height: 23px; } p { font-family: Consolas, monaco, monospace; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } blockquote { font-family: Consolas, monaco, monospace; font-size: 17px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; } pre { font-family: Consolas, monaco, monospace; font-size: 11px; font-style: normal; font-variant: normal; font-weight: 400; line-height: 23px; }
+    h1 {
+        font-family: Consolas, monaco, monospace;
+        font-size: 23px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
 
-    progress::-webkit-progress-value { background: darkgreen; }
+    h3 {
+        font-family: Consolas, monaco, monospace;
+        font-size: 17px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 700;
+        line-height: 23px;
+    }
+
+    p {
+        font-family: Consolas, monaco, monospace;
+        font-size: 14px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
+
+    blockquote {
+        font-family: Consolas, monaco, monospace;
+        font-size: 17px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
+
+    pre {
+        font-family: Consolas, monaco, monospace;
+        font-size: 11px;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 23px;
+    }
+
+    progress::-webkit-progress-value {
+        background: darkgreen;
+    }
 
 
     #computer_screen {
@@ -29,8 +75,9 @@
         height: 85vh;
     }
 
-    input[type="text"], input[type="password"] {
-        background-color : black; 
+    input[type="text"],
+    input[type="password"] {
+        background-color: black;
         border: 1px solid white;
         color: green;
         padding-left: 10px;
@@ -40,25 +87,26 @@
     }
 
     input[type="button"] {
-        background-color : green; 
+        background-color: green;
         border: 3px solid darkgreen;
         color: lightgreen;
         padding-left: 10px;
         font-size: 20px;
-        cursor:pointer;
+        cursor: pointer;
 
         font-family: Consolas;
 
     }
 
-    .centered{
-        display: block; margin: 0 auto;
+    .centered {
+        display: block;
+        margin: 0 auto;
         text-align: center;
     }
 
     html {
-    overflow-y: hidden;
-    font-family: Consolas;
+        overflow-y: hidden;
+        font-family: Consolas;
     }
 
     body {
@@ -72,24 +120,24 @@
         0% {
             background-position: 0 0;
         }
+
         50% {
             background-position: 0 -250%;
         }
+
         100% {
             background-position: 0 0;
         }
     }
 
-    .texte{
+    .texte {
         font-size: 50px;
     }
 
-    .title{
+    .title {
         font-size: 50px;
         font-style: normal;
     }
-
-
 </style>
 
 <script src="..\web\node_modules\howler\dist\howler.js"></script>
@@ -97,10 +145,10 @@
 
 <script>
 
-    let debug = true;
+    let debug = false;
 
 
-    function delay(milliseconds){
+    function delay(milliseconds) {
         return new Promise(resolve => {
             setTimeout(resolve, debug ? 10 : milliseconds);
         });
@@ -108,40 +156,68 @@
 
 
     async function typeText(selector, text, whatNext, waitSecondBeforeWhatNext = true, fast_writing = false) {
-    const element = document.querySelector(selector);
-    let index = 0;
-    const sound = new Howl({
-        src: ['assets/key1_press.wav']
-    });
+        const element = document.querySelector(selector);
+        let index = 0;
+        let index_input = 0;
+        const sound = new Howl({
+            src: ['assets/key1_press.wav']
+        });
 
-    async function writeText() {
-        let currentChar = text.substring(index, index + 1);
+        async function writeText() {
 
-        element.innerHTML += currentChar.replace(/\n/g, "<br>");
+            let currentChar = text.substring(index, index + 1);
 
-        if (!fast_writing) {
-            sound.play();
-        }
-
-        index++;
-        if (index > text.length - 1) {
-            clearInterval(timer);
-
-            // prochain évènement
-            if (waitSecondBeforeWhatNext) {
-                await delay(650);
+            if (currentChar == "@") {
+                // place un input texte
+                element.innerHTML += "<input type='text' onkeyup='input_text_changed(this.name)' class='input_code' name='" + index_input.toString() + "' style='height: 30px; width: 86px; background-color: black; border: 1px solid green; color: green; font-size: 26px; font-family: Consolas;' />";
+                index_input++;
             }
-            whatNext();
+            else {
+                element.innerHTML += currentChar.replace(/\n/g, "<br>");
+            }
+
+            if (!fast_writing) {
+                sound.play();
+            }
+
+            index++;
+            if (index > text.length - 1) {
+                clearInterval(timer);
+
+                // prochain évènement
+                if (waitSecondBeforeWhatNext) {
+                    await delay(650);
+                }
+                whatNext();
+            }
         }
+
+        const timer = setInterval(writeText, debug ? 1 : (fast_writing ? 5 : 100));
     }
 
-    const timer = setInterval(writeText, debug || fast_writing ? 5 : 100);
-}
+    async function eraseText(selector, whatNext) {
+        const element = document.querySelector(selector);
+
+        async function eraseText() {
+            element.innerHTML = element.innerHTML.substring(0, element.innerHTML.length - 1)
+
+            if (element.innerHTML.length <= 4) {
+                clearInterval(timer);
+
+                // prochain évènement
+                await delay(650);
+
+                whatNext();
+            }
+        }
+
+        const timer = setInterval(eraseText, 5);
+    }
 
 
     async function progressBarText(selector, whatNext) {
-    const element = document.querySelector(selector);
-    let index = 0;
+        const element = document.querySelector(selector);
+        let index = 0;
 
         async function progressText() {
             element.textContent = "> [" + "█".repeat(index) + "░".repeat(15 - index) + "] " + parseInt(((index / 15) * 100), 10) + "%"
@@ -149,7 +225,7 @@
             index++;
 
             clearInterval(timer);
-            timer =  setInterval(progressText, debug ? 150 : getRandomInt(450));
+            timer = setInterval(progressText, debug ? 20 : getRandomInt(450));
 
 
             if (index > 15) {
@@ -181,25 +257,25 @@
 
         const timer = setInterval(cursorAppear, debug ? 250 : 680);
     }
-    
+
 
     function opacityAnim(idElement) {
         var element = document.getElementById(idElement);
         var opacite = 0;
         element.style.opacity = opacite;
 
-        var intervalId = setInterval(function() {
+        var intervalId = setInterval(function () {
             if (opacite >= 1) {
-            clearInterval(intervalId);
+                clearInterval(intervalId);
             } else {
-            opacite += 0.1;
-            element.style.opacity = opacite;
+                opacite += 0.1;
+                element.style.opacity = opacite;
             }
         }, 50);
     }
 
     function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+        return Math.floor(Math.random() * max);
     }
 
 
@@ -212,11 +288,11 @@
         function progressPlus() {
 
             element.value = index;
-            index+=getRandomInt(50) / 100;
+            index += getRandomInt(50) / 100;
 
 
             clearInterval(timer);
-            timer =  setInterval(progressPlus, debug ? 5 : getRandomInt(35));
+            timer = setInterval(progressPlus, debug ? 5 : getRandomInt(35));
 
 
             if (index > 100) {
@@ -228,14 +304,14 @@
                 whatNext();
             }
         }
-        timer =  setInterval(progressPlus, 20);
+        timer = setInterval(progressPlus, 20);
     }
 
-    function button_login_clicked(){
+    function button_login_clicked() {
         let username = document.getElementById('txt_username').value;
         let password = document.getElementById('txt_password').value;
 
-        if(username == "admin" && password == "password"){
+        if (username == "admin" && password == "password") {
             document.getElementById("computer_screen_py").style.visibility = "visible";
             document.getElementById("progressBarConnexionServeur").style.visibility = "collapse";
             document.getElementById("computer_screen").style.visibility = "collapse";
@@ -243,78 +319,113 @@
             login();
         }
     }
+
+    firstInputCorrect = false;
+    secondInputCorrect = false;
+    thirdInputCorrect = false;
+
+    function check_input(name, correct_answer) {
+        return document.getElementsByName(name)[0].value.trim().replace(" ", "").toLowerCase() == correct_answer.toLowerCase();
+    }
+
+    function input_text_changed(input_name) {
+        // 0 doit contenir = "-53"
+        // 1 doit contenir = "in"
+        // 2 doit contenir = "False"
+        firstInputCorrect = check_input("0", "-53");
+        secondInputCorrect = check_input("1", "in");
+        thirdInputCorrect = check_input("2", "False");
+
+        // si bonne réponse
+        if (firstInputCorrect && secondInputCorrect && thirdInputCorrect) {
+            // anim code disparait
+            eraseText("#code_delimiter_top", () => {
+                typeCursorForMs("#code_delimiter_top", ">", () => {
+                    typeText("#code_delimiter_top", " Épreuve réussie. Sortie du terminal code : 0.", () => {
+                        window.pywebview.api.terminal_completed();
+                    }, true);
+                }, 3);
+
+            });
+        }
+
+
+
+    }
 </script>
+
 <body>
 
-    
+
     <!-- code 1 -->
     <p style="visibility: collapse; display: none;" id="code1_text">
-┌───────────────────────────────────────────────────────────────────────────┐
-│ def check_door():                                                         │
-│     inventory = ["clé", "lampe"]                                          │
-│     is_door_opened = map.get_data_from_coordinate(16, _____, "is_opened") │
-│                                                                           │
-│     if "clé" _____ inventory and is_door_opened == False:                 │
-│         open_door()                                                       │
-│     elif is_door_opened == ________:                                      │
-│         pass                                                              │
-│     else:                                                                 │
-│         message.show("Vous devez avoir la clé.")                          │
-│                                                                           │
-│ Traceback (most recent call last):                                        │
-│   File "/server/download/s_down.py", line 4, in "module"                  │
-│     download_code('check_door')                                           │
-│                                                                           │
-│ Connection Interrupted: le serveur n'a pas eu le temps de traiter votre   │
-│ requête complètement.                                                     │
-│                                                                           │
-│ Message: Il semblerait que vous devriez compléter ce code. La porte se    │
-│ trouve aux coordonnées suivantes : X:16 Y:-53                             │
-└───────────────────────────────────────────────────────────────────────────┘       
+┌────────────────────────────────────────────────────────────────────────────┐
+│ Traceback (most recent call last):                                         │
+│   File "/server/download/s_down.py", line 4, in "module"                   │
+│     download_code('check_door')                                            │
+│                                                                            │
+│ Connection Interrupted: le serveur n'a pas eu le temps de traiter votre    │
+│ requête complètement.                                                      │
+│                                                                            │
+│ Message: Il semblerait que vous devriez compléter le code vous même. La    │
+│ porte se trouve aux coordonnées suivantes : X:16 Y:-53                     │
+│                                                                            │
+│ def check_door():                                                          │
+│     inventory = ["trophee", "clé", "lampe"]                                │
+│     is_door_opened = map.get_data_from_coordinate(16, @, "is_opened")│
+│                                                                            │
+│     if "clé" @ inventory and is_door_opened == False:                │
+│         open_door()                                                        │
+│     elif is_door_opened == @:                                        │
+│         pass                                                               │
+│     else:                                                                  │
+│         message.show("Vous devez avoir la clé.")                           │
+└────────────────────────────────────────────────────────────────────────────┘   
     </p>
 
 
 
 
     <div id="computer_screen">
-    
+
         <p id="title" style="color: green; font-size: 3em; text-align: center;"></p>
-        <progress id="progressBarConnexionServeur" class="centered" value="0" max="100" style="height: 50px; width: 500px; background-color: black; visibility: hidden;">
-        
+        <progress id="progressBarConnexionServeur" class="centered" value="0" max="100"
+            style="height: 50px; width: 500px; background-color: black; visibility: hidden;">
+
         </progress>
-        
-        <br/>
-        <br/>
-        <br/>
+
+        <br />
+        <br />
+        <br />
 
         <p id="log_in" style="color: green; font-size: 2em; text-align: center;"></p>
 
-        <form >
+        <form>
             <input type="text" id="txt_username" class="centered" name="username" placeholder="username"
                 style="height: 35px; width: 300px; opacity: 0;" value="admin" />
-                <br/>
+            <br />
             <input type="password" id="txt_password" class="centered" name="password" placeholder="password"
                 style="height: 35px; width: 300px; opacity: 0;" value="password" />
-                <br/>
-            <input type="button" id="button_sendLogIn" class="centered" style="width: 150px; opacity: 0;" onclick="button_login_clicked()" value="login"/>
-        </form> 
+            <br />
+            <input type="button" id="button_sendLogIn" class="centered" style="width: 150px; opacity: 0;"
+                onclick="button_login_clicked()" value="login" />
+        </form>
 
         <script>
             opacityAnim("title");
-            
-            typeText("#title","Connexion au serveur", () => { 
-                document.getElementById("progressBarConnexionServeur").style.visibility = "visible"; 
+
+            typeText("#title", "Connexion au serveur", () => {
+                document.getElementById("progressBarConnexionServeur").style.visibility = "visible";
                 opacityAnim("progressBarConnexionServeur");
 
-                progressBarAnim("#progressBarConnexionServeur", () =>
-                {
+                progressBarAnim("#progressBarConnexionServeur", () => {
                     opacityAnim("log_in");
-                    typeText("#log_in","Identifiant nécessaire", () => {
+                    typeText("#log_in", "Identifiant nécessaire", () => {
                         opacityAnim("txt_username");
                         opacityAnim("txt_password");
                         opacityAnim("button_sendLogIn");
                     });
-                }) 
+                })
             });
         </script>
 
@@ -322,22 +433,23 @@
 
 
     <div id="computer_screen_py" style="visibility: collapse;">
-        <p id="recupServ" style="color: green; font-size: 26px; text-align: left;"></p>
-        <p id="servProgress" style="color: green; font-size: 26px; text-align: left;"></p>
+        <p id="recupServ" style="color: green; font-size: 24px; text-align: left;"></p>
+        <p id="servProgress" style="color: green; font-size: 24px; text-align: left;"></p>
 
-        <p id="code_delimiter_top" style="color: green; font-size: 26px; text-align: left;white-space: pre; line-height: 30px;"></p>
+        <p id="code_delimiter_top"
+            style="color: green; font-size: 26px; text-align: left;white-space: pre; line-height: 30px;"></p>
 
         <script>
-            function login(){
+            function login() {
                 opacityAnim("recupServ");
 
-                typeCursorForMs("#recupServ", ">", () =>{
-                    typeText("#recupServ"," Récupération du code du serveur", () => {
+                typeCursorForMs("#recupServ", ">", () => {
+                    typeText("#recupServ", " Récupération du code du serveur", () => {
 
-                        typeCursorForMs("#servProgress", ">", () =>{
+                        typeCursorForMs("#servProgress", ">", () => {
                             progressBarText("#servProgress", () => {
 
-                                typeCursorForMs("#code_delimiter_top", ">", () =>{
+                                typeCursorForMs("#code_delimiter_top", ">", () => {
 
                                     code = document.getElementById("code1_text").innerHTML;
                                     typeText("#code_delimiter_top", code, () => {
@@ -345,10 +457,10 @@
                                     }, false, true);
                                 }, 3);
 
-                             });
+                            });
                         });
 
-                     }, false);
+                    }, false);
                 });
             }
         </script>
@@ -357,4 +469,5 @@
 
 
 </body>
+
 </html>
