@@ -209,7 +209,11 @@
             // Joue le son uniquement si on est pas en écriture accélérer 
             if (!fast_writing) {
                 //sound.play();
-                //window.api.play_key_sound();
+                try{
+                    pywebview.api.play_key_sound();
+                }catch(error){
+                    // problème avec son
+                }
             }
 
             index++;
@@ -344,6 +348,14 @@
             document.getElementById('txt_password').style.borderColor = "red";
         }
     }
+
+    /** 
+     * Trigger : bouton power
+     * Ferme le terminal
+     * */
+    function close_terminal(){
+        pywebview.api.close_window();
+    }
 </script>
 
 <body>
@@ -409,7 +421,7 @@
 
                 typeCursorForMs("#connexion_reussie", ">", () => {
                     typeText("#connexion_reussie", " Connexion réussie.", () => {
-                        window.pywebview.api.completed(s);
+                        pywebview.api.completed();
                     }, false);
                 });
             }
@@ -417,7 +429,8 @@
 
     </div>
 
-
+    <img src="assets/power_button.png" style="position: absolute; right: 20px; bottom: 20px; width: 50px; cursor:pointer;"
+        onmousedown="close_terminal()"/>
 </body>
 
 </html>

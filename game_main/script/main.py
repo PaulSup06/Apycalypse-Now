@@ -59,28 +59,30 @@ class Game:
         self.menu_state = 'main'
 
         #gestion des thèmes (à déplacer ??)
-        main_theme = pygame_menu.themes.THEME_ORANGE.copy()
-        main_theme.background_color = self.menu_pg_pymenu
-        main_theme.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_SIMPLE
-        main_theme.title = False
-        main_theme.widget_font_size  = 50
-        main_theme.widget_margin = (20,20)
-        theme2 = main_theme.copy()
-        theme2.title = True
-        theme2.widget_font_size  = 30
-        theme2.widget_font_color = "white"
-        theme2.widget_margin =  (5,5)
-        theme2.background_color = (245,175,200,100)
-        theme2.widget_alignment = pygame_menu.locals.ALIGN_LEFT
-        theme3 = pygame_menu.themes.THEME_ORANGE.copy()
+        theme_main_screen = pygame_menu.themes.THEME_ORANGE.copy()
+        theme_main_screen.background_color = self.menu_pg_pymenu
+        theme_main_screen.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_ADAPTIVE
+        theme_main_screen.title = False
+        theme_main_screen.widget_font_size  = 50
+        theme_main_screen.widget_margin = (20,20)
 
-        self.main_menu = pygame_menu.menu.Menu(GAME_TITLE, WIDTH, HEIGHT, True, theme=main_theme)
-        self.settings_menu = pygame_menu.menu.Menu("Paramètres",WIDTH,HEIGHT,True, columns=4, rows=8, theme = theme2)
-        self.saves_menu = pygame_menu.menu.Menu("Sauvegardes",WIDTH,HEIGHT,True, theme=theme3)
-        self.escape_menu = pygame_menu.menu.Menu("Jeu en pause",WIDTH,HEIGHT,True,theme=main_theme)
+        theme_settings = pygame_menu.themes.THEME_DARK.copy()
+        theme_settings.title = True
+        theme_settings.widget_font_size  = 30
+        theme_settings.widget_font_color = "white"
+        theme_settings.widget_margin =  (15,15)
+        theme_settings.background_color = (54,79,89,255)
+        theme_settings.widget_alignment = pygame_menu.locals.ALIGN_CENTER
+        theme_sauvegarde = pygame_menu.themes.THEME_ORANGE.copy()
+
+        self.main_menu = pygame_menu.menu.Menu(GAME_TITLE, WIDTH, HEIGHT, True, theme=theme_main_screen)
+        self.settings_menu = pygame_menu.menu.Menu("Paramètres",WIDTH,HEIGHT,True, columns=4, rows=8, theme = theme_settings)
+        self.saves_menu = pygame_menu.menu.Menu("Sauvegardes",WIDTH,HEIGHT,True, theme=theme_sauvegarde)
+        self.escape_menu = pygame_menu.menu.Menu("Jeu en pause",WIDTH,HEIGHT,True,theme=theme_main_screen)
         
         #menu principal
-        self.main_menu.add.button("Nouvelle partie",self.create_new_game)
+        #TODO: trouver comment changer la couleur de selection des boutons
+        self.main_menu.add.button("Nouvelle partie", self.create_new_game)
         self.main_menu.add.button("Sauvegardes",self.saves_menu)
         self.main_menu.add.button("Paramètres",self.settings_menu)
         self.main_menu.add.button("Quitter", self.quit_game)

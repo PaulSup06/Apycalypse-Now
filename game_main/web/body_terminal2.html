@@ -209,7 +209,11 @@
             // Joue le son uniquement si on est pas en écriture accélérer 
             if (!fast_writing) {
                 //sound.play();
-                //window.api.play_key_sound();
+                try{
+                    pywebview.api.play_key_sound();
+                }catch(error){
+                    // problème avec son
+                }
             }
 
             index++;
@@ -384,14 +388,19 @@
                 typeCursorForMs("#code_text", ">", () => {
                     // épreuve terminée
                     typeText("#code_text", " Code fonctionnel. Sortie du terminal code : 0.", () => {
-                        window.pywebview.api.terminal_completed();
+                        pywebview.api.completed();
                     }, true);
                 }, 3);
             });
         }
+    }
 
-
-
+    /** 
+     * Trigger : bouton power
+     * Ferme le terminal
+     * */
+    function close_terminal(){
+        pywebview.api.close_window();
     }
 </script>
 
@@ -461,7 +470,8 @@
 
     </div>
 
-
+    <img src="assets/power_button.png" style="position: absolute; right: 20px; bottom: 20px; width: 50px; cursor:pointer;"
+        onmousedown="close_terminal()"/>
 </body>
 
 </html>

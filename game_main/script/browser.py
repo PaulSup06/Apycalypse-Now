@@ -41,6 +41,7 @@ class Terminal(Entity):
 
 class Browser:
     def __init__(self, html, title) -> None:
+        self.api = Api()
         self.html = html
         self.title = title
         self.window = None
@@ -48,23 +49,32 @@ class Browser:
 
     def show_browser(self):
         print(self.html)
-        self.window = webview.create_window(self.title, html=self.html, resizable=False, fullscreen=True, js_api=self)
-        
+        self.window = webview.create_window(self.title, html=self.html, resizable=False, fullscreen=True, js_api=self.api)
+        self.api.set_window(self.window)
+
         webview.start()       
     
+
+class Api:
+
+    def __init__(self):
+        self._window = None
+
+    def set_window(self, window):
+        self._window = window
+
     def close_window(self):
-        self.window.destroy()
+        self.succeded = False
+        self._window.destroy()
 
     def completed(self):
         self.succeded = True
-        self.window.destroy()
+        self._window.destroy()
 
     def play_key_sound(self):
         # joue son clavier
-        pass
-
-    def connexion_reussie(self):
-        # terminal 1 : réussie
+        pygame.mixer.music.load(os.path.join(music_folder, "misc/key1_press.wav"))
+        pygame.mixer.music.play()
         pass
 
 # appel de "pythonFunction" dans JS
