@@ -141,7 +141,7 @@ def load_html(id):
     Returns:
         str: html décodé du fichier
     """
-    with open(f"..\\web\\terminal_{id}.html") as f:
+    with open(f"..\\web\\body_terminal{id}.html") as f:
         return f.read()
 #fonts
 pygame.font.init()

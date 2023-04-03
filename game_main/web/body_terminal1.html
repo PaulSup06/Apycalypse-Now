@@ -409,7 +409,7 @@
 
                 typeCursorForMs("#connexion_reussie", ">", () => {
                     typeText("#connexion_reussie", " Connexion réussie.", () => {
-                        window.api.connexion_reussie();
+                        window.pywebview.api.completed(s);
                     }, false);
                 });
             }

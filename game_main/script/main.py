@@ -158,9 +158,14 @@ class Game:
                                             self.change_level(fin_dialogue.get("change_level"))
                                         if fin_dialogue.get("npc_update"):
                                             npc.change_state(*fin_dialogue.get("npc_update"))
+                                            
                             for terminal in self.level.terminals:
                                 if self.player.check_distance_to(terminal.surface.midbottom,interact_distance) and not terminal.locked and not terminal.using:
                                     renvoi_terminal = terminal.interact()
+                                    if renvoi_terminal[0]:
+                                        for door in self.level.doors:
+                                            if door.id == renvoi_terminal[1]:
+                                                door.unlock()
 
                         elif event.key == int(self.settings["k_escape"]):
                             self.game_state = "menu"
