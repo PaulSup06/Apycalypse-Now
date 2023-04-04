@@ -51,11 +51,11 @@
 ### game folder
 
 ## Modules python :
--pygame (2.3.0 ou +)
+-pygame (2.3.0 ou +) installée depuis la version site python.org, car nous avons eu des problèmes avec la version Microsoft Store
 
--pywebview (4.0.2)
+-pywebview (4.0.2 ou +)
 !!! SPECIFIQUE REQUIS:
-    - .NET Framework 4.6.2
+    - .NET Framework 4.6.2 ou +
     - Edge Runtime installed (https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
     - wheel library for python (before install)
 
