@@ -10,14 +10,14 @@
     - [ ] inventaire ? (optionnel)
 - [ ] UI:
     - [ ] vie/armure/items
-    - [ ] Menu de dialogues
+    - [x] Menu de dialogues
 - [ ] Textures :
     - [ ] Joueur (animations)
     - [x] Monde 
     - [ ] Mobs
     - [ ] Armes (optionnel textures sur le joueur)
 - [ ] Entités (mobs et interactions joueur):
-    - [ ] Mobs agressifs de base (déplacements en ligne)
+    - [x] Mobs agressifs de base (déplacements en ligne)
     - [ ] Mobs agressifs intelligents (pathfinding)
     - [ ] Mobs tir à distance ?
     - [ ] Autres personnages interactifs (menu ? + dialogues + cinématiques ? + quêtes ?)
@@ -25,7 +25,7 @@
     - [x] décodage de pytmx et génération map
     - [x] ajout "hauteur" d'objet pour l'affichage
     - [ ] ajout items/mobs dynamiquement (modification de la map ?) (optionnel)
-- [ ] Ajout énigmes via pages Internet
+- [x] Ajout énigmes via pages Internet
 - [x] Sauvegarde de la position du joueur/son monde actuel (à la fermeture du jeu !!! à ajouter)
     - [x] décodage JSON et choix de la sauvegarde utilisée
 - [x] IMPORTANT Optimiser le code/jeu pour maintenir les 60 fps au mieux sur toutes les machines (ex : pc du lycée), sinon passer à 30fps
@@ -43,3 +43,21 @@
   ### MUSIQUE :
     ##### [Dystopian pack (banger absolu allez écouter)](https://timbeek.itch.io/dystopian)
     ##### [Synthwave Pink Bloom pack (idem)](https://davidkbd.itch.io/pink-bloom-synthwave-music-pack)
+
+
+# REQUIS POUR L'INSTALLATION
+### Python 3.8 ou plus récent
+### Windows 10/11
+### game folder
+
+## Modules python :
+-pygame (2.3.0 ou +)
+
+-pywebview (4.0.2)
+!!! SPECIFIQUE REQUIS:
+    - .NET Framework 4.6.2
+    - Edge Runtime installed (https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+    - wheel library for python (before install)
+
+-pygame_menu (4.4.0 ou +)
+-pytmx (3.31 ou +)

@@ -64,7 +64,6 @@ class Api:
         self._window = window
 
     def close_window(self):
-        self.succeded = False
         self._window.destroy()
 
     def completed(self):
