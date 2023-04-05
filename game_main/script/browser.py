@@ -7,7 +7,7 @@ class Terminal(Entity):
     def __init__(self, x, y, groupes, id=-1, locked=False):
         self.image = load_terminal_img()
         super().__init__(x, y, self.image, groupes)
-        self.id = id
+        self.id = int(str(id).strip())
         self.html = load_html(self.id) #TODO à compléter/activer lors de l'implémentation des sites
         self.surface = pygame.Rect(self.x, self.y+CASE_SIZE,CASE_SIZE*2,32)
         self.locked = locked
@@ -52,13 +52,16 @@ class Browser:
         self.window = webview.create_window(self.title, html=self.html, resizable=False, fullscreen=True, js_api=self.api)
         self.api.set_window(self.window)
 
-        webview.start()       
+        webview.start()  
+        if self.api.succeded:
+            self.succeded = True     
     
 
 class Api:
 
     def __init__(self):
         self._window = None
+        self.succeded =False
 
     def set_window(self, window):
         self._window = window

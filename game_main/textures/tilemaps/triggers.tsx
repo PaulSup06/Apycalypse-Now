@@ -20,4 +20,12 @@
  <tile id="25" class="music6"/>
  <tile id="26" class="music7"/>
  <tile id="27" class="music8"/>
+ <tile id="50" class="terminal: 1:0"/>
+ <tile id="51" class="terminal: 2:0"/>
+ <tile id="60" class="terminal: 1:1"/>
+ <tile id="61" class="terminal: 2:1"/>
+ <tile id="70" class="door: 1:0"/>
+ <tile id="71" class="door: 2:0"/>
+ <tile id="80" class="door: 1:1"/>
+ <tile id="81" class="door: 2:0"/>
 </tileset>

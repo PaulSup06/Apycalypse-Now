@@ -3,7 +3,7 @@ from entity import *
 from debug import *
 
 class Player(Entity):
-    def __init__(self, x, y, groupes, collision_blocks, player_life, weapon=None):
+    def __init__(self, x, y, groupes, collision_blocks, player_life, max_life, weapon=None):
         """Objet Player : objet principal controlable par le joueur
 
         Args:
@@ -27,6 +27,7 @@ class Player(Entity):
 
         #variables de gameplay
         self.life = player_life
+        self.max_life = max_life
         self.attacking = False
         self.weapon = weapon
         self.attack_counter = 0
@@ -126,11 +127,3 @@ class Player(Entity):
             for enemy in enemies:
                 if hit_rect.colliderect(enemy.rect):
                     enemy.hit(damages)
-
-#    def draw(self, surface):
-#        """Méthode : affiche le joueur à l'écran et gère les animations
-#        """
-#        #TODO ajouter animations
-#        self.image = player_img
-#        surface.blit(self.image, (self.x,self.y))
-        

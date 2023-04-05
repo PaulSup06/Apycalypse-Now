@@ -53,7 +53,7 @@ def get_actual_settings():
 playerspeed = 5
 hitbox_offset = 15 #marge pour les collisions du joueur
 walk_anim_duration = 12 #nombre de frames que dure 1 image de l'animation de marche
-default_player_life = 5
+default_player_life = 6
 default_player_attack_cooldown = 20 #cooldown par défaut quand main vide
 default_player_attack_range = 32 #nombre de pixels du range de l'attaque avec les mains vides
 default_player_damages = 2

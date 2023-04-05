@@ -83,7 +83,7 @@ class Door(Entity):
         super().__init__(x, y, self.image, groupes)
         self.surface = pygame.Rect(self.x, self.y+CASE_SIZE,CASE_SIZE*2,32)
         self.basey = self.surface.bottom
-        self.id = id
+        self.id = int(id)
         self.locked = locked
         self.counter = 0
         
@@ -110,4 +110,4 @@ class Door(Entity):
             
             
     def unlock(self):
-        self.unlocked = False
+        self.locked = False

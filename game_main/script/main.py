@@ -49,9 +49,14 @@ class Game:
         image_path="..\\textures\\ui\\menu_bg.png",
         drawing_mode=pygame_menu.baseimage.IMAGE_MODE_FILL,
         )
+        
+        #initialisation des variables se conservant d'un niveau à un autre
         self.settings = get_actual_settings() #décodage du fichier CSV de paramètres du jeu
         self.npc_states = {}
+        self.current_life = self.max_life = default_player_life
         self.changin_world = False
+        self.player_weapon_name = None
+        
         self.generate_menus()
 
     def generate_menus(self):
@@ -216,7 +221,7 @@ class Game:
                     damages = enemy.move(self.player)
                     if damages:
                         self.player.life -= damages
-                        print(self.player.life)
+
                 self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx, self.settings)
                 for door in self.level.doors:
                     door.update(self.player)
@@ -241,7 +246,7 @@ class Game:
             #UI
             #========================================================================================
                 
-                ui_return = self.ui.show_ui()
+                ui_return = self.ui.show_ui(self.player)
                 if ui_return['npc_update']:
                     for npc in self.level.npcs:
                         if npc.name == self.ui.current_npc:
@@ -286,6 +291,7 @@ class Game:
         pos = {"x":self.player.x,
                "y":self.player.y,
                "life":self.player.life,
+               "max_life":self.player.max_life,
                "level":self.level.world_id,
                "weapon":self.player.weapon,
                "inventory":self.inventaire.inventory,
@@ -310,12 +316,17 @@ class Game:
         #génération du monde
         self.game_state = "playing"
         self.main_menu.disable()
-        self.level = Level(self,params["level"],False)
+        
+        self.current_life = params["life"]
+        self.max_life = params["max_life"]
+        
+        self.level = Level(self, self.current_life,self.max_life, params["level"],False)
 
         self.npc_states = params["npcs"]
 
         self.player = Player(params["x"],params["y"],(self.level.visible_blocks),
-                             self.level.collision_blocks,params["life"],params["weapon"])  
+                             self.level.collision_blocks,params["life"], params["max_life"],params["weapon"])  
+        
         self.level.player = self.player
         self.inventaire = Inventaire(params["inventory"])
         self.ui.add_transition_open()
@@ -356,18 +367,22 @@ class Game:
         if not current_world:
             current_world = self.current_world
             
-        self.level = Level(self,current_world,)
+        self.level = Level(self, self.current_life,self.max_life ,current_world,True)
+        self.player = self.level.player
+        self.player.weapon = self.player_weapon_name
+        
+        if pos:
+            pos = eval(pos)
+            self.player.x = pos[0]
+            self.player.y = pos[1]
         if self.npc_states.get(current_world):
+            
             for npc in self.level.npcs:
                 npc_status = self.npc_states.get(current_world).get(npc.name)
                 if npc_status:
                     npc.change_state(*npc_status)
 
-        self.player = self.level.player
-        if pos:
-            pos = eval(pos)
-            self.player.x = pos[0]
-            self.player.y = pos[1]
+        
         self.ui.add_transition_open()
     
     def create_new_game(self):
@@ -379,6 +394,7 @@ class Game:
         #génération du monde
         self.current_world = 0
         self.generate_world(self.current_world)
+        self.current_life = self.max_life = default_player_life
             
     def change_level(self, level,pos=None):
         """Change le monde lors d'un changement de niveau + transition
@@ -389,8 +405,8 @@ class Game:
         if not self.changing_world:
             self.changing_world = True
             self.save_npc_states(self.current_world)
-            print(self.npc_states)
             self.current_world = level
+            self.current_life, self.max_life = self.player.life, self.player.max_life
             self.ui.add_transition_close(self.generate_world,level,pos)
 
     def reprendre_partie(self):

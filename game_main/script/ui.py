@@ -8,6 +8,11 @@ class UI:
         """
         #chargement des images et textes fixes 
         self.dialog_box = pygame.image.load("..\\textures\\ui\\dialog_box.png").convert_alpha()
+        self.hearts = [
+            pygame.transform.scale(pygame.image.load("..\\textures\\ui\\heart_full.png"),(32,32)),
+            pygame.transform.scale(pygame.image.load("..\\textures\\ui\\heart_half.png"),(32,32)),
+            pygame.transform.scale(pygame.image.load("..\\textures\\ui\\heart_empty.png"),(32,32)),
+        ]
         self.continue_indic = font2.render("[E] pour continuer...", 1,"white")
         self.screen = pygame.display.get_surface()
         self.current_dialog = None
@@ -79,7 +84,7 @@ class UI:
             self.choix = []
             self.nb_choix = 0    
 
-    def show_ui(self):
+    def show_ui(self, player):
 
         #initialisation des variables renvoyées
         npc_update= None
@@ -152,14 +157,23 @@ class UI:
             #=========================================================================================================================================================    
 
             
-        #gestion transitions
-        self.handle_transitions()
-
+    
         #affichage de la vie
+        life_surf = pygame.Surface(((player.max_life//2+player.max_life%2) * self.hearts[0].get_width(), self.hearts[0].get_height()),pygame.SRCALPHA)
+        for i in range(player.max_life//2+player.max_life%2):
+            if player.life//2 >= i+1:
+                life_surf.blit(self.hearts[0],(i*self.hearts[0].get_width(),0))
+            elif player.life - (i*2) == 1:
+                life_surf.blit(self.hearts[1],(i*self.hearts[0].get_width(),0))
+            else:
+                life_surf.blit(self.hearts[2],(i*self.hearts[0].get_width(),0))
+        
+        self.screen.blit(life_surf, (15, HEIGHT - life_surf.get_height() - 15))
         #affichage des items
         #affichage de l'inventaire
         # 
-         
+        #gestion transitions
+        self.handle_transitions()
         return{"npc_update":npc_update}
      
     def finish_dialog(self):

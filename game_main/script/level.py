@@ -13,7 +13,7 @@ import os
 import csv
 
 class Level:
-    def __init__(self, game, world=0,player_gen=True) -> None:
+    def __init__(self, game, player_life, player_max_life, world=0,player_gen=True) -> None:
         """Génération d'un niveau et affichage à l'écran
         Args:
             game (Game): objet Game principal pour accéder à certaines méthodes et fonctions
@@ -55,7 +55,7 @@ class Level:
                     if gid!=0:
                         tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
                         if tile_properties["class"] == "player" and player_gen:
-                            self.player = Player(x*CASE_SIZE,y*CASE_SIZE, self.visible_blocks, self.collision_blocks, default_player_life)
+                            self.player = Player(x*CASE_SIZE,y*CASE_SIZE, self.visible_blocks, self.collision_blocks, player_life, player_max_life)
                         elif tile_properties["class"][:3] == 'npc':
                             #NPC de test (Fairy)
                             Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][4:],'True', first_dialog="1")
@@ -63,10 +63,10 @@ class Level:
                             
                             Enemy(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.enemies],self.collision_blocks, self.enemy_imgs, "ligne_h",tile_properties["class"][6:])
                         
-                        elif tile_properties["id"] == 29:
-                            Door(x*CASE_SIZE,y*CASE_SIZE,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,False)
+                        elif tile_properties["class"][:4] == "door":
+                            Door(x*CASE_SIZE,y*CASE_SIZE,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,tile_properties["class"][5:7],tile_properties["class"][8]=="1")
                         elif tile_properties["class"][:8]=="terminal":
-                            Terminal(x*CASE_SIZE,y*CASE_SIZE,[self.visible_blocks,self.collision_blocks,self.terminals], 1,False)
+                            Terminal(x*CASE_SIZE,y*CASE_SIZE,[self.visible_blocks,self.collision_blocks,self.terminals], tile_properties["class"][9:11],tile_properties["class"][12]=="1")
 
             if layer.name == "ground props":
                 for x,y,gid in layer.iter_data():
