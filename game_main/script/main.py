@@ -129,7 +129,12 @@ class Game:
         self.escape_menu.add.button("Quitter sans sauvegarder",self.save_and_quit,(False))
         self.escape_menu.disable()
 
-    
+        #boutons de fin de partie
+        self.death_buttons = [
+        Button(WIDTH//2 - 200,HEIGHT//5*2 -50, 400, 100, font1, "Menu principal",self.to_main_menu,True),
+        Button(WIDTH//2 - 200,HEIGHT//5*3 -50, 400, 100, font1, "Continuer la partie",self.continue_game,True),
+        Button(WIDTH//2 - 200,HEIGHT//5*4 -50, 400, 100, font1, "Recommencer",self.retry,True),
+        ]
 
     def run(self):
         """Boucle de code principale
@@ -226,6 +231,8 @@ class Game:
                     damages = enemy.move(self.player)
                     if damages:
                         self.player.life -= damages
+                        if self.player.life<=0:
+                            self.game_state="death"
 
                 self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx, self.settings)
                 for door in self.level.doors:
@@ -273,7 +280,19 @@ class Game:
                     slider_vol = self.settings_menu.get_widget("volume_slider").get_value()
                     if self.settings["volume"] != slider_vol:
                         self.change_music_volume(slider_vol)
-                    
+            
+            elif self.game_state == "death":
+                self.screen.blit(self.menu_pg_pygame, (0,0))
+                game_over_surf = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
+                game_over_title = title_font.render("GAME OVER",1,"white")
+                game_over_surf.blit(game_over_title,((game_over_surf.get_width()-game_over_title.get_width())//2, 0))
+                game_over_text = font1.render("Oh non ! Vous avez été tué ! Vous aurez plus de chance la prochaine fois !",1,"white")
+                game_over_surf.blit(game_over_text,((game_over_surf.get_width()-game_over_text.get_width())//2, game_over_title.get_height() + 10))
+                game_over_rect = game_over_surf.get_bounding_rect()
+                self.screen.blit(game_over_surf, (WIDTH//2 - game_over_rect.width//2 -game_over_rect.x,HEIGHT//5 - game_over_rect.height//2 -game_over_rect.y))
+                for button in self.death_buttons:
+                    button.process()
+                    self.screen.blit(button.image,(button.x,button.y))        
 
             #========================================================================================
             
@@ -526,7 +545,19 @@ class Game:
         with open(settings_path, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=settings_fields)
             writer.writeheader()
-            writer.writerow(self.settings)            
+            writer.writerow(self.settings)   
+    
+    def to_main_menu(self):
+        self.game_state = 'menu'
+        self.main_menu.enable()         
+    
+    def retry(self):
+        self.create_new_game()
+
+    def continue_game(self):
+        self.player.life = self.player.max_life
+        self.current_life = self.max_life = self.player.max_life
+        self.game_state = "playing"
     #=================================================================================      
 
 

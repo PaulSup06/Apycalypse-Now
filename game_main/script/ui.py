@@ -263,7 +263,7 @@ class Transition:
 
 
 class Button:
-    def __init__(self, x, y, width, height, font, buttonText='Button', onclickFunction=None, onePress=False,fillColors={'normal': '#ffffff','hover': '#666666','pressed': '#333333','text':(20,20,20),}, *args):
+    def __init__(self, x, y, width, height, font, buttonText='Button', onclickFunction=None, oneRelease=False,fillColors={'normal': '#ffffff','hover': '#666666','pressed': '#333333','text':(20,20,20),}, *args):
         """Class Button : bouton polyvalent permettant d'exécuter une fonction avec des arguments lorsque pressé
 
         Args:
@@ -285,7 +285,7 @@ class Button:
         self.height = height
         self.font = font
         self.onclickFunction = onclickFunction
-        self.onePress = onePress
+        self.oneRelease = oneRelease
         self.args = args
 
         self.fillColors = fillColors
@@ -313,16 +313,22 @@ class Button:
             if pygame.mouse.get_pressed(num_buttons=3)[0]:
                 self.image.fill(self.fillColors['pressed'])
 
-                if self.onePress:
+                if not self.oneRelease:
                     result = self.onclickFunction(*self.args)
 
                 elif not self.alreadyPressed:
-                    result = self.onclickFunction(*self.args)
+                    
                     self.alreadyPressed = True
 
             else:
+                if self.alreadyPressed:
+                    result = self.onclickFunction(*self.args)
+                self.alreadyPressed = False 
+        elif not pygame.mouse.get_pressed(num_buttons=3)[0]:
+            if self.alreadyPressed:
+                result = self.onclickFunction(*self.args)
                 self.alreadyPressed = False
-
+                
         self.image.blit(self.buttonSurf, [
             self.rect.width/2 - self.buttonSurf.get_rect().width/2,
             self.rect.height/2 - self.buttonSurf.get_rect().height/2

@@ -79,6 +79,12 @@ class Inventaire:
 
 
     def move_cursor(self,key,settings):
+        """Déplace le curseur du joueur dans l'inventaire
+
+        Args:
+            key (int): touche pygame pressée
+            settings (dict): dictionnaire des paramètres de l'utilisateur et des touches attribuées
+        """
         if key == int(settings["k_up"]) and self.cursor_y>0:
             self.cursor_y -= 1
         elif key == int(settings["k_down"]) and self.cursor_y<GRID_SIZE-1:
@@ -90,6 +96,12 @@ class Inventaire:
 
         
     def draw_inventory(self, surface, params):
+        """Affichage de l'inventaire
+
+        Args:
+            surface (pygame.surface): Surface d'affichage de l'inventaire (généralement pygame.display)
+            params (dict): dictionnaire des paramètres et des touches
+        """
         self.rendered = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
         name_bg_rect = pygame.Rect(0,0,GRID_SIZE * (CASE_SIZE + CELL_MARGIN), 80)
         pygame.draw.rect(self.rendered, BACKGROUND_COLOR, name_bg_rect)
@@ -193,6 +205,14 @@ class Inventaire:
         return None       
 
     def drop(self, player, item_groups,item_name=None, amount=MAX_ITEMS_PER_CELL):
+        """Lache un ou plusieurs items sur le sol
+
+        Args:
+            player (Player): objet du joueur
+            item_groups (pygame.sprite.Group): group item du level
+            item_name (str, optional): Nom de l'item à lacher. Par défaut, l'item sélectionné par le curseur du joueur.
+            amount (int, optional): Nombre d'items à lacher. Par défaut un stack soit 64 items.
+        """
         if not item_name:
             item_name = self.inventory_grid[self.cursor_y][self.cursor_x][0]
         
@@ -203,6 +223,8 @@ class Inventaire:
             Item(player.x+(offset*positive),player.rect.bottom + 20,self.item_images[item_name],item_groups,item_name,amount)
     
     def use(self):
+        """utilise l'objet sélectionné dans l'inventaire (consommable uniquement)
+        """
         selected_item = self.inventory_grid[self.cursor_y][self.cursor_x][0]
         used = self.item_function[selected_item]()
         if used:
