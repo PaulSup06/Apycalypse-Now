@@ -120,9 +120,8 @@ def load_door_imgs():
 def load_item_imgs():
     item_images = {}
     for file_name in os.listdir(items_folder):
-        if file_name.endswith(".jpg"):
-            item_name = os.path.splitext(file_name)[0]
-            item_images[item_name] = pygame.image.load(os.path.join(items_folder, file_name))
+        item_name = os.path.splitext(file_name)[0]
+        item_images[item_name] = pygame.image.load(os.path.join(items_folder, file_name))
 
     return item_images
 
@@ -208,6 +207,10 @@ button_fillcolors = {'normal': (0,0,0,0),
                      'hover': (0,0,0,100),
                      'pressed': (140,140,140,140),
                      'text':(255,255,255)}
+
+item_names_render = {
+    "life_potion":"Potion de soin",
+}
 #temp
 #test_world = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 #         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],

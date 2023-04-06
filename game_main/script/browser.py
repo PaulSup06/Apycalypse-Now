@@ -25,7 +25,6 @@ class Terminal(Entity):
             browser.show_browser()
             self.using = False
             if browser.succeded:
-                print("YOUHOU")
                 return True, self.id
             else:
                 return False, self.id

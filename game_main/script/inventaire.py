@@ -1,11 +1,11 @@
 import pygame
 from settings import *
-from item import Item
+from entity import Entity
 import os
 import random
 
 class Inventaire:    
-    def __init__(self, inventory=None) -> None:
+    def __init__(self, main, inventory=None) -> None:
         self.enabled = False
         self.cell_image = pygame.image.load("..\\textures\\ui\\cell.jpg")
         #Dictionary to hold images
@@ -23,6 +23,12 @@ class Inventaire:
         self.cursor_x = 0
         
         self.item_name_display =''
+        
+        self.main_elmt = main
+        self.item_function = {
+            "life_potion":self.main_elmt.heal_player,
+            "heart":self.main_elmt.add_player_heart,
+        }
         
     def update_grid(self):
         """Génère le tableau 3D contenant les items de l'inventaire
@@ -83,9 +89,9 @@ class Inventaire:
             self.cursor_x +=1
 
         
-    def draw_inventory(self, surface):
+    def draw_inventory(self, surface, params):
         self.rendered = pygame.Surface((WIDTH,HEIGHT), pygame.SRCALPHA)
-        name_bg_rect = pygame.Rect(0,0,GRID_SIZE * (CASE_SIZE + CELL_MARGIN), 30)
+        name_bg_rect = pygame.Rect(0,0,GRID_SIZE * (CASE_SIZE + CELL_MARGIN), 80)
         pygame.draw.rect(self.rendered, BACKGROUND_COLOR, name_bg_rect)
 
         for i in range(GRID_SIZE):
@@ -114,23 +120,27 @@ class Inventaire:
                     if i == self.cursor_y and j == self.cursor_x:
                         if item_name != "":
                             font = pygame.font.SysFont(None, 24)
-                            name_text = font.render(item_name, True, (255, 255, 255))
+                            name_text = font.render(item_names_render[item_name], True, (255, 255, 255))
                             name_text_rect = name_text.get_rect(
                                 midtop=((GRID_SIZE * (CASE_SIZE + CELL_MARGIN)) / 2,10))
+                            
+                            drop_text = font.render(f"[{pygame.key.name(int(params['k_attack']))}] pour lacher",1,"white")
+                            self.rendered.blit(drop_text, (name_text_rect.centerx - drop_text.get_width()//2, name_text_rect.bottom + 5))
+                            
+                            if item_name in self.item_function.keys():
+                                action_text = font.render(f"[{pygame.key.name(int(params['k_interact']))}] pour utiliser",1,"white")
+                                self.rendered.blit(action_text, (name_text_rect.centerx - action_text.get_width()//2, name_text_rect.bottom + drop_text.get_height() + 5))
+                                
                             self.rendered.blit(name_text, name_text_rect)
                             self.item_name_display = item_name
+                            
                         pygame.draw.rect(self.rendered, CURSOR_COLOR, cell_rect, 2)
 
                 elif i == self.cursor_y and j == self.cursor_x:
                     pygame.draw.rect(self.rendered, CURSOR_COLOR, cell_rect, 2)
                     self.item_name_display = ""
 
-        if self.item_name_display != "":
-            font = pygame.font.SysFont(None, 24)
-            name_text = font.render(self.item_name_display, True, (255, 255, 255))
-            name_text_rect = name_text.get_rect(
-                midtop=((GRID_SIZE * (CASE_SIZE + CELL_MARGIN)) / 2, 10))
-            self.rendered.blit(name_text, name_text_rect)
+
         self.rendered_rect = self.rendered.get_bounding_rect()
         surface.blit(self.rendered, (
             (WIDTH-self.rendered_rect.width)//2,
@@ -182,9 +192,66 @@ class Inventaire:
         
         return None       
 
-    def drop(self, player, item_name, item_groups, amount=1):
+    def drop(self, player, item_groups,item_name=None, amount=MAX_ITEMS_PER_CELL):
+        if not item_name:
+            item_name = self.inventory_grid[self.cursor_y][self.cursor_x][0]
+        
         amount = self.remove_item(item_name, amount)
         if amount:
             offset = random.randint(0,100)
             positive = random.choice((-1,1))
             Item(player.x+(offset*positive),player.rect.bottom + 20,self.item_images[item_name],item_groups,item_name,amount)
+    
+    def use(self):
+        selected_item = self.inventory_grid[self.cursor_y][self.cursor_x][0]
+        used = self.item_function[selected_item]()
+        if used:
+            self.remove_item(selected_item,1)        
+            
+class Item(Entity):
+    def __init__(self, x, y, image, groupes, name, amount):
+        """Objet item lorsque laché au sol
+
+        Args:
+            x (int): position x de l'item
+            y (int): position y de l'item
+            image (pygame.image): image par défaut (non resized)
+            groupes (list): list de pygame.sprite.Group auxquels ajouter l'item'
+            name (str): Nom de l'item
+            amount (int): quantité d'items dans le stack (max = MAX_ITEMS_PER_CELL)
+        """
+        super().__init__(x, y, image, groupes)
+        self.name = name
+        self.amount = amount
+        self.rect = self.image.get_rect(topleft=(x,y))
+        self.amount_rendered = font2.render(str(self.amount),1,"black")
+        self.surface = pygame.display.get_surface()
+    
+    def pickup(self):
+        self.kill()
+        return self.amount
+    
+    def handle(self,player,offset):
+        self.draw(offset)
+        if self.rect.colliderect(player.rect):
+            return self.pickup()
+        else:
+            return None
+        
+    def stack(self,items):
+        for item in items:
+            if item!=self and item.name==self.name and self.check_distance_to((item.x,item.y), stackable_range) and item.amount<MAX_ITEMS_PER_CELL:
+                total = self.amount + item.amount
+                if total > MAX_ITEMS_PER_CELL:
+                    item.amount = MAX_ITEMS_PER_CELL
+                    self.amount = total - MAX_ITEMS_PER_CELL
+                else:
+                    item.amount += self.amount
+                    return True
+        
+        
+    def draw(self,offset):
+        self.amount_rendered = font2.render(str(self.amount),1,"black")
+        self.surface.blit(pygame.transform.scale(self.image, ITEM_SIZE),(self.x-offset.x,self.y-offset.y))
+        self.surface.blit(self.amount_rendered,(self.x -offset.x + ITEM_SIZE[0] + 5,self.y - offset.y + ITEM_SIZE[1] + 5))
+        

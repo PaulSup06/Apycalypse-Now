@@ -43,7 +43,7 @@ class Game:
         #génération des interfaces
         self.game_state = "menu"
         self.ui = UI()  
-        self.inventaire = Inventaire()  
+        self.inventaire = Inventaire(self)  
         self.menu_pg_pygame = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\menu_bg.png"), (WIDTH,HEIGHT)).convert()
         self.menu_pg_pymenu = pygame_menu.baseimage.BaseImage(
         image_path="..\\textures\\ui\\menu_bg.png",
@@ -149,30 +149,35 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     if self.game_state == "playing":
                         if event.key == int(self.settings["k_attack"]): #TODO ajouter touches dynamiques
-                            if not self.ui.current_dialog:
+                            if not self.ui.current_dialog and not self.inventaire.enabled:
                                 self.player.attack(self.level.enemies)
+                            elif self.inventaire.enabled:
+                                self.inventaire.drop(self.player,self.level.items)
                         elif event.key == int(self.settings["k_interact"]):
-                            for npc in self.level.npcs:
-                                if npc.check_distance_to((self.player.x,self.player.y),interact_distance):
-                                    if not self.ui.current_dialog:
-                                        self.ui.load_dialog(*npc.interact())
-                                    elif self.ui.ongoing_dialog:
-                                        self.ui.finish_dialog()
-                                    else:
-                                        fin_dialogue = self.ui.quit_dialog(npc.name)
-                                        #handle dialogue ended (fin dialog = dict)
-                                        if fin_dialogue.get("change_level"):
-                                            self.change_level(fin_dialogue.get("change_level"))
-                                        if fin_dialogue.get("npc_update"):
-                                            npc.change_state(*fin_dialogue.get("npc_update"))
-                                            
-                            for terminal in self.level.terminals:
-                                if self.player.check_distance_to(terminal.surface.midbottom,interact_distance) and not terminal.locked and not terminal.using:
-                                    renvoi_terminal = terminal.interact()
-                                    if renvoi_terminal[0]:
-                                        for door in self.level.doors:
-                                            if door.id == renvoi_terminal[1]:
-                                                door.unlock()
+                            if self.inventaire.enabled:
+                                self.inventaire.use()
+                            else:
+                                for npc in self.level.npcs:
+                                    if npc.check_distance_to((self.player.x,self.player.y),interact_distance):
+                                        if not self.ui.current_dialog:
+                                            self.ui.load_dialog(*npc.interact())
+                                        elif self.ui.ongoing_dialog:
+                                            self.ui.finish_dialog()
+                                        else:
+                                            fin_dialogue = self.ui.quit_dialog(npc.name)
+                                            #handle dialogue ended (fin dialog = dict)
+                                            if fin_dialogue.get("change_level"):
+                                                self.change_level(fin_dialogue.get("change_level"))
+                                            if fin_dialogue.get("npc_update"):
+                                                npc.change_state(*fin_dialogue.get("npc_update"))
+                                                
+                                for terminal in self.level.terminals:
+                                    if self.player.check_distance_to(terminal.surface.midbottom,interact_distance) and not terminal.locked and not terminal.using:
+                                        renvoi_terminal = terminal.interact()
+                                        if renvoi_terminal[0]:
+                                            for door in self.level.doors:
+                                                if door.id == renvoi_terminal[1]:
+                                                    door.unlock()
 
                         elif event.key == int(self.settings["k_escape"]):
                             self.game_state = "menu"
@@ -198,7 +203,7 @@ class Game:
                     elif event.key == pygame.K_y: #temporaire pour tests
                         self.change_level(1)
                     elif event.key==pygame.K_u:
-                        self.inventaire.add_item("Blue blob",100)
+                        self.inventaire.add_item("life_potion",100)
                         self.inventaire.inventory
                     elif event.key==pygame.K_i:
                         self.inventaire.drop(self.player,"Blue blob", [self.level.items],10)
@@ -235,7 +240,7 @@ class Game:
                     if item.stack(self.level.items):
                         self.level.items.remove(item)
                 if self.inventaire.enabled:
-                    self.inventaire.draw_inventory(self.screen)
+                    self.inventaire.draw_inventory(self.screen, self.settings)
                 #hitbox pour débug
                 if showing_hitbox:
                     for block in self.level.collision_blocks:
@@ -328,7 +333,7 @@ class Game:
                              self.level.collision_blocks,params["life"], params["max_life"],params["weapon"])  
         
         self.level.player = self.player
-        self.inventaire = Inventaire(params["inventory"])
+        self.inventaire = Inventaire(self, params["inventory"])
         self.ui.add_transition_open()
         
     def delete_sauvegarde(self, save_name):
@@ -390,7 +395,7 @@ class Game:
         """
         self.game_state = "playing"
         self.main_menu.disable()
-        self.inventaire = Inventaire()
+        self.inventaire = Inventaire(self)
         #génération du monde
         self.current_world = 0
         self.generate_world(self.current_world)
@@ -524,6 +529,23 @@ class Game:
             writer.writerow(self.settings)            
     #=================================================================================      
 
+
+    #=====================================================================
+    #FONCTIONS LIEES AUX ITEMS DU JEU
+    #=====================================================================
+    def heal_player(self, amount=2):
+        if self.player.life < self.player.max_life:
+            self.player.life += amount #ajoute 1 coeur entier par défaut
+            if self.player.life > self.player.max_life:
+                self.player.life = self.player.max_life
+            self.current_life = self.player.life
+            return True
+        else:
+            return False
+    
+    def add_player_heart(self,amount=2):
+        self.max_life += amount
+        self.player.max_life = self.max_life
 #===============================================================
 #====PROGRAMME PRINCIPAL========================================
 #===============================================================
