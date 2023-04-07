@@ -47,7 +47,7 @@ class Camera(pygame.sprite.Group):
             return None 
     #=======================================================================
 
-    def draw_visible(self, player,npcs,enemies, tilemap, settings):   
+    def draw_visible(self, player,npcs, enemies, tilemap, settings):   
         """Affiche les éléments à l'écran en fonction de la position du joueur
 
         Args:
@@ -74,6 +74,16 @@ class Camera(pygame.sprite.Group):
         for sprite in sorted(self.sprites(),key = lambda sprite: sprite.basey):
             offset_pos = (sprite.x,sprite.y) - self.offset
             self.screen.blit(sprite.image, offset_pos)
+
+        # affichage de la barre de vie des ennemies
+        for enemy in enemies:
+            offset_pos = (enemy.x,enemy.y) - self.offset
+            health_bar_width = 88
+            pygame.draw.rect(self.screen, (0,0,0), (offset_pos.x -12, offset_pos.y -15, health_bar_width + 2, 9))
+            pygame.draw.rect(self.screen, (255,255,255), (offset_pos.x -10, offset_pos.y - 13, health_bar_width, 6))
+            # vie restante
+            health = (enemy.health / enemy.max_health) * health_bar_width
+            pygame.draw.rect(self.screen, (128,0,0), (offset_pos.x -10, offset_pos.y - 13, health, 6))
         
         for npc in npcs:
             if npc.check_distance_to([player.x,player.y],distance_affichage_npc_prompt):  

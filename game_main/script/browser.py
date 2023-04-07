@@ -47,10 +47,8 @@ class Browser:
         self.succeded = False
 
     def show_browser(self):
-        print(self.html)
-        self.window = webview.create_window(self.title, html=self.html, resizable=False, fullscreen=True, js_api=self.api)
+        self.window = webview.create_window(self.title, html=self.html, resizable=False, fullscreen=True, js_api=self.api, background_color="#003300")
         self.api.set_window(self.window)
-
         webview.start()  
         if self.api.succeded:
             self.succeded = True     
@@ -66,17 +64,21 @@ class Api:
         self._window = window
 
     def close_window(self):
-        self._window.destroy()
+        try:
+            self._window.destroy()
+        except KeyError:
+            pass # erreur de la fonction .destroy() courante et non résolue à ce jour
+
 
     def completed(self):
         self.succeded = True
-        self._window.destroy()
+        try:
+            self._window.destroy()
+        except KeyError:
+            pass # erreur de la fonction .destroy() courante et non résolue à ce jour
 
     def play_key_sound(self):
         # joue son clavier
         pygame.mixer.music.load(os.path.join(music_folder, "misc/key1_press.wav"))
         pygame.mixer.music.play()
         pass
-
-# appel de "pythonFunction" dans JS
-# window.pywebview.api.pythonFunction("arg");

@@ -156,7 +156,36 @@ class UI:
             
             #=========================================================================================================================================================    
 
+        #affichage des indicateurs de temps de popo
+        # potion de speed
+        potion_pos_left = 10
+
+        if player.speed_multiplier > 1:
+            self.speed_potion_timer += 1
             
+            self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\speed.png", (1 - self.speed_potion_timer / (speed_potion_duration * FPS)))
+            potion_pos_left += 90
+            
+            if self.speed_potion_timer >= speed_potion_duration * FPS: # Fin du temps
+                player.speed_multiplier = 1
+
+        if player.strength_multiplier > 1:
+            self.strength_potion_timer += 1
+            
+            self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\strength.png", (1 - self.strength_potion_timer / (strength_potion_duration * FPS)))
+            potion_pos_left += 90
+            
+            if self.strength_potion_timer >= strength_potion_duration * FPS: # Fin du temps
+                player.strength_multiplier = 1
+
+        if player.invincibility:
+            self.invincibility_potion_timer += 1
+            
+            self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\invincibility.png", (1 - self.invincibility_potion_timer / (invincibility_potion_duration * FPS)))
+            potion_pos_left += 90
+            
+            if self.invincibility_potion_timer >= invincibility_potion_duration * FPS: # Fin du temps
+                player.invincibility = False
     
         #affichage de la vie
         life_surf = pygame.Surface(((player.max_life//2+player.max_life%2) * self.hearts[0].get_width(), self.hearts[0].get_height()),pygame.SRCALPHA)
@@ -176,6 +205,27 @@ class UI:
         self.handle_transitions()
         return{"npc_update":npc_update}
      
+    def show_potion_timer(self, position_gauche, image_path, progression):
+        """Affiche en haut à gauche de l'écran le temps restant de la popo
+        """
+        # Affiche l'image de la potion de vitesse
+        speed_image = pygame.image.load(image_path) 
+        speed_rect = speed_image.get_rect() 
+        square_rect = pygame.Rect(position_gauche, 10, speed_rect.width+10, speed_rect.height+10) # carré pour le fond de l'image
+        pygame.draw.rect(self.screen, (0, 0, 0), square_rect) # de couleur noir
+        
+        # Image dans le carré
+        speed_rect.x = square_rect.x + 5
+        speed_rect.y = square_rect.y + 5
+        self.screen.blit(speed_image, speed_rect)
+        
+        # Barre de progression du temps restant
+        progress_rect = pygame.Rect(square_rect.right + 5, square_rect.y, 10, square_rect.height)
+        progress_height = progression * square_rect.height
+        progress_filled_rect = pygame.Rect(progress_rect.x, progress_rect.bottom-progress_height, progress_rect.width, progress_height)
+        pygame.draw.rect(self.screen, (255, 255, 255), progress_filled_rect)
+        pygame.draw.rect(self.screen, (255, 255, 255), progress_rect, 1) 
+
     def finish_dialog(self):
         """Fonction appelée pour accélérer l'affichage du dialogue à l'écran
         Va directement à la fin de la page de dialogue en cours

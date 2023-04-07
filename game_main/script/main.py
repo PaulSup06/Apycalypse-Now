@@ -24,7 +24,7 @@ class Game:
         os.chdir(os.path.realpath(__file__)[:-7])
         
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH,HEIGHT) ,pygame.SCALED | pygame.FULLSCREEN)  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.SCALED | pygame.FULLSCREEN)  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
         pygame.display.set_caption(GAME_TITLE) #ajouter titre du jeu ici
         pygame.display.set_icon(pygame.image.load("..\\textures\\test\\rock.png")) #TODO rajouter une petite icone sympa
         self.clock = pygame.time.Clock() #initialisation système de comptage de temps (fps cap) de pygame
@@ -142,7 +142,7 @@ class Game:
         """
         while self.running:
             self.screen.fill((0,0,0))
-            
+
             #EVENT HANDLER PYGAME
             #========================================================================================
             events = pygame.event.get()
@@ -261,12 +261,6 @@ class Game:
                         self.level.items.remove(item)
                 if self.inventaire.enabled:
                     self.inventaire.draw_inventory(self.screen, self.settings)
-
-                # affiche les barres de vie des ennemies
-                for enemy in self.level.enemies:
-                    # affiche barre de vie     
-                    
-                    pygame.draw.rect(self.screen, (0, 255, 0), (enemy.x - 12, enemy.y - 15, 90, 9)) 
                     
                 #hitbox pour débugd
                 if showing_hitbox:
@@ -275,36 +269,7 @@ class Game:
                     pygame.draw.rect(self.screen,'white',pygame.Rect(self.player.surface.x - self.level.visible_blocks.offset.x,self.player.surface.y - self.level.visible_blocks.offset.y, self.player.surface.width, self.player.surface.height),2)
                     pygame.draw.rect(self.screen,'red',pygame.Rect(self.player.rect.x - self.level.visible_blocks.offset.x,self.player.rect.y - self.level.visible_blocks.offset.y, self.player.rect.width, self.player.rect.height),2)   
 
-                #   potion indicateur de temps
-                # potion de speed
-                potion_pos_left = 10
-
-                if self.player.speed_multiplier > 1:
-                    self.speed_potion_timer += 1
-                    
-                    self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\speed.png", (1 - self.speed_potion_timer / (speed_potion_duration * FPS)))
-                    potion_pos_left += 90
-                    
-                    if self.speed_potion_timer >= speed_potion_duration * FPS: # Fin du temps
-                        self.player.speed_multiplier = 1
-
-                if self.player.strength_multiplier > 1:
-                    self.strength_potion_timer += 1
-                    
-                    self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\strength.png", (1 - self.strength_potion_timer / (strength_potion_duration * FPS)))
-                    potion_pos_left += 90
-                    
-                    if self.strength_potion_timer >= strength_potion_duration * FPS: # Fin du temps
-                        self.player.strength_multiplier = 1
-
-                if self.player.invincibility:
-                    self.invincibility_potion_timer += 1
-                    
-                    self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\invincibility.png", (1 - self.invincibility_potion_timer / (invincibility_potion_duration * FPS)))
-                    potion_pos_left += 90
-                    
-                    if self.invincibility_potion_timer >= invincibility_potion_duration * FPS: # Fin du temps
-                        self.player.invincibility = False
+                
             #UI
             #========================================================================================
                 
@@ -351,29 +316,6 @@ class Game:
             #Update de l'écran et gestion tickrate
             pygame.display.update()
             self.clock.tick(FPS)
-
-    #=====================================================================
-    #GESTION DE L'AFFICHAGE DES POTIONS
-    #====================================================================== 
-
-    def show_potion_timer(self, position_gauche, image_path, progression):
-        # Affiche l'image de la potion de vitesse
-        speed_image = pygame.image.load(image_path) 
-        speed_rect = speed_image.get_rect() 
-        square_rect = pygame.Rect(position_gauche, 10, speed_rect.width+10, speed_rect.height+10) # carré pour le fond de l'image
-        pygame.draw.rect(self.screen, (0, 0, 0), square_rect) # de couleur noir
-        
-        # Image dans le carré
-        speed_rect.x = square_rect.x + 5
-        speed_rect.y = square_rect.y + 5
-        self.screen.blit(speed_image, speed_rect)
-        
-        # Barre de progression du temps restant
-        progress_rect = pygame.Rect(square_rect.right + 5, square_rect.y, 10, square_rect.height)
-        progress_height = progression * square_rect.height
-        progress_filled_rect = pygame.Rect(progress_rect.x, progress_rect.bottom-progress_height, progress_rect.width, progress_height)
-        pygame.draw.rect(self.screen, (255, 255, 255), progress_filled_rect)
-        pygame.draw.rect(self.screen, (255, 255, 255), progress_rect, 1) 
 
     #=====================================================================
     #GESTION DES SAUVEGARDES
@@ -651,7 +593,7 @@ class Game:
         # change vitesse du joueur pendant 15 secondes
         if self.player.speed_multiplier == 1:
             self.player.speed_multiplier = speed_potion_mutltiplier
-            self.speed_potion_timer = 0
+            self.ui.speed_potion_timer = 0
             return True
         else: # déjà du speed
             return False
@@ -660,7 +602,7 @@ class Game:
         # change vitesse du joueur pendant 15 secondes
         if self.player.strength_multiplier == 1:
             self.player.strength_multiplier = strength_potion_mutltiplier
-            self.strength_potion_timer = 0
+            self.ui.strength_potion_timer = 0
             return True
         else: # déjà du strength
             return False
@@ -669,7 +611,7 @@ class Game:
         # change vitesse du joueur pendant 15 secondes
         if self.player.invincibility == False:
             self.player.invincibility = True
-            self.invincibility_potion_timer = 0
+            self.ui.invincibility_potion_timer = 0
             return True
         else: # déjà du strength
             return False

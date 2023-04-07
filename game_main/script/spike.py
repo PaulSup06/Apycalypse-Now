@@ -17,7 +17,7 @@ class Spike(Entity):
             textures (dict): dictionnaire contenant les textures rendues pygame         
             name (str): Nom de la classe de l'ennemi
         """ 
-        super().__init__(x, y, image, groupes, smaller_collision = True)
+        super().__init__(x, y, image, groupes, hitbox=pygame.Rect(x+15,y+8, 40, 40))
         self.collision_blocks = collision_blocks
         self.name = name
 

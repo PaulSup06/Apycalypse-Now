@@ -2,7 +2,7 @@ import pygame
 from settings import *
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, x,y, image, groupes, hitbox=None, smaller_collision = False):
+    def __init__(self, x,y, image, groupes, hitbox=None):
         """Objet de base pour tout objet mobile ou intéractif du jeu.
         Hérite de la class pygame.sprite.Sprite 
 
@@ -19,11 +19,6 @@ class Entity(pygame.sprite.Sprite):
         self.y = y
         self.image = image
         self.surface = self.image.get_rect(topleft=(x,y))
-
-        if smaller_collision:
-            self.surface = pygame.Rect(x+15,y+15, 40, 40)
-        else:
-            self.surface = self.image.get_rect(topleft=(x,y))
     
         self.basey = self.surface.centery
         if hitbox:
