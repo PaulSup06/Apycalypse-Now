@@ -43,6 +43,9 @@
   ### MUSIQUE :
     ##### [Dystopian pack (banger absolu allez écouter)](https://timbeek.itch.io/dystopian)
     ##### [Synthwave Pink Bloom pack (idem)](https://davidkbd.itch.io/pink-bloom-synthwave-music-pack)
+    
+ ### EFFET AUDIO:
+    ##### [freesound.org](freesound.org)
 
 
 # REQUIS POUR L'INSTALLATION
