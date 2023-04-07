@@ -31,6 +31,7 @@ class Game:
         
         #initialisation système audio
         pygame.mixer.init()
+        pygame.mixer.set_num_channels(999) # pour pouvoir jouer différent son en simultané 
         self.music_playing=None
         
         self.running = True
@@ -236,8 +237,17 @@ class Game:
                             self.player.life -= damages
                             if self.player.life<=0:
                                 self.game_state="death"
+                for spike in self.level.spikes:
+                    damages = spike.check_trigger(self.player)
+                    if damages:
+                        # un ennemie fait des dégâts au joueur
+                        if self.player.invincibility == False:
+                            self.player.life -= damages
+                            if self.player.life<=0:
+                                self.game_state="death"
 
                 self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx, self.settings)
+
                 for door in self.level.doors:
                     door.update(self.player)
                 for term in self.level.terminals:
@@ -251,7 +261,14 @@ class Game:
                         self.level.items.remove(item)
                 if self.inventaire.enabled:
                     self.inventaire.draw_inventory(self.screen, self.settings)
-                #hitbox pour débug
+
+                # affiche les barres de vie des ennemies
+                for enemy in self.level.enemies:
+                    # affiche barre de vie     
+                    
+                    pygame.draw.rect(self.screen, (0, 255, 0), (enemy.x - 12, enemy.y - 15, 90, 9)) 
+                    
+                #hitbox pour débugd
                 if showing_hitbox:
                     for block in self.level.collision_blocks:
                         pygame.draw.rect(self.screen,'white',pygame.Rect(block.surface.x - self.level.visible_blocks.offset.x,block.surface.y - self.level.visible_blocks.offset.y, block.surface.width, block.surface.height),2)

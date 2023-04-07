@@ -23,6 +23,7 @@ ITEM_SIZE = (32,32)
 
 #folders et paths
 music_folder = "..\\audio"
+sound_folder = "..\\sound"
 settings_path ="..\\misc\\settings.csv"
 default_settings_path ="..\\misc\\default_settings.csv"
 
@@ -82,6 +83,9 @@ enemy_caracteristics = {
                         }
                        }
 
+spike_exit_speed = 17
+spike_damage = 1
+
 # variable potion
 speed_potion_duration = 15 # en seconde
 speed_potion_mutltiplier = 1.5 
@@ -94,6 +98,7 @@ invincibility_potion_duration = 5 # en seconde
 #textures
 player_img_folder = "..\\textures\\player"
 enemy_img_folder = "..\\textures\\enemies"
+spike_img_folder = "..\\textures\\spike"
 misc_folder = "..\\textures\\misc"
 items_folder="..\\textures\\items"
 def load_imgs():
@@ -133,6 +138,14 @@ def load_enemy_imgs():
                enemy_imgs[type][folder].append(pygame.image.load(os.path.join(enemy_img_folder,type,folder,file)).convert_alpha())
                
     return enemy_imgs
+
+def load_spike_imgs():
+    spike_imgs = []
+
+    for file in os.listdir(os.path.join(spike_img_folder)):
+        spike_imgs.append(pygame.image.load(os.path.join(spike_img_folder,file)).convert_alpha())
+            
+    return spike_imgs
 
 def load_door_imgs():
     door_imgs = []

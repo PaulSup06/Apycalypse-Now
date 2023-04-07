@@ -5,6 +5,7 @@ from camera import Camera
 from player import *
 from npc import Npc, Door
 from enemy import Enemy
+from spike import Spike
 from ui import Button
 from browser import Terminal
 import pytmx
@@ -32,6 +33,7 @@ class Level:
         
         #textures
         self.enemy_imgs = load_enemy_imgs()
+        self.spike_imgs = load_spike_imgs()
         self.door_imgs = load_door_imgs()
         
         #pygame sprite groups
@@ -40,6 +42,7 @@ class Level:
         self.trigger_blocks = pygame.sprite.Group() 
         self.npcs = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
+        self.spikes = pygame.sprite.Group()
         self.doors = pygame.sprite.Group()
         self.terminals = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
@@ -59,14 +62,15 @@ class Level:
                         elif tile_properties["class"][:3] == 'npc':
                             #NPC de test (Fairy)
                             Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][4:],'True', first_dialog="1")
-                        elif tile_properties["class"][:5] == 'enemy':
-                            
+                        elif tile_properties["class"][:5] == 'enemy':                         
                             Enemy(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.enemies], self.collision_blocks, self.enemy_imgs, "ligne_h",tile_properties["class"][6:], self.items)
-                        
+                       
                         elif tile_properties["class"][:4] == "door":
                             Door(x*CASE_SIZE,y*CASE_SIZE,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,tile_properties["class"][5:7],tile_properties["class"][8]=="1")
                         elif tile_properties["class"][:8]=="terminal":
                             Terminal(x*CASE_SIZE,y*CASE_SIZE,[self.visible_blocks,self.collision_blocks,self.terminals], tile_properties["class"][9:11],tile_properties["class"][12]=="1")
+                        elif tile_properties["class"][:6]=="spikes":
+                            Spike(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.spikes], self.collision_blocks, self.spike_imgs,"spike")
 
             if layer.name == "ground props":
                 for x,y,gid in layer.iter_data():

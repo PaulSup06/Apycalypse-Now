@@ -2,7 +2,7 @@ import pygame
 from settings import *
 
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, x,y, image, groupes, hitbox=None):
+    def __init__(self, x,y, image, groupes, hitbox=None, smaller_collision = False):
         """Objet de base pour tout objet mobile ou intéractif du jeu.
         Hérite de la class pygame.sprite.Sprite 
 
@@ -12,12 +12,19 @@ class Entity(pygame.sprite.Sprite):
             image (pygame.image): image par défaut de l'entité (habituellement override mais si image unique peut être utile)
             groupes (list): list des pygame.sprite.Group() auxquels ajouter l'Entity
             hitbox (pygame.Rect, optional): Rectangle utilisé pour les collisions. Si non spécifié, utilisation de la surface de l'image.
+            smaller_collision (bool, optional): Pour le trigger, si la collision est plus petite pour cette entité
         """
         super().__init__(groupes)
         self.x = x
         self.y = y
         self.image = image
         self.surface = self.image.get_rect(topleft=(x,y))
+
+        if smaller_collision:
+            self.surface = pygame.Rect(x+15,y+15, 40, 40)
+        else:
+            self.surface = self.image.get_rect(topleft=(x,y))
+    
         self.basey = self.surface.centery
         if hitbox:
             self.rect = hitbox

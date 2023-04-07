@@ -40,8 +40,11 @@ class Enemy(Entity):
             self.damages = enemy_caracteristics[self.name]["damages"]
         if health:    
             self.health = health
+            self.max_health = health
         else:
             self.health = enemy_caracteristics[self.name]["health"]
+            self.max_health = enemy_caracteristics[self.name]["health"]
+
         self.attack_cooldown = 60
         self.movement_condition = movement_condition
         self.direction=1
@@ -109,9 +112,7 @@ class Enemy(Entity):
             self.action = "move"
 
         else:
-            self.action = "idle"
-        
-        
+            self.action = "idle" 
 
         self.animate()
 
@@ -127,6 +128,7 @@ class Enemy(Entity):
             self.animation_counter +=1  
             if self.animation_counter//enemy_anim_duration > len(self.textures[self.action])-1:
                 self.animation_counter = 0
+
 
     def change_direction(self):
         """Change la direction de déplacement de l'ennemi (utilisé seulement pour déplacements en ligne droite)
