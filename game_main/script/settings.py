@@ -63,9 +63,33 @@ interact_distance = 100
 dialog_cooldown = 2 #nombre de frames entre l'affichage de chaque caractère du dialogue
 door_unlock_range = 3*CASE_SIZE
 stackable_range = 100
-enemy_caracteristics = {"bamboo":{"speed":5,
-                                  "damages":1,
-                                  "health":3}}
+enemy_caracteristics = {
+                        "bamboo":{
+                            "speed":5,
+                            "damages":1,
+                            "health":3,
+                            "drops":[
+                                {
+                                    "name":"life_potion",
+                                    "drop_rate":50,
+                                    "drop_count":1,                                    
+                                }, {
+                                    "name":"speed_potion",
+                                    "drop_rate":50,
+                                    "drop_count":1,                                    
+                                }
+                            ]
+                        }
+                       }
+
+# variable potion
+speed_potion_duration = 15 # en seconde
+speed_potion_mutltiplier = 1.5 
+
+strength_potion_duration = 15 # en seconde
+strength_potion_mutltiplier = 2.5 
+
+invincibility_potion_duration = 5 # en seconde
 
 #textures
 player_img_folder = "..\\textures\\player"
@@ -210,6 +234,9 @@ button_fillcolors = {'normal': (0,0,0,0),
 
 item_names_render = {
     "life_potion":"Potion de soin",
+    "speed_potion":"Potion de vitesse",
+    "strength_potion":"Potion de force",
+    "invincibility_potion":"Potion d'invincibilité",
 }
 #temp
 #test_world = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],

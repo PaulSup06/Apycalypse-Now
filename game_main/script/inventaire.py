@@ -27,6 +27,9 @@ class Inventaire:
         self.main_elmt = main
         self.item_function = {
             "life_potion":self.main_elmt.heal_player,
+            "speed_potion":self.main_elmt.speed_player,
+            "strength_potion":self.main_elmt.strength_player,
+            "invincibility_potion":self.main_elmt.invincibility_player,
             "heart":self.main_elmt.add_player_heart,
         }
         

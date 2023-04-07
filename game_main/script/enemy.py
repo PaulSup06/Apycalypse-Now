@@ -1,9 +1,11 @@
 from entity import Entity
 import pygame
 from settings import *
+from inventaire import Item
+import random
 
 class Enemy(Entity):
-    def __init__(self, x, y, image, groupes, collision_blocks, textures, movement_type, name, speed=None, damages=None, health=None, movement_condition=True):
+    def __init__(self, x, y, image, groupes, collision_blocks, textures, movement_type, name, item_group, speed=None, damages=None, health=None, movement_condition=True):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:
@@ -24,6 +26,9 @@ class Enemy(Entity):
         self.collision_blocks = collision_blocks
         self.movement_type = movement_type
         self.name = name
+        self.item_images = load_item_imgs()
+        self.item_group = item_group
+
         self.textures = textures[name]
         if speed:
             self.speed = speed
@@ -55,7 +60,7 @@ class Enemy(Entity):
         Returns:
             int: dégats infligés
         """
-        if self.rect.colliderect(player.rect) and self.action !="attack" and self.action!="death" and self.action !='stunt':            
+        if self.rect.colliderect(player.rect) and player.invincibility == False and self.action !="attack" and self.action!="death" and self.action !='stunt':            
             self.action = "attack"
             self.animate()
             return self.damages
@@ -69,6 +74,7 @@ class Enemy(Entity):
         elif self.action == "death":
             self.death_cooldown -= 1
             if self.death_cooldown <= 0:
+                self.drop_item()
                 self.kill()
 
         elif self.action == "stunt":
@@ -139,3 +145,12 @@ class Enemy(Entity):
         self.stunt_cooldown = stunt
         if self.health <= 0:
             self.action = "death"
+            
+    def drop_item(self):
+        drop_items = enemy_caracteristics[self.name]["drops"]
+        for item in drop_items:
+            tirage = random.randint(1,100)
+            if item["drop_rate"]<=tirage:
+                offset = random.randint(-10,10)
+                positive = random.choice((-0.2,0.2))
+                Item(self.x+(offset*positive),self.rect.bottom + offset, self.item_images[item["name"]], self.item_group, item["name"], item["drop_count"])

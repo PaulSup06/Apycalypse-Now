@@ -24,7 +24,7 @@ class Game:
         os.chdir(os.path.realpath(__file__)[:-7])
         
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT) ,pygame.SCALED | pygame.FULLSCREEN)  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
         pygame.display.set_caption(GAME_TITLE) #ajouter titre du jeu ici
         pygame.display.set_icon(pygame.image.load("..\\textures\\test\\rock.png")) #TODO rajouter une petite icone sympa
         self.clock = pygame.time.Clock() #initialisation système de comptage de temps (fps cap) de pygame
@@ -57,7 +57,7 @@ class Game:
         self.changin_world = False
         self.player_weapon_name = None
         
-        self.generate_menus()
+        self.generate_menus()           
 
     def generate_menus(self):
         #menus
@@ -208,7 +208,9 @@ class Game:
                     elif event.key == pygame.K_y: #temporaire pour tests
                         self.change_level(1)
                     elif event.key==pygame.K_u:
-                        self.inventaire.add_item("life_potion",100)
+                        self.inventaire.add_item("strength_potion",2)
+                        self.inventaire.add_item("speed_potion",3)
+                        self.inventaire.add_item("invincibility_potion",4)
                         self.inventaire.inventory
                     elif event.key==pygame.K_i:
                         self.inventaire.drop(self.player,"Blue blob", [self.level.items],10)
@@ -220,8 +222,7 @@ class Game:
                     pygame.mixer.music.load(os.path.join(music_folder,self.music_playing))
                     pygame.mixer.music.play(-1)
                 #========================================================================================    
-                    
-                    
+                         
             #BOUCLE PRINCIPALE LORS DU JEU        
             if self.game_state == "playing":
                 if not self.ui.current_dialog and not self.inventaire.enabled:
@@ -230,9 +231,11 @@ class Game:
                 for enemy in self.level.enemies:
                     damages = enemy.move(self.player)
                     if damages:
-                        self.player.life -= damages
-                        if self.player.life<=0:
-                            self.game_state="death"
+                        # un ennemie fait des dégâts au joueur
+                        if self.player.invincibility == False:
+                            self.player.life -= damages
+                            if self.player.life<=0:
+                                self.game_state="death"
 
                 self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx, self.settings)
                 for door in self.level.doors:
@@ -255,6 +258,36 @@ class Game:
                     pygame.draw.rect(self.screen,'white',pygame.Rect(self.player.surface.x - self.level.visible_blocks.offset.x,self.player.surface.y - self.level.visible_blocks.offset.y, self.player.surface.width, self.player.surface.height),2)
                     pygame.draw.rect(self.screen,'red',pygame.Rect(self.player.rect.x - self.level.visible_blocks.offset.x,self.player.rect.y - self.level.visible_blocks.offset.y, self.player.rect.width, self.player.rect.height),2)   
 
+                #   potion indicateur de temps
+                # potion de speed
+                potion_pos_left = 10
+
+                if self.player.speed_multiplier > 1:
+                    self.speed_potion_timer += 1
+                    
+                    self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\speed.png", (1 - self.speed_potion_timer / (speed_potion_duration * FPS)))
+                    potion_pos_left += 90
+                    
+                    if self.speed_potion_timer >= speed_potion_duration * FPS: # Fin du temps
+                        self.player.speed_multiplier = 1
+
+                if self.player.strength_multiplier > 1:
+                    self.strength_potion_timer += 1
+                    
+                    self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\strength.png", (1 - self.strength_potion_timer / (strength_potion_duration * FPS)))
+                    potion_pos_left += 90
+                    
+                    if self.strength_potion_timer >= strength_potion_duration * FPS: # Fin du temps
+                        self.player.strength_multiplier = 1
+
+                if self.player.invincibility:
+                    self.invincibility_potion_timer += 1
+                    
+                    self.show_potion_timer(potion_pos_left, "..\\textures\\ui\\invincibility.png", (1 - self.invincibility_potion_timer / (invincibility_potion_duration * FPS)))
+                    potion_pos_left += 90
+                    
+                    if self.invincibility_potion_timer >= invincibility_potion_duration * FPS: # Fin du temps
+                        self.player.invincibility = False
             #UI
             #========================================================================================
                 
@@ -301,6 +334,29 @@ class Game:
             #Update de l'écran et gestion tickrate
             pygame.display.update()
             self.clock.tick(FPS)
+
+    #=====================================================================
+    #GESTION DE L'AFFICHAGE DES POTIONS
+    #====================================================================== 
+
+    def show_potion_timer(self, position_gauche, image_path, progression):
+        # Affiche l'image de la potion de vitesse
+        speed_image = pygame.image.load(image_path) 
+        speed_rect = speed_image.get_rect() 
+        square_rect = pygame.Rect(position_gauche, 10, speed_rect.width+10, speed_rect.height+10) # carré pour le fond de l'image
+        pygame.draw.rect(self.screen, (0, 0, 0), square_rect) # de couleur noir
+        
+        # Image dans le carré
+        speed_rect.x = square_rect.x + 5
+        speed_rect.y = square_rect.y + 5
+        self.screen.blit(speed_image, speed_rect)
+        
+        # Barre de progression du temps restant
+        progress_rect = pygame.Rect(square_rect.right + 5, square_rect.y, 10, square_rect.height)
+        progress_height = progression * square_rect.height
+        progress_filled_rect = pygame.Rect(progress_rect.x, progress_rect.bottom-progress_height, progress_rect.width, progress_height)
+        pygame.draw.rect(self.screen, (255, 255, 255), progress_filled_rect)
+        pygame.draw.rect(self.screen, (255, 255, 255), progress_rect, 1) 
 
     #=====================================================================
     #GESTION DES SAUVEGARDES
@@ -574,9 +630,37 @@ class Game:
         else:
             return False
     
+    def speed_player(self):
+        # change vitesse du joueur pendant 15 secondes
+        if self.player.speed_multiplier == 1:
+            self.player.speed_multiplier = speed_potion_mutltiplier
+            self.speed_potion_timer = 0
+            return True
+        else: # déjà du speed
+            return False
+        
+    def strength_player(self):
+        # change vitesse du joueur pendant 15 secondes
+        if self.player.strength_multiplier == 1:
+            self.player.strength_multiplier = strength_potion_mutltiplier
+            self.strength_potion_timer = 0
+            return True
+        else: # déjà du strength
+            return False
+        
+    def invincibility_player(self):
+        # change vitesse du joueur pendant 15 secondes
+        if self.player.invincibility == False:
+            self.player.invincibility = True
+            self.invincibility_potion_timer = 0
+            return True
+        else: # déjà du strength
+            return False
+    
     def add_player_heart(self,amount=2):
         self.max_life += amount
         self.player.max_life = self.max_life
+
 #===============================================================
 #====PROGRAMME PRINCIPAL========================================
 #===============================================================

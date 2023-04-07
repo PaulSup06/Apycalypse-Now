@@ -61,7 +61,7 @@ class Level:
                             Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][4:],'True', first_dialog="1")
                         elif tile_properties["class"][:5] == 'enemy':
                             
-                            Enemy(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.enemies],self.collision_blocks, self.enemy_imgs, "ligne_h",tile_properties["class"][6:])
+                            Enemy(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.enemies], self.collision_blocks, self.enemy_imgs, "ligne_h",tile_properties["class"][6:], self.items)
                         
                         elif tile_properties["class"][:4] == "door":
                             Door(x*CASE_SIZE,y*CASE_SIZE,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,tile_properties["class"][5:7],tile_properties["class"][8]=="1")

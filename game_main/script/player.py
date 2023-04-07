@@ -27,6 +27,9 @@ class Player(Entity):
 
         #variables de gameplay
         self.life = player_life
+        self.speed_multiplier = 1 
+        self.strength_multiplier = 1 
+        self.invincibility = False
         self.max_life = max_life
         self.attacking = False
         self.weapon = weapon
@@ -63,14 +66,12 @@ class Player(Entity):
             if self.movement.length() != 0:
                 self.movement = self.movement.normalize()
             
-            if self.check_collision(self.collision_blocks, "horizontal", self.movement.x * playerspeed) == False:
-                self.x += self.movement.x * playerspeed
+            if self.check_collision(self.collision_blocks, "horizontal", self.movement.x * (playerspeed * self.speed_multiplier)) == False:
+                self.x += self.movement.x * (playerspeed * self.speed_multiplier)
                 
-            if self.check_collision(self.collision_blocks, "vertical", self.movement.y * playerspeed) == False:
-                self.y += self.movement.y * playerspeed
-                
-            
-            
+            if self.check_collision(self.collision_blocks, "vertical", self.movement.y * (playerspeed * self.speed_multiplier)) == False:
+                self.y += self.movement.y * (playerspeed * self.speed_multiplier)
+                            
             self.x = round(self.x)
             self.y = round(self.y)
             
@@ -100,6 +101,11 @@ class Player(Entity):
             self.attack_counter +=1
             if self.attack_counter >= self.attack_cooldown:
                 self.attacking = False
+        
+        # TODO : dessine la bubble (si le joueur est invincible)
+        # "..\\textures\\player\\misc\\invincibility_bubble.png"
+        if self.invincibility:
+            pass
     
     def attack(self, enemies):
         if not self.attacking:
@@ -126,4 +132,4 @@ class Player(Entity):
 
             for enemy in enemies:
                 if hit_rect.colliderect(enemy.rect):
-                    enemy.hit(damages)
+                    enemy.hit(damages * self.strength_multiplier)
