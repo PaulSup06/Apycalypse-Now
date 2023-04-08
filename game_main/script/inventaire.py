@@ -234,7 +234,7 @@ class Inventaire:
         if amount:
             offset = random.randint(0,100)
             positive = random.choice((-1,1))
-            Item(player.x+(offset*positive),player.rect.bottom + 20,self.item_images[item_name],item_groups,item_name,amount)
+            Item(player.x+(offset*positive),player.rect.bottom + 20,self.item_images[item_name if "note" not in item_name else "note"],item_groups,item_name,amount)
     
     def use(self):
         """utilise l'objet sélectionné dans l'inventaire (consommable uniquement)

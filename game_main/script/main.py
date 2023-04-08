@@ -57,6 +57,11 @@ class Game:
         self.current_life = self.max_life = default_player_life
         self.changin_world = False
         self.player_weapon_name = None
+
+        # init image des notes
+        self.note_img = pygame.image.load("..\\textures\\ui\\note.png")
+        self.note_rect = self.note_img.get_rect()
+        self.note_rect = (WIDTH / 2 - self.note_rect.width / 2 - 20, -10, self.note_rect.width, self.note_rect.height)
         
         self.generate_menus()           
 
@@ -153,7 +158,9 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    if self.game_state == "playing":
+                    if self.game_state == "playing" or self.game_state == "note":
+                        self.game_state = "playing" # se retire de la note
+
                         if event.key == int(self.settings["k_attack"]): #TODO ajouter touches dynamiques
                             if not self.ui.current_dialog and not self.inventaire.enabled:
                                 self.player.attack(self.level.enemies)
@@ -210,7 +217,7 @@ class Game:
                         self.change_level(1)
                     elif event.key==pygame.K_u:
                         self.inventaire.add_item("strength_potion",2)
-                        self.inventaire.add_item("note", 1, "Lettre aux robots|Ce vendredi 24 mars, nous étions seul face aux robots. Après leur arrivée soudaine, nous étions désemparés. Veuillez venir nous aider au plus vite.\n\nCricri et Marco.")
+                        self.inventaire.add_item("note", 1, "Message aux futurs générations|Mes chères amis, veuillez garder notre planète propre car sinon nous allons tous mourrir d'ici un siècle ou deux. Voici cette note de teste!")
                         self.inventaire.add_item("invincibility_potion",4)
                         self.inventaire.inventory
                     elif event.key==pygame.K_i:
@@ -225,7 +232,7 @@ class Game:
                 #========================================================================================    
                          
             #BOUCLE PRINCIPALE LORS DU JEU        
-            if self.game_state == "playing":
+            if self.game_state == "playing" or self.game_state == "note":
                 if not self.ui.current_dialog and not self.inventaire.enabled:
                     self.player.move(pygame.key.get_pressed(),self.settings)
                 self.player.update()
@@ -268,6 +275,33 @@ class Game:
                         pygame.draw.rect(self.screen,'white',pygame.Rect(block.surface.x - self.level.visible_blocks.offset.x,block.surface.y - self.level.visible_blocks.offset.y, block.surface.width, block.surface.height),2)
                     pygame.draw.rect(self.screen,'white',pygame.Rect(self.player.surface.x - self.level.visible_blocks.offset.x,self.player.surface.y - self.level.visible_blocks.offset.y, self.player.surface.width, self.player.surface.height),2)
                     pygame.draw.rect(self.screen,'red',pygame.Rect(self.player.rect.x - self.level.visible_blocks.offset.x,self.player.rect.y - self.level.visible_blocks.offset.y, self.player.rect.width, self.player.rect.height),2)   
+
+                # affiche la note par dessus l'écran
+                if self.game_state == "note":
+                    self.screen.blit(self.note_img, self.note_rect)
+                    # affiche titre de la note
+                    text = font1.render(self.note_titre, True, (0, 0, 0))
+                    text_rect = text.get_rect(bottomleft=(220,250))
+                    self.note_img.blit(text, text_rect)
+                    # afficher le contenu de la note avec des retours à la ligne
+                    lignes = []
+                    mots = self.note_contenu.split(" ")
+                    ligne = ""
+                    for mot in mots:
+                        if font1.size(ligne + mot)[0] < 350:
+                            ligne += mot + " "
+                        else:
+                            lignes.append(ligne)
+                            ligne = mot + " "
+                    lignes.append(ligne)
+
+                    y = 300 
+                    for ligne in lignes:
+                        text = font1.render(ligne, True, (0, 0, 0))
+                        text_rect = text.get_rect(bottomleft=(220,y))
+                        self.note_img.blit(text, text_rect)
+                        y += font1.get_height() + 10 
+
 
 
             #UI
@@ -619,8 +653,9 @@ class Game:
     def read_note(self, note):
         # ouvre une note
 
-        titre = str(note).split("|")[1]
-        contenu = str(note).split("|")[2]
+        self.note_titre = str(note).split("|")[1]
+        self.note_contenu = str(note).split("|")[2]
+        self.game_state = "note"
 
 
         return False
