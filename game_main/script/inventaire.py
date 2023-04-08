@@ -239,7 +239,9 @@ class Inventaire:
     def use(self):
         """utilise l'objet sélectionné dans l'inventaire (consommable uniquement)
         """
-        selected_item = self.inventory_grid[self.cursor_y][self.cursor_x][0]
+        selected_item = self.inventory_grid[self.cursor_y][self.cursor_x]
+        if selected_item != None:
+            selected_item = selected_item[0]
 
         if "note" not in selected_item:
             used = self.item_function[selected_item]()

@@ -43,8 +43,8 @@ class Game:
           
         #génération des interfaces
         self.game_state = "menu"
-        self.ui = UI()  
         self.inventaire = Inventaire(self)  
+        self.ui = UI(self.inventaire.add_item)  
         self.menu_pg_pygame = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\menu_bg.png"), (WIDTH,HEIGHT)).convert()
         self.menu_pg_pymenu = pygame_menu.baseimage.BaseImage(
         image_path="..\\textures\\ui\\menu_bg.png",
@@ -59,10 +59,11 @@ class Game:
         self.player_weapon_name = None
 
         # init image des notes
-        self.note_img = pygame.image.load("..\\textures\\ui\\note.png")
+        self.note_img = pygame.image.load("..\\textures\\ui\\note.png").convert_alpha()
         self.note_rect = self.note_img.get_rect()
         self.note_rect = (WIDTH / 2 - self.note_rect.width / 2 - 20, -10, self.note_rect.width, self.note_rect.height)
-        
+        self.is_in_a_note = False
+
         self.generate_menus()           
 
     def generate_menus(self):
@@ -158,9 +159,8 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    if self.game_state == "playing" or self.game_state == "note":
-                        self.game_state = "playing" # se retire de la note
-
+                    if self.game_state == "playing" or self.is_in_a_note:
+                        self.is_in_a_note = False
                         if event.key == int(self.settings["k_attack"]): #TODO ajouter touches dynamiques
                             if not self.ui.current_dialog and not self.inventaire.enabled:
                                 self.player.attack(self.level.enemies)
@@ -232,7 +232,7 @@ class Game:
                 #========================================================================================    
                          
             #BOUCLE PRINCIPALE LORS DU JEU        
-            if self.game_state == "playing" or self.game_state == "note":
+            if self.game_state == "playing" or self.is_in_a_note:
                 if not self.ui.current_dialog and not self.inventaire.enabled:
                     self.player.move(pygame.key.get_pressed(),self.settings)
                 self.player.update()
@@ -277,7 +277,7 @@ class Game:
                     pygame.draw.rect(self.screen,'red',pygame.Rect(self.player.rect.x - self.level.visible_blocks.offset.x,self.player.rect.y - self.level.visible_blocks.offset.y, self.player.rect.width, self.player.rect.height),2)   
 
                 # affiche la note par dessus l'écran
-                if self.game_state == "note":
+                if self.is_in_a_note:
                     self.screen.blit(self.note_img, self.note_rect)
                     # affiche titre de la note
                     text = font1.render(self.note_titre, True, (0, 0, 0))
@@ -434,7 +434,7 @@ class Game:
             current_world (int): Monde à générer
         """
         #rend le paramètre optionnel en utilisant la valeur de la classe Game
-        self.ui = UI()   #reset l'ui lors du chargement (fix bug ui ouvert lors de fermeture d'une précédente page)
+        self.ui = UI(self.inventaire.add_item)   #reset l'ui lors du chargement (fix bug ui ouvert lors de fermeture d'une précédente page)
         self.changing_world = False 
 
         if not current_world:
@@ -625,37 +625,37 @@ class Game:
     
     def speed_player(self):
         # change vitesse du joueur pendant 15 secondes
-        if self.player.speed_multiplier == 1:
+        #if self.player.speed_multiplier == 1:
             self.player.speed_multiplier = speed_potion_mutltiplier
             self.ui.speed_potion_timer = 0
             return True
-        else: # déjà du speed
-            return False
+        #else: # déjà du speed
+        #    return False
         
     def strength_player(self):
         # change vitesse du joueur pendant 15 secondes
-        if self.player.strength_multiplier == 1:
+        #if self.player.strength_multiplier == 1:
             self.player.strength_multiplier = strength_potion_mutltiplier
             self.ui.strength_potion_timer = 0
             return True
-        else: # déjà du strength
-            return False
+        #else: # déjà du strength
+        #    return False
         
     def invincibility_player(self):
         # change vitesse du joueur pendant 15 secondes
-        if self.player.invincibility == False:
+        #if self.player.invincibility == False:
             self.player.invincibility = True
             self.ui.invincibility_potion_timer = 0
             return True
-        else: # déjà de l'invincibility
-            return False
+        #else: # déjà de l'invincibility
+        #    return False
         
     def read_note(self, note):
         # ouvre une note
 
         self.note_titre = str(note).split("|")[1]
         self.note_contenu = str(note).split("|")[2]
-        self.game_state = "note"
+        self.is_in_a_note = True
 
 
         return False

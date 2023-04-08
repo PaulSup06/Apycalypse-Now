@@ -21,6 +21,9 @@ MAX_ITEMS_PER_CELL = 64
 BACKGROUND_COLOR = (0, 0, 0)
 ITEM_SIZE = (32,32)
 
+#son
+actual_sound_channel = 1
+
 #folders et paths
 music_folder = "..\\audio"
 sound_folder = "..\\sound"
@@ -190,51 +193,73 @@ button_font = pygame.font.SysFont("Arial",35, True)
 
 #dialogues
 npc_dialogs = {
-    "John":{
+    "Osborn Turtledove":{
         
             "1":{
-                    "type": "sans_choix",
-                    'text':'Bonjour aventurier ! Je ne vous avais jamais vu dans les parages auparavant...',
-                    "goto": "2",
-                    "npc_update":["True","...","2"],
-                },
-            "2":{
-                    "type": "sans_choix",
-                    'text':"Vous voulez aller vers l'Est ? Je ne m'y risquerais pas... \n J'ai entendu de terribles histoires sur cet endroit depuis la grande catastrophe",
-                    "goto": "-1",
-                    "npc_update":["True","...","3"],
-                },
-            "3":{
                     "type": "avec_choix",
-                    "text":"Une question avec un choix",
+                    'text':'Vous êtes Nils je suppose... on m\'a parlé de votre arrivée.',
                     "choix":[
                         {"index":1,
-                        "text": "choix1",
-                        "goto":"1",
-                        "npc_update":["True","...","1"],
-                        },
-                        {"index":2,
-                        "text": "choix2",
-                        "goto":"4",
-                        "npc_update":["True","...","4"],
-                        },
-                        {"index":3,
-                        "text": "choix3",
+                        "text": "Oui, c'est moi",
                         "goto":"2",
                         "npc_update":["True","...","1"],
                         },
-                        {"index":4,
-                        "text": "choix4",
+                        {"index":2,
+                        "text": "Qui vous a parlé de moi ?",
+                        "goto":"3",
+                        "npc_update":["True","...","3"],
+                        }
+                    ]
+                },
+            "2":{
+                    "type": "avec_choix",
+                    'text':"Comme vous le savez sûrement, l'humanité est depuis peu sous menace d'extinction.\nLe Cristal de Feu a été brisé, hélas!",
+                    "choix":[
+                        {"index":1,
+                        "text": "Qu'est-ce que le \"Cristal de Feu\"?..",
                         "goto":"4",
                         "npc_update":["True","...","4"],
+                        },
+                        {"index":2,
+                        "text": "J'ai entendu, c'est pour ça que je suis ici",
+                        "goto":"5",
+                        "npc_update":["True","...","5"],
+                        }
+                    ]
+                },
+            "3":{
+                    "type": "avec_choix",
+                    "text":"Un ancien moine du temple m'a donné une lettre il y a peu. Votre nom y figuré. \nTenez, je vous l'a met dans votre sac.",
+                    "choix":[
+                        {"index":1,
+                        "text": "Merci",
+                        "goto":"2",
+                        "npc_update":["True","lettre_moine","2"],
                         }
                     ]
                 },
             "4":{
                 "type": "sans_choix",
-                "text":"un dialogue qui se ferme sans rien faire",
-                "goto": "-1",
-                "npc_update":["True","...","1"],
+                "text":"Le Cristal de Feu est une pierre dont la forme est parfaite. Jamais l'humanité a-t-elle pu reproduire une telle perfection. ",
+                "goto": "5",
+                "npc_update":["True","...","5"],
+            },
+            "5":{
+                "type": "sans_choix",
+                "text":"D'après une légende ancienne, le jour où ce cristal se brisera, la Terre connaîtra son trépas, \npollution et destruction règneront en maîtres, et l'humanité en paiera les êtres.",
+                "goto": "6",
+                "npc_update":["True","...","6"],
+            },
+            "6":{
+                "type": "avec_choix",
+                "text":"Quelle misère! Le temps nous est compté! Voudrais-tu bien nous aider dans notre quêtre ?",
+                "choix":[
+                    {"index":1,
+                    "text": "Oui! Allons sauver la terre!",
+                    "goto":"-1",
+                    "npc_update":["True","...","-1"],
+                    }
+                ]
             }
         }
     }

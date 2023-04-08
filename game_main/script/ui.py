@@ -3,7 +3,7 @@ from settings import *
 from debug import debug
 
 class UI:
-    def __init__(self) -> None:
+    def __init__(self, add_item) -> None:
         """Class UI : gère tout ce qui est affiché à l'écran et n'est pas directement dans le monde du jeu (overlay, affichage dialogues,...)
         """
         #chargement des images et textes fixes 
@@ -18,7 +18,7 @@ class UI:
         self.current_dialog = None
         self.dialog_counter = 0
         self.ongoin_dialog = False
-        
+        self.add_item = add_item
         self.transitions = []
 
     def load_dialog(self, dialogue_id, npc_name):
@@ -27,34 +27,6 @@ class UI:
             dialogue_id (int): id du dialogue à afficher
             npc_name (str): nom du npc 
         """
-
-        ''' exemple de structure de donnée des dialogues d'un npc
-        {
-            "1":{
-                    "type": "sans_choix",
-                    "goto": "2"
-                    "npc_update:("True","...",dialogue suivant)     -->     Change le status du npc 
-                },
-            "2":{
-                    "type": "avec_choix",
-                    "choix":[
-                        {"index":1,
-                        "texte_du_choix": "choix1",
-                        "goto_number":"1"
-                        },
-                        {"index":2,
-                        "texte_du_choix": "choix2",
-                        "goto_number":"3"
-                        }
-                    ]
-                },
-            "3":{
-                "type": "sans_choix",
-                "goto": "-1"
-            }
-        }
-        '''
-
         self.current_npc = npc_name
         self.ongoing_dialog = True
         
@@ -68,6 +40,8 @@ class UI:
         if self.current_dialog["type"] == "avec_choix":
             self.choix = self.current_dialog["choix"]
             self.nb_choix = len(self.choix)
+            if self.nb_choix ==1:
+                self.choix_rendered.append(Button((WIDTH//4) * 2 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]["goto"],self.choix[0]["npc_update"]))
             if self.nb_choix ==2:
                 self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]["goto"],self.choix[0]["npc_update"]))
                 self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-100,500,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]["goto"],self.choix[1]["npc_update"]))
@@ -252,6 +226,12 @@ class UI:
      
     def select_option(self,next_dialog,npc_update):
         self.load_dialog(next_dialog,self.current_npc)
+
+        if npc_update[1] == "lettre_moine":
+            # donne une lettre au joueur
+            self.add_item("note", 1, "Lettre d'un ancien moine|Prenez garde! Le Cristal de Feu a été brisé! Mais rassurez-vous.. Nils, oui, Nils viendra nous sauver! Je l'ai vu dans mes rêves, prévenez la cité des Orphèves que nous serons sauvés!")
+
+
         return npc_update       
         
     def add_transition_open(self):
