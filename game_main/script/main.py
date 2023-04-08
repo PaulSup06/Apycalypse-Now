@@ -210,7 +210,7 @@ class Game:
                         self.change_level(1)
                     elif event.key==pygame.K_u:
                         self.inventaire.add_item("strength_potion",2)
-                        self.inventaire.add_item("speed_potion",3)
+                        self.inventaire.add_item("note", 1, "Lettre aux robots|Ce vendredi 24 mars, nous étions seul face aux robots. Après leur arrivée soudaine, nous étions désemparés. Veuillez venir nous aider au plus vite.\n\nCricri et Marco.")
                         self.inventaire.add_item("invincibility_potion",4)
                         self.inventaire.inventory
                     elif event.key==pygame.K_i:
@@ -269,7 +269,7 @@ class Game:
                     pygame.draw.rect(self.screen,'white',pygame.Rect(self.player.surface.x - self.level.visible_blocks.offset.x,self.player.surface.y - self.level.visible_blocks.offset.y, self.player.surface.width, self.player.surface.height),2)
                     pygame.draw.rect(self.screen,'red',pygame.Rect(self.player.rect.x - self.level.visible_blocks.offset.x,self.player.rect.y - self.level.visible_blocks.offset.y, self.player.rect.width, self.player.rect.height),2)   
 
-                
+
             #UI
             #========================================================================================
                 
@@ -613,8 +613,17 @@ class Game:
             self.player.invincibility = True
             self.ui.invincibility_potion_timer = 0
             return True
-        else: # déjà du strength
+        else: # déjà de l'invincibility
             return False
+        
+    def read_note(self, note):
+        # ouvre une note
+
+        titre = str(note).split("|")[1]
+        contenu = str(note).split("|")[2]
+
+
+        return False
     
     def add_player_heart(self,amount=2):
         self.max_life += amount

@@ -24,6 +24,8 @@ class Spike(Entity):
         self.textures = textures
         self.action = "idle"
 
+        self.basey = self.surface.top # spike apparait derrière le joueur
+
         self.trigger_cooldown = 0
         self.animation_counter_fps = 0
 

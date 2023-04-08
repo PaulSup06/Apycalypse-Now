@@ -30,6 +30,7 @@ class Inventaire:
             "speed_potion":self.main_elmt.speed_player,
             "strength_potion":self.main_elmt.strength_player,
             "invincibility_potion":self.main_elmt.invincibility_player,
+            "note":self.main_elmt.read_note,
             "heart":self.main_elmt.add_player_heart,
         }
         
@@ -120,7 +121,7 @@ class Inventaire:
                 self.rendered.blit(self.cell_image, cell_rect)
                 if self.inventory_grid[i][j] != None:
                     item_name, amount = self.inventory_grid[i][j]
-                    item_image = self.item_images.get(item_name)
+                    item_image = self.item_images.get(item_name if "note" not in item_name else "note")
 
                     if item_image is not None:
                         item_image_rect = item_image.get_rect(center=cell_rect.center)
@@ -135,15 +136,22 @@ class Inventaire:
                     if i == self.cursor_y and j == self.cursor_x:
                         if item_name != "":
                             font = pygame.font.SysFont(None, 24)
-                            name_text = font.render(item_names_render[item_name], True, (255, 255, 255))
+
+                            if "note" in str(item_name):
+                                #note|nom|contenu
+                                name_text = font.render(str(item_name).split("|")[1], True, (255, 255, 255))
+                            else:
+                                name_text = font.render(item_names_render[item_name], True, (255, 255, 255))
+
                             name_text_rect = name_text.get_rect(
                                 midtop=((GRID_SIZE * (CASE_SIZE + CELL_MARGIN)) / 2,10))
                             
                             drop_text = font.render(f"[{pygame.key.name(int(params['k_attack']))}] pour lacher",1,"white")
                             self.rendered.blit(drop_text, (name_text_rect.centerx - drop_text.get_width()//2, name_text_rect.bottom + 5))
                             
-                            if item_name in self.item_function.keys():
-                                action_text = font.render(f"[{pygame.key.name(int(params['k_interact']))}] pour utiliser",1,"white")
+                            if item_name in self.item_function.keys() or "note" in str(item_name):
+                                verbe = "utiliser" if "note" not in str(item_name) else "lire"
+                                action_text = font.render(f"[{pygame.key.name(int(params['k_interact']))}] pour " + verbe ,1,"white")
                                 self.rendered.blit(action_text, (name_text_rect.centerx - action_text.get_width()//2, name_text_rect.bottom + drop_text.get_height() + 5))
                                 
                             self.rendered.blit(name_text, name_text_rect)
@@ -162,7 +170,7 @@ class Inventaire:
             (HEIGHT-self.rendered_rect.height)//2
         ))
 
-    def add_item(self, item_name, amount=1):
+    def add_item(self, item_name, amount=1, args=""):
         """Ajoute un item à l'inventaire
 
         Args:
@@ -171,6 +179,9 @@ class Inventaire:
         return:
             overflow (list): Liste d'items avec leur nombre qui n'ont pas pu être ajoutés à l'inventaire
         """
+        if args != "":
+            item_name = item_name + "|" + args
+
         if item_name in self.inventory.keys():
             amount_before = self.inventory[item_name]
             self.inventory[item_name] = amount + amount_before
@@ -229,7 +240,12 @@ class Inventaire:
         """utilise l'objet sélectionné dans l'inventaire (consommable uniquement)
         """
         selected_item = self.inventory_grid[self.cursor_y][self.cursor_x][0]
-        used = self.item_function[selected_item]()
+
+        if "note" not in selected_item:
+            used = self.item_function[selected_item]()
+        else:
+            used = self.item_function["note"](selected_item)
+
         if used:
             self.remove_item(selected_item,1)        
             

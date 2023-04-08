@@ -249,6 +249,7 @@ item_names_render = {
     "life_potion":"Potion de soin",
     "speed_potion":"Potion de vitesse",
     "strength_potion":"Potion de force",
+    "note":"Note",
     "invincibility_potion":"Potion d'invincibilité",
 }
 #temp
