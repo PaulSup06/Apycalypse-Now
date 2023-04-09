@@ -64,6 +64,9 @@ class Game:
         self.note_rect = (WIDTH / 2 - self.note_rect.width / 2 - 20, -10, self.note_rect.width, self.note_rect.height)
         self.is_in_a_note = False
 
+        # debug
+        self.debug_text_showing = False
+
         self.generate_menus()           
 
     def generate_menus(self):
@@ -191,6 +194,16 @@ class Game:
                                             for door in self.level.doors:
                                                 if door.id == renvoi_terminal[1]:
                                                     door.unlock()
+                                for switch in self.level.switches:
+                                    if switch.name == "lever" or switch.name == "manivelle" :
+                                        if switch.player_near:
+                                            methode_to_call = switch.interact()
+                                            if methode_to_call != None:
+                                                if methode_to_call == "remove_manivelle_from_player_inventory":
+                                                    self.inventaire.remove_item("manivelle")
+                                                else:
+                                                    methode = getattr(self, methode_to_call)
+                                                    methode()
 
                         elif event.key == int(self.settings["k_escape"]):
                             self.game_state = "menu"
@@ -219,6 +232,7 @@ class Game:
                         self.inventaire.add_item("strength_potion",2)
                         self.inventaire.add_item("note", 1, "Message aux futurs générations|Mes chères amis, veuillez garder notre planète propre car sinon nous allons tous mourrir d'ici un siècle ou deux. Voici cette note de teste!")
                         self.inventaire.add_item("invincibility_potion",4)
+                        self.inventaire.add_item("manivelle",1)
                         self.inventaire.inventory
                     elif event.key==pygame.K_i:
                         self.inventaire.drop(self.player,"Blue blob", [self.level.items],10)
@@ -261,6 +275,13 @@ class Game:
                     term.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings)
                 for trigger in self.level.trigger_blocks:
                     trigger.handle(self.player)
+                for switch in self.level.switches:
+                    fonction_to_call = switch.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings, self.inventaire.have_item("manivelle"))
+                    if fonction_to_call != None:
+                        methode = getattr(self, fonction_to_call)
+                        methode()
+
+                    switch.animate()
                 for item in self.level.items:
                     if item.handle(self.player, self.level.visible_blocks.offset):
                         self.inventaire.add_item(item.name, item.amount)
@@ -346,6 +367,13 @@ class Game:
             #========================================================================================
             
             debug(("FPS : " + str(round(self.clock.get_fps(),1)),))
+
+            # message debug
+            if self.debug_text_showing:
+                pygame.Surface.blit(self.screen, self.debug_text, ((WIDTH/2) - self.debug_text.get_width() / 2, HEIGHT - self.debug_text.get_height() - 10, self.debug_text_rect.width, self.debug_text_rect.height))
+                self.debug_text_timer += 1
+                if self.debug_text_timer >= FPS * 3:
+                    self.debug_text_showing = False
             
             #Update de l'écran et gestion tickrate
             pygame.display.update()
@@ -664,6 +692,24 @@ class Game:
         self.max_life += amount
         self.player.max_life = self.max_life
 
+
+    #=====================================================================
+    #FONCTIONS LIEES AUX SWITCHES
+    #=====================================================================
+    def lever_trigger(self):
+        self.debug_message("switch tiré/poussé/tourné!")
+        return False
+    
+    #=====================================================================
+    #DEBUG
+    #=====================================================================
+    def debug_message(self, msg):
+        self.debug_text = font2.render(msg, 1,"white")
+        self.debug_text_rect = self.debug_text.get_rect()
+        self.debug_text_timer = 0
+        self.debug_text_showing = True
+
+    
 #===============================================================
 #====PROGRAMME PRINCIPAL========================================
 #===============================================================

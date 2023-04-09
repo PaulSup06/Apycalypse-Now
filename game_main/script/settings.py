@@ -102,6 +102,7 @@ invincibility_potion_duration = 5 # en seconde
 player_img_folder = "..\\textures\\player"
 enemy_img_folder = "..\\textures\\enemies"
 spike_img_folder = "..\\textures\\spike"
+lever_img_folder = "..\\textures\\lever"
 misc_folder = "..\\textures\\misc"
 items_folder="..\\textures\\items"
 def load_imgs():
@@ -149,6 +150,21 @@ def load_spike_imgs():
         spike_imgs.append(pygame.image.load(os.path.join(spike_img_folder,file)).convert_alpha())
             
     return spike_imgs
+
+def load_switches_imgs():
+
+    files = os.listdir(os.path.join(lever_img_folder))
+    # floor_lever1
+    floor_lever1 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "01.png" or  file == "13.png" or file == "25.png" or  file == "37.png"]
+    floor_lever2 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "04.png" or  file == "16.png" or file == "28.png" or  file == "40.png"]
+    floor_lever3 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "10.png" or  file == "22.png" or file == "34.png"]
+    manivelle = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "44.png" or  file == "08.png" or file == "20.png"or file == "32.png"]
+    wall_lever = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "00.png" or  file == "12.png" or file == "24.png"or file == "36.png"]
+    pressure_plate_1 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "50.png" or  file == "62.png" or file == "74.png"or file == "86.png"]
+    pressure_plate_2 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "48.png" or  file == "60.png" or file == "72.png"or file == "84.png"]
+    pressure_plate_3 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "53.png" or  file == "65.png" or file == "77.png"or file == "89.png"]
+            
+    return (floor_lever1,floor_lever2,floor_lever3,manivelle,pressure_plate_1,pressure_plate_2,pressure_plate_3,wall_lever)
 
 def load_door_imgs():
     door_imgs = []
@@ -273,6 +289,7 @@ button_fillcolors = {'normal': (0,0,0,0),
 item_names_render = {
     "life_potion":"Potion de soin",
     "speed_potion":"Potion de vitesse",
+    "manivelle":"Manivelle",
     "strength_potion":"Potion de force",
     "note":"Note",
     "invincibility_potion":"Potion d'invincibilité",

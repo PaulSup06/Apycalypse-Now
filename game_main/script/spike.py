@@ -32,10 +32,10 @@ class Spike(Entity):
         self.damage = spike_damage
         
     def check_trigger(self, player):
-        """Gestion du mouvement de l'ennemi ainsi que de ses collisions et états
+        """Gestion de l'état du spike ainsi que de ses collisions et états
 
         Args:
-            player (player object): objet du joueur pour les colisions et la gestion des dégats
+            player (player object): objet du joueur pour les collisions et la gestion des dégats
 
         Returns:
             int: dégats infligés

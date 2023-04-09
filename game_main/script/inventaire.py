@@ -34,6 +34,9 @@ class Inventaire:
             "heart":self.main_elmt.add_player_heart,
         }
         
+    def have_item(self,name):
+        return name in self.inventory
+
     def update_grid(self):
         """Génère le tableau 3D contenant les items de l'inventaire
 
@@ -242,15 +245,15 @@ class Inventaire:
         selected_item = self.inventory_grid[self.cursor_y][self.cursor_x]
         if selected_item != None:
             selected_item = selected_item[0]
+            if  selected_item in self.item_function:
+                if "note" not in selected_item:
+                    used = self.item_function[selected_item]()
+                else:
+                    used = self.item_function["note"](selected_item)
 
-        if "note" not in selected_item:
-            used = self.item_function[selected_item]()
-        else:
-            used = self.item_function["note"](selected_item)
-
-        if used:
-            self.remove_item(selected_item,1)        
-            
+                if used:
+                    self.remove_item(selected_item,1)        
+                
 class Item(Entity):
     def __init__(self, x, y, image, groupes, name, amount):
         """Objet item lorsque laché au sol

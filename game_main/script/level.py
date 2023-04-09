@@ -1,3 +1,4 @@
+from switch import Lever, Manivelle, PressurePlate
 from settings import * 
 from case import Case,Trigger
 from debug import debug
@@ -34,6 +35,8 @@ class Level:
         #textures
         self.enemy_imgs = load_enemy_imgs()
         self.spike_imgs = load_spike_imgs()
+        (self.floor_lever1_imgs, self.floor_lever2_imgs, self.floor_lever3_imgs, self.manivelle_imgs, 
+         self.pressure_plate1_imgs , self.pressure_plate2_imgs,  self.pressure_plate3_imgs, self.wall_lever_imgs) = load_switches_imgs()
         self.door_imgs = load_door_imgs()
         
         #pygame sprite groups
@@ -43,6 +46,7 @@ class Level:
         self.npcs = pygame.sprite.Group()
         self.enemies = pygame.sprite.Group()
         self.spikes = pygame.sprite.Group()
+        self.switches = pygame.sprite.Group()
         self.doors = pygame.sprite.Group()
         self.terminals = pygame.sprite.Group()
         self.items = pygame.sprite.Group()
@@ -77,8 +81,8 @@ class Level:
                     if gid!=0:
                         tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
                         image = self.world_tmx.get_tile_image_by_gid(gid)
-
                         Case(x*CASE_SIZE, y*CASE_SIZE, [self.visible_blocks], image, basey=(y+int(str(tile_properties["class"])[1:]))*CASE_SIZE)
+
             if layer.name == "triggers":
                 for x,y,gid in layer.iter_data():
                     if gid!=0:
@@ -92,3 +96,29 @@ class Level:
                             Trigger(x*CASE_SIZE, y*CASE_SIZE, [self.trigger_blocks], image,self.game.change_level,image,None,int(trigger_id[8:10]),trigger_id[10:])
                         elif trigger_id[:5]=="music":
                             Trigger(x*CASE_SIZE, y*CASE_SIZE, [self.trigger_blocks], image,self.game.play_music,image,None,f"{trigger_id[5:]}.wav")
+            if layer.name == "switches":
+                for x,y,gid in layer.iter_data():
+                    if gid!=0:
+                        tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
+                        trigger_id = tile_properties["class"]
+                        image = self.world_tmx.get_tile_image_by_gid(gid)
+
+                        function_to_call =  getattr(layer, "class")
+
+                        if "floor_lever1" in tile_properties["class"]:
+                            Lever(x*CASE_SIZE, y*CASE_SIZE,image, [self.collision_blocks,self.visible_blocks, self.switches], self.collision_blocks, self.floor_lever1_imgs, function_to_call, "lever")
+                        elif "floor_lever2" in tile_properties["class"]:
+                            Lever(x*CASE_SIZE, y*CASE_SIZE,image, [self.collision_blocks,self.visible_blocks, self.switches], self.collision_blocks, self.floor_lever2_imgs, function_to_call, "lever")
+                        elif "floor_lever3" in tile_properties["class"]:
+                            Lever(x*CASE_SIZE, y*CASE_SIZE,image, [self.collision_blocks,self.visible_blocks, self.switches], self.collision_blocks, self.floor_lever3_imgs, function_to_call, "lever")
+                        elif "pressure_plate1" in tile_properties["class"]:
+                            PressurePlate(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.switches], self.collision_blocks, self.pressure_plate1_imgs, function_to_call, "pressure_plate")
+                        elif "pressure_plate2" in tile_properties["class"]:
+                            PressurePlate(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.switches], self.collision_blocks, self.pressure_plate2_imgs, function_to_call, "pressure_plate")
+                        elif "pressure_plate3" in tile_properties["class"]:
+                            PressurePlate(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.switches], self.collision_blocks, self.pressure_plate3_imgs, function_to_call, "pressure_plate")
+                        elif "manivelle" in tile_properties["class"]:
+                            Manivelle(x*CASE_SIZE, y*CASE_SIZE,image, [self.collision_blocks,self.visible_blocks, self.switches], self.collision_blocks, self.manivelle_imgs, function_to_call, "manivelle")
+                        elif "wall_lever" in tile_properties["class"]:
+                            Lever(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.switches], self.collision_blocks, self.wall_lever_imgs, function_to_call, "lever")
+
