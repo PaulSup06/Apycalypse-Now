@@ -20,6 +20,7 @@
  <tile id="25" class="music6"/>
  <tile id="26" class="music7"/>
  <tile id="27" class="music8"/>
+ <tile id="30" class="Osborn Turtledove"/>
  <tile id="50" class="terminal: 1:0"/>
  <tile id="51" class="terminal: 2:0"/>
  <tile id="60" class="terminal: 1:1"/>

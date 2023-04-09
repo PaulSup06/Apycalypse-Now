@@ -52,6 +52,10 @@ class Level:
         self.items = pygame.sprite.Group()
 
         self.player = None
+
+        #npc path
+        npc_path = {}
+        npcs = []
         
         for layer in self.world_tmx.layers:
             if layer.name == "collision":
@@ -65,7 +69,12 @@ class Level:
                             self.player = Player(x*CASE_SIZE,y*CASE_SIZE, self.visible_blocks, self.collision_blocks, player_life, player_max_life)
                         elif tile_properties["class"][:3] == 'npc':
                             #NPC de test (Fairy)
-                            Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][4:],'True', first_dialog="1")
+                            npcs.append(Npc(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.npcs],tile_properties["class"][4:],'True', first_dialog="1"))
+                            
+                            if tile_properties["class"] not in npc_path:
+                                npc_path[tile_properties["class"].split(':')[1]] = {"npc_pos": (x, y), "npc_trajectoire": []}
+                            else:
+                                npc_path[tile_properties["class"].split(':')[1]]["npc_pos"] = (x, y)
                         elif tile_properties["class"][:5] == 'enemy':                         
                             Enemy(x*CASE_SIZE, y*CASE_SIZE,image,[self.visible_blocks, self.enemies], self.collision_blocks, self.enemy_imgs, "ligne_h",tile_properties["class"][6:], self.items)
                        
@@ -121,4 +130,52 @@ class Level:
                             Manivelle(x*CASE_SIZE, y*CASE_SIZE,image, [self.collision_blocks,self.visible_blocks, self.switches], self.collision_blocks, self.manivelle_imgs, function_to_call, "manivelle")
                         elif "wall_lever" in tile_properties["class"]:
                             Lever(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.switches], self.collision_blocks, self.wall_lever_imgs, function_to_call, "lever")
+            if layer.name == "npc_path":
 
+                for x,y,gid in layer.iter_data():
+                    if gid!=0:
+                        tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
+                        trigger_id = tile_properties["class"]
+                        image = self.world_tmx.get_tile_image_by_gid(gid)
+
+                        if tile_properties["class"] not in npc_path:
+                            npc_path[tile_properties["class"]] = {"npc_pos": (0, 0), "npc_trajectoire": []}
+
+                        npc_path[tile_properties["class"]]["npc_trajectoire"].append((x, y))
+        
+        # trie les chemins de NPC afin qu'il puisse suivre une seul trajectoire
+        for key in npc_path.keys():
+            npc_path[key]["npc_trajectoire"] = self.trouver_chemin(npc_path[key]["npc_trajectoire"], npc_path[key]["npc_pos"])
+
+        # ajoute les trajectoires aux npc
+        for npc in npcs:
+            npc.path = npc_path[npc.name]
+
+    def trouver_chemin(self, coordonnees, coordonnee_depart):
+        """Algorithme de parcours en profondeur (DFS)
+        A partie d'une liste de position, les tries pour que chaque position soit à côté de la position précédente dans le tableau
+        """
+        chemin = [coordonnee_depart]
+        visites = set()
+        visites.add(coordonnee_depart)
+
+        def dfs(coordonnee_actuelle):
+            voisins = [(coordonnee_actuelle[0]+1, coordonnee_actuelle[1]),  # droite
+                    (coordonnee_actuelle[0], coordonnee_actuelle[1]+1),  # bas
+                    (coordonnee_actuelle[0]-1, coordonnee_actuelle[1]),  # gauche
+                    (coordonnee_actuelle[0], coordonnee_actuelle[1]-1)]  # haut
+
+            for voisin in voisins:
+                if voisin in visites or voisin not in coordonnees:
+                    continue
+                visites.add(voisin)
+                chemin.append(voisin)
+                if voisin == coordonnees[-1]:
+                    return True
+                if dfs(voisin):
+                    return True
+                chemin.pop()
+            return False
+
+        dfs(coordonnee_depart)
+        return chemin
