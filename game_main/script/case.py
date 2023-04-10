@@ -20,7 +20,7 @@ class Case(pygame.sprite.Sprite):
         self.surface = surface.get_rect(topleft=(x,y))
 
         if not basey:
-            self.basey = self.surface.centery
+            self.basey = self.surface.bottom
         else:
             self.basey = basey
         

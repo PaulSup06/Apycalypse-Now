@@ -77,7 +77,7 @@ class Player(Entity):
             
             self.surface.topleft = (self.x,self.y)
             self.rect.topleft = (self.x, self.y + hitbox_offset)
-            self.basey = self.surface.centery
+            self.basey = self.surface.bottom
 
     def update(self):
         """Gère les animations du joueur en fonction de ses déplacemens

@@ -61,7 +61,7 @@ class Npc(Entity):
         pygame.draw.rect(surface,"black",indicator_rect,1,5)
         surface.blit(self.indicator_rendered, (self.x + self.surface.width + 10 - offset.x, self.y - 10 - offset.y))
         if self.is_talkable and self.check_distance_to((player.x,player.y),interact_distance):
-            surface.blit(font2.render(f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour parler") ,1,"black"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + indicator_rect.height - offset.y))
+            surface.blit(font2.render(f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour parler" ,1,"black"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + indicator_rect.height - offset.y))
 
     def interact(self):
         return self.next_dialog, self.name

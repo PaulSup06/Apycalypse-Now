@@ -89,7 +89,7 @@ class PressurePlate(Entity):
         super().__init__(x, y, image, groupes,hitbox=pygame.Rect(x+15,y+8, 40, 40))
         self.collision_blocks = collision_blocks
         self.textures = textures
-        self.action = "idle"
+        self.action = "off"
         self.name = name
 
         self.basey = self.surface.top # pressure plate apparait derrière le joueur
@@ -100,12 +100,12 @@ class PressurePlate(Entity):
     def handle(self,player, surface, offset, settings, has_manivelle): # /!\ même si inutilisé on doit garder les paramètres là pour le trigger depuis main /!\
         global actual_sound_channel 
 
-        if self.rect.colliderect(player.rect) and self.action == "idle" :            
+        if self.rect.colliderect(player.rect) :            
             if self.is_off:
                 global actual_sound_channel 
 
                 # animation pressurplate activé
-                self.is_off = False
+                self.is_off = True if self.is_off else False
                 
                 self.action = "triggered"
                 # joue son trigger
@@ -122,7 +122,7 @@ class PressurePlate(Entity):
             self.image = self.textures[self.animation_counter_fps // (FPS//14)]
 
             if self.animation_counter_fps // (FPS//14) >= 3:
-                self.action = "idle"
+                self.action = "off"
                 self.animation_counter_fps = 0
 
 
