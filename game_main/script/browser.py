@@ -72,10 +72,7 @@ class Api:
 
     def completed(self):
         self.succeded = True
-        try:
-            self._window.destroy()
-        except KeyError:
-            pass # erreur de la fonction .destroy() courante et non résolue à ce jour
+        self.close_window()
 
     def play_key_sound(self):
         # joue son clavier
