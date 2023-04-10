@@ -24,7 +24,7 @@ class Game:
         os.chdir(os.path.realpath(__file__)[:-7])
         
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT),pygame.SCALED | pygame.FULLSCREEN)  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
         pygame.display.set_caption(GAME_TITLE) #ajouter titre du jeu ici
         pygame.display.set_icon(pygame.image.load("..\\textures\\test\\rock.png")) #TODO rajouter une petite icone sympa
         self.clock = pygame.time.Clock() #initialisation système de comptage de temps (fps cap) de pygame
@@ -57,11 +57,6 @@ class Game:
         self.current_life = self.max_life = default_player_life
         self.changin_world = False
         self.player_weapon_name = None
-
-        # init image des notes
-        self.note_img = pygame.image.load("..\\textures\\ui\\note.png").convert_alpha()
-        self.note_rect = self.note_img.get_rect()
-        self.note_rect = (WIDTH / 2 - self.note_rect.width / 2 - 20, -10, self.note_rect.width, self.note_rect.height)
         self.is_in_a_note = False
 
         # debug
@@ -657,6 +652,8 @@ class Game:
         # ouvre une note
 
         self.note_img = pygame.image.load(os.path.join(items_folder,note+".png"))
+        self.note_rect = self.note_img.get_rect()
+        self.note_rect = pygame.Rect((WIDTH - self.note_rect.width)//2, (HEIGHT - self.note_rect.height)//2,self.note_rect.width, self.note_rect.height)
         self.is_in_a_note = True
 
 

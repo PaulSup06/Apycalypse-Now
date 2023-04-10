@@ -19,7 +19,11 @@
  <tile id="36" class="wall_lever"/>
  <tile id="37" class="floor_lever1"/>
  <tile id="40" class="floor_lever2"/>
- <tile id="44" class="manivelle"/>
+ <tile id="44" class="manivelle">
+  <properties>
+   <property name="has_manivelle" type="bool" value="false"/>
+  </properties>
+ </tile>
  <tile id="48" class="pressure_plate2"/>
  <tile id="50" class="pressure_plate1"/>
  <tile id="53" class="pressure_plate3"/>

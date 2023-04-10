@@ -16,7 +16,7 @@ import random
 """
 
 class Lever(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, name):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, name, basey=None):
         """Levier héritant de la classe Entité, est utile au joueur
         Args:
             x (int): pos x
@@ -34,6 +34,8 @@ class Lever(Entity):
         self.player_near = False
         self.name = name
         self.is_off = True
+        if basey:
+            self.basey = basey
 
     def handle(self,player,surface, offset, settings, has_manivelle):
         if player.check_distance_to(self.surface.center, interact_distance) and self.is_off:

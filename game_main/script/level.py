@@ -121,7 +121,7 @@ class Level:
                         Manivelle(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs["manivelle"], function_to_call, "manivelle", switch.properties["has_manivelle"])
                         
                     elif switch.name == "wall_lever":
-                        Lever(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs["wall_lever"], function_to_call, "lever")
+                        Lever(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs["wall_lever"], function_to_call, "lever",basey=y+switch.properties['height']*CASE_SIZE +1)
                             
             if layer.name == "npc_path":
 

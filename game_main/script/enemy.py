@@ -54,7 +54,7 @@ class Enemy(Entity):
         Returns:
             int: dégats infligés
         """
-        if self.rect.colliderect(player.rect) and player.invincibility == False and self.action !="attack" and self.action!="death" and self.action !='stunt':            
+        if self.rect.colliderect(player.rect) and self.action !="attack" and self.action!="death" and self.action !='stunt':            
             self.action = "attack"
             self.animate()
             return self.damages

@@ -222,7 +222,6 @@ class UI:
         return {}
      
     def select_option(self,choix):
-        print(choix)
         next_dialog = choix.get("goto")
         if next_dialog == "-1":
             self.current_dialog = None
