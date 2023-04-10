@@ -5,7 +5,7 @@ from inventaire import Item
 import random
 
 class Spike(Entity):
-    def __init__(self, x, y, image, groupes, collision_blocks, textures, name):
+    def __init__(self, x, y, image, groupes, textures, name):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:
@@ -13,12 +13,10 @@ class Spike(Entity):
             y (int): pos y
             image (pygame.image): image par défaut (utile uniquement pour la classe Entity)
             groupes (list): liste de groupes auquels appartient l'Enemy
-            collision_blocks (pygame.group.Group): Blocks de collisions pour les déplacements
             textures (dict): dictionnaire contenant les textures rendues pygame         
             name (str): Nom de la classe de l'ennemi
         """ 
         super().__init__(x, y, image, groupes, hitbox=pygame.Rect(x+15,y+8, 40, 40))
-        self.collision_blocks = collision_blocks
         self.name = name
 
         self.textures = textures

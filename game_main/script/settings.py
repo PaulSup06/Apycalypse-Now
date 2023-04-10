@@ -59,7 +59,7 @@ hitbox_offset = 15 #marge pour les collisions du joueur
 walk_anim_duration = 12 #nombre de frames que dure 1 image de l'animation de marche
 default_player_life = 6
 default_player_attack_cooldown = 20 #cooldown par défaut quand main vide
-default_player_attack_range = 32 #nombre de pixels du range de l'attaque avec les mains vides
+default_player_attack_range = 40 #nombre de pixels du range de l'attaque avec les mains vides
 default_player_damages = 2
 enemy_anim_duration = 8 #nombre de frames pour chaque image de l'animation des enemies 
 distance_affichage_npc_prompt = 300
@@ -67,24 +67,20 @@ interact_distance = 100
 dialog_cooldown = 2 #nombre de frames entre l'affichage de chaque caractère du dialogue
 door_unlock_range = 3*CASE_SIZE
 stackable_range = 100
-enemy_caracteristics = {
-                        "bamboo":{
-                            "speed":5,
-                            "damages":1,
-                            "health":3,
-                            "drops":[
-                                {
-                                    "name":"life_potion",
-                                    "drop_rate":50,
-                                    "drop_count":1,                                    
-                                }, {
-                                    "name":"speed_potion",
-                                    "drop_rate":50,
-                                    "drop_count":1,                                    
-                                }
-                            ]
+enemy_drops = {
+                "bamboo":[
+                        {
+                            "name":"life_potion",
+                            "drop_rate":50,
+                            "drop_count":1,                                    
+                        }, {
+                            "name":"speed_potion",
+                            "drop_rate":50,
+                            "drop_count":1,                                    
                         }
-                       }
+                    ]
+                }
+                       
 
 spike_exit_speed = 17
 spike_damage = 1
@@ -105,6 +101,7 @@ spike_img_folder = "..\\textures\\spike"
 lever_img_folder = "..\\textures\\lever"
 misc_folder = "..\\textures\\misc"
 items_folder="..\\textures\\items"
+
 def load_imgs():
     """Charge les textures principales du jeu (appellée après initialisation vidéo pygame car convertion)
     """
@@ -155,16 +152,19 @@ def load_switches_imgs():
 
     files = os.listdir(os.path.join(lever_img_folder))
     # floor_lever1
-    floor_lever1 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "01.png" or  file == "13.png" or file == "25.png" or  file == "37.png"]
-    floor_lever2 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "04.png" or  file == "16.png" or file == "28.png" or  file == "40.png"]
-    floor_lever3 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "10.png" or  file == "22.png" or file == "34.png"]
-    manivelle = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "44.png" or  file == "08.png" or file == "20.png"or file == "32.png"]
-    wall_lever = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "00.png" or  file == "12.png" or file == "24.png"or file == "36.png"]
-    pressure_plate_1 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "50.png" or  file == "62.png" or file == "74.png"or file == "86.png"]
-    pressure_plate_2 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "48.png" or  file == "60.png" or file == "72.png"or file == "84.png"]
-    pressure_plate_3 = [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "53.png" or  file == "65.png" or file == "77.png"or file == "89.png"]
+    imgs={
+        "floor_lever1" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "01.png" or  file == "13.png" or file == "25.png" or  file == "37.png"],
+        "floor_lever2" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "04.png" or  file == "16.png" or file == "28.png" or  file == "40.png"],
+        "floor_lever3" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "10.png" or  file == "22.png" or file == "34.png"],
+        "manivelle" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "44.png" or  file == "08.png" or file == "20.png"or file == "32.png"],
+        "wall_lever" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "00.png" or  file == "12.png" or file == "24.png"or file == "36.png"],
+        "pressure_plate1" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "50.png" or  file == "62.png" or file == "74.png"or file == "86.png"],
+        "pressure_plate2" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "48.png" or  file == "60.png" or file == "72.png"or file == "84.png"],
+        "pressure_plate3" : [pygame.image.load(os.path.join(lever_img_folder,file)).convert_alpha() for file in files if file == "53.png" or  file == "65.png" or file == "77.png"or file == "89.png"],
+    }
+    
             
-    return (floor_lever1,floor_lever2,floor_lever3,manivelle,pressure_plate_1,pressure_plate_2,pressure_plate_3,wall_lever)
+    return imgs
 
 def load_door_imgs():
     door_imgs = []
@@ -245,12 +245,12 @@ npc_dialogs = {
                 },
             "3":{
                     "type": "avec_choix",
-                    "text":"Un ancien moine du temple m'a donné une lettre il y a peu. Votre nom y figuré. \nTenez, je vous l'a met dans votre sac.",
+                    "text":"Un ancien moine du temple m'a donné une lettre il y a peu. Votre nom y figuré. \nTenez, je vous la met dans votre sac.",
                     "choix":[
                         {"index":1,
                         "text": "Merci",
                         "goto":"2",
-                        "npc_update":["True","lettre_moine","2"],
+                        "npc_update":["True","...","2"],
                         }
                     ]
                 },
@@ -274,6 +274,7 @@ npc_dialogs = {
                     "text": "Oui! Allons sauver la terre!",
                     "goto":"-1",
                     "npc_update":["True","...","-1"],
+                    "add_item":("note#2",1)
                     }
                 ]
             }

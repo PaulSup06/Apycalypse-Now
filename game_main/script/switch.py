@@ -16,19 +16,17 @@ import random
 """
 
 class Lever(Entity):
-    def __init__(self, x, y, image, groupes, collision_blocks, textures, function_to_call, name):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, name):
         """Levier héritant de la classe Entité, est utile au joueur
         Args:
             x (int): pos x
             y (int): pos y
             image (pygame.image): image par défaut (utile uniquement pour la classe Entity)
             groupes (list): liste de groupes auquels appartient l'Enemy
-            collision_blocks (pygame.group.Group): Blocks de collisions pour les déplacements
             textures (dict): dictionnaire contenant les textures rendues pygame         
             function_to_call (str): Nom de la fonction à appeler lorsque l'interrupteur est enclanché
         """ 
         super().__init__(x, y, image, groupes)
-        self.collision_blocks = collision_blocks
         self.textures = textures
         self.action = "idle"
         self.function_to_call = function_to_call
@@ -74,7 +72,7 @@ class Lever(Entity):
 
 
 class PressurePlate(Entity):
-    def __init__(self, x, y, image, groupes, collision_blocks, textures, function_to_call, name):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, name):
         """PressurePlate héritant de la classe Entité, est utile au joueur
 
         Args:
@@ -82,12 +80,10 @@ class PressurePlate(Entity):
             y (int): pos y
             image (pygame.image): image par défaut (utile uniquement pour la classe Entity)
             groupes (list): liste de groupes auquels appartient l'Enemy
-            collision_blocks (pygame.group.Group): Blocks de collisions pour les déplacements
             textures (dict): dictionnaire contenant les textures rendues pygame         
             function_to_call (str): Nom de la fonction à appeler lorsque l'interrupteur est enclanché
         """ 
         super().__init__(x, y, image, groupes,hitbox=pygame.Rect(x+15,y+8, 40, 40))
-        self.collision_blocks = collision_blocks
         self.textures = textures
         self.action = "idle"
         self.name = name
@@ -127,7 +123,7 @@ class PressurePlate(Entity):
 
 
 class Manivelle(Entity):
-    def __init__(self, x, y, image, groupes, collision_blocks, textures, function_to_call, name):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, name, manivelle):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:
@@ -135,20 +131,24 @@ class Manivelle(Entity):
             y (int): pos y
             image (pygame.image): image par défaut (utile uniquement pour la classe Entity)
             groupes (list): liste de groupes auquels appartient l'Enemy
-            collision_blocks (pygame.group.Group): Blocks de collisions pour les déplacements
             textures (dict): dictionnaire contenant les textures rendues pygame         
             function_to_call (str): Nom de la fonction à appeler lorsque l'interrupteur est enclanché
+            name (str) : nom du type de switch (manivelle)
+            anivelle (bool) : manivelle équipée par défaut
         """ 
         super().__init__(x, y, image, groupes)
-        self.collision_blocks = collision_blocks
         self.textures = textures
         self.action = "idle"
+        if manivelle:
+            self.action = "manivelle"
+            self.image = self.textures[1]
         self.name = name
 
         self.function_to_call = function_to_call
         self.animation_counter_fps = 0
         self.player_near = False
         self.is_off = True
+        
         self.have_manivelle = False
 
     def handle(self,player,surface, offset, settings, have_manivelle):
@@ -157,6 +157,8 @@ class Manivelle(Entity):
             self.show_indicator(surface, offset, settings, have_manivelle)
         else:
             self.player_near = False
+        
+
           
     def show_indicator(self,surface, offset, settings, have_manivelle):
         message = ("Il vous faut une manivelle" if have_manivelle == False and self.action == "idle" else  f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour placer la manivelle") if self.action != "manivelle" else f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour actionner"

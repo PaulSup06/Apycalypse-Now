@@ -24,7 +24,7 @@ class Game:
         os.chdir(os.path.realpath(__file__)[:-7])
         
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH,HEIGHT), pygame.SCALED | pygame.FULLSCREEN)  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
         pygame.display.set_caption(GAME_TITLE) #ajouter titre du jeu ici
         pygame.display.set_icon(pygame.image.load("..\\textures\\test\\rock.png")) #TODO rajouter une petite icone sympa
         self.clock = pygame.time.Clock() #initialisation système de comptage de temps (fps cap) de pygame
@@ -44,7 +44,7 @@ class Game:
         #génération des interfaces
         self.game_state = "menu"
         self.inventaire = Inventaire(self)  
-        self.ui = UI(self.inventaire.add_item)  
+        self.ui = UI(self)  
         self.menu_pg_pygame = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\menu_bg.png"), (WIDTH,HEIGHT)).convert()
         self.menu_pg_pymenu = pygame_menu.baseimage.BaseImage(
         image_path="..\\textures\\ui\\menu_bg.png",
@@ -162,8 +162,10 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
-                    if self.game_state == "playing" or self.is_in_a_note:
+                    if self.is_in_a_note:
                         self.is_in_a_note = False
+                    elif self.game_state == "playing":
+                        
                         if event.key == int(self.settings["k_attack"]): #TODO ajouter touches dynamiques
                             if not self.ui.current_dialog and not self.inventaire.enabled:
                                 self.player.attack(self.level.enemies)
@@ -181,11 +183,9 @@ class Game:
                                             self.ui.finish_dialog()
                                         else:
                                             fin_dialogue = self.ui.quit_dialog(npc.name)
+                                            self.update_dialog_ended(fin_dialogue, npc.name)
                                             #handle dialogue ended (fin dialog = dict)
-                                            if fin_dialogue.get("change_level"):
-                                                self.change_level(fin_dialogue.get("change_level"))
-                                            if fin_dialogue.get("npc_update"):
-                                                npc.change_state(*fin_dialogue.get("npc_update"))
+                                            
                                                 
                                 for terminal in self.level.terminals:
                                     if self.player.check_distance_to(terminal.surface.midbottom,interact_distance) and not terminal.locked and not terminal.using:
@@ -230,7 +230,7 @@ class Game:
                         self.change_level(1)
                     elif event.key==pygame.K_u:
                         self.inventaire.add_item("strength_potion",2)
-                        self.inventaire.add_item("note", 1, "Message aux futurs générations|Mes chères amis, veuillez garder notre planète propre car sinon nous allons tous mourrir d'ici un siècle ou deux. Voici cette note de teste!")
+                        self.inventaire.add_item("note#1", 1)
                         self.inventaire.add_item("invincibility_potion",4)
                         self.inventaire.add_item("manivelle",1)
                         self.inventaire.inventory
@@ -296,35 +296,10 @@ class Game:
                         pygame.draw.rect(self.screen,'white',pygame.Rect(block.surface.x - self.level.visible_blocks.offset.x,block.surface.y - self.level.visible_blocks.offset.y, block.surface.width, block.surface.height),2)
                     pygame.draw.rect(self.screen,'white',pygame.Rect(self.player.surface.x - self.level.visible_blocks.offset.x,self.player.surface.y - self.level.visible_blocks.offset.y, self.player.surface.width, self.player.surface.height),2)
                     pygame.draw.rect(self.screen,'red',pygame.Rect(self.player.rect.x - self.level.visible_blocks.offset.x,self.player.rect.y - self.level.visible_blocks.offset.y, self.player.rect.width, self.player.rect.height),2)   
-
+                
                 # affiche la note par dessus l'écran
                 if self.is_in_a_note:
                     self.screen.blit(self.note_img, self.note_rect)
-                    # affiche titre de la note
-                    text = font1.render(self.note_titre, True, (0, 0, 0))
-                    text_rect = text.get_rect(bottomleft=(220,250))
-                    self.note_img.blit(text, text_rect)
-                    # afficher le contenu de la note avec des retours à la ligne
-                    lignes = []
-                    mots = self.note_contenu.split(" ")
-                    ligne = ""
-                    for mot in mots:
-                        if font1.size(ligne + mot)[0] < 350:
-                            ligne += mot + " "
-                        else:
-                            lignes.append(ligne)
-                            ligne = mot + " "
-                    lignes.append(ligne)
-
-                    y = 300 
-                    for ligne in lignes:
-                        text = font1.render(ligne, True, (0, 0, 0))
-                        text_rect = text.get_rect(bottomleft=(220,y))
-                        self.note_img.blit(text, text_rect)
-                        y += font1.get_height() + 10 
-
-
-
             #UI
             #========================================================================================
                 
@@ -462,7 +437,7 @@ class Game:
             current_world (int): Monde à générer
         """
         #rend le paramètre optionnel en utilisant la valeur de la classe Game
-        self.ui = UI(self.inventaire.add_item)   #reset l'ui lors du chargement (fix bug ui ouvert lors de fermeture d'une précédente page)
+        self.ui = UI(self)   #reset l'ui lors du chargement (fix bug ui ouvert lors de fermeture d'une précédente page)
         self.changing_world = False 
 
         if not current_world:
@@ -681,8 +656,7 @@ class Game:
     def read_note(self, note):
         # ouvre une note
 
-        self.note_titre = str(note).split("|")[1]
-        self.note_contenu = str(note).split("|")[2]
+        self.note_img = pygame.image.load(os.path.join(items_folder,note+".png"))
         self.is_in_a_note = True
 
 
@@ -692,11 +666,23 @@ class Game:
         self.max_life += amount
         self.player.max_life = self.max_life
 
-
+    #FONCTION D'UI    
+    def update_dialog_ended(self,fin_dialogue, npc_name):
+        for npc in  self.level.npcs:
+            if npc.name == npc_name:
+                current_npc = npc
+        if fin_dialogue.get("change_level"):
+            self.change_level(fin_dialogue.get("change_level"))
+        if fin_dialogue.get("npc_update"):
+            current_npc.change_state(*fin_dialogue.get("npc_update"))
+        item_dropped = fin_dialogue.get("add_item")
+        if item_dropped:
+            current_npc.drop_item(item_dropped[0],item_dropped[1],self.level.items)
+            
     #=====================================================================
     #FONCTIONS LIEES AUX SWITCHES
     #=====================================================================
-    def lever_trigger(self):
+    def lever2_triggered(self):
         self.debug_message("switch tiré/poussé/tourné!")
         return False
     

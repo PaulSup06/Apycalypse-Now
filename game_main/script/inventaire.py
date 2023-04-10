@@ -140,11 +140,10 @@ class Inventaire:
                         if item_name != "":
                             font = pygame.font.SysFont(None, 24)
 
-                            if "note" in str(item_name):
-                                #note|nom|contenu
-                                name_text = font.render(str(item_name).split("|")[1], True, (255, 255, 255))
-                            else:
+                            if item_names_render.get(item_name):
                                 name_text = font.render(item_names_render[item_name], True, (255, 255, 255))
+                            else:
+                                name_text =  font.render(item_name, True, (255, 255, 255))
 
                             name_text_rect = name_text.get_rect(
                                 midtop=((GRID_SIZE * (CASE_SIZE + CELL_MARGIN)) / 2,10))
@@ -245,12 +244,12 @@ class Inventaire:
         selected_item = self.inventory_grid[self.cursor_y][self.cursor_x]
         if selected_item != None:
             selected_item = selected_item[0]
-            if  selected_item in self.item_function:
-                if "note" not in selected_item:
-                    used = self.item_function[selected_item]()
-                else:
+            if  selected_item in self.item_function or 'note' in selected_item:
+                if "note" in selected_item:
                     used = self.item_function["note"](selected_item)
-
+                else:
+                    used = self.item_function[selected_item]()
+                    
                 if used:
                     self.remove_item(selected_item,1)        
                 

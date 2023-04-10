@@ -77,7 +77,7 @@ class Player(Entity):
             
             self.surface.topleft = (self.x,self.y)
             self.rect.topleft = (self.x, self.y + hitbox_offset)
-            self.basey = self.surface.centery
+            self.basey = self.surface.bottom
 
     def update(self):
         """Gère les animations du joueur en fonction de ses déplacemens
@@ -122,13 +122,13 @@ class Player(Entity):
             
 
             if self.direction == "up":
-                hit_rect = pygame.Rect(self.rect.centerx - 1, self.y - attack_range, 2, attack_range)
+                hit_rect = pygame.Rect(self.rect.centerx - 5, self.y - attack_range, 10, attack_range)
             elif self.direction == "down":
-                hit_rect = pygame.Rect(self.rect.centerx - 1, self.rect.bottom, 2, attack_range)
+                hit_rect = pygame.Rect(self.rect.centerx - 5, self.rect.bottom, 10, attack_range)
             elif self.direction == "left":
-                hit_rect = pygame.Rect(self.x - attack_range, self.surface.centery - 1, attack_range, 2)
+                hit_rect = pygame.Rect(self.x - attack_range, self.surface.centery - 5, attack_range, 10)
             elif self.direction == "right":
-                hit_rect = pygame.Rect(self.rect.right, self.surface.centery - 1, attack_range, 2)
+                hit_rect = pygame.Rect(self.rect.right, self.surface.centery - 5, attack_range, 10)
 
             for enemy in enemies:
                 if hit_rect.colliderect(enemy.rect):

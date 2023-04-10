@@ -3,7 +3,7 @@ from settings import *
 from debug import debug
 
 class UI:
-    def __init__(self, add_item) -> None:
+    def __init__(self, main) -> None:
         """Class UI : gère tout ce qui est affiché à l'écran et n'est pas directement dans le monde du jeu (overlay, affichage dialogues,...)
         """
         #chargement des images et textes fixes 
@@ -18,7 +18,7 @@ class UI:
         self.current_dialog = None
         self.dialog_counter = 0
         self.ongoin_dialog = False
-        self.add_item = add_item
+        self.main_elmt = main #utilisé pour les fonctions de callback
         self.transitions = []
 
     def load_dialog(self, dialogue_id, npc_name):
@@ -41,19 +41,19 @@ class UI:
             self.choix = self.current_dialog["choix"]
             self.nb_choix = len(self.choix)
             if self.nb_choix ==1:
-                self.choix_rendered.append(Button((WIDTH//4) * 2 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]["goto"],self.choix[0]["npc_update"]))
+                self.choix_rendered.append(Button((WIDTH//4) * 2 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]))
             if self.nb_choix ==2:
-                self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]["goto"],self.choix[0]["npc_update"]))
-                self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-100,500,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]["goto"],self.choix[1]["npc_update"]))
+                self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]))
+                self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-100,500,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]))
             elif self.nb_choix ==3:
-                self.choix_rendered.append(Button(WIDTH//4 - 175,HEIGHT-100,350,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]["goto"],self.choix[0]["npc_update"]))
-                self.choix_rendered.append(Button((WIDTH//4)*2 - 175,HEIGHT-100,350,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]["goto"],self.choix[1]["npc_update"]))
-                self.choix_rendered.append(Button((WIDTH//4)*3 - 175,HEIGHT-100,350,50,font1,self.choix[2]["text"],self.select_option,False,button_fillcolors,self.choix[2]["goto"],self.choix[2]["npc_update"]))
+                self.choix_rendered.append(Button(WIDTH//4 - 175,HEIGHT-100,350,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]))
+                self.choix_rendered.append(Button((WIDTH//4)*2 - 175,HEIGHT-100,350,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]))
+                self.choix_rendered.append(Button((WIDTH//4)*3 - 175,HEIGHT-100,350,50,font1,self.choix[2]["text"],self.select_option,False,button_fillcolors,self.choix[2]))
             elif self.nb_choix ==4:
-                self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-110,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]["goto"],self.choix[0]["npc_update"]))
-                self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-110,500,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]["goto"],self.choix[1]["npc_update"]))
-                self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-65,500,50,font1,self.choix[2]["text"],self.select_option,False,button_fillcolors, self.choix[2]["goto"],self.choix[2]["npc_update"]))
-                self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-65,500,50,font1,self.choix[3]["text"],self.select_option,False,button_fillcolors,self.choix[3]["goto"],self.choix[3]["npc_update"]))
+                self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-110,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]))
+                self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-110,500,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]))
+                self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-65,500,50,font1,self.choix[2]["text"],self.select_option,False,button_fillcolors, self.choix[2]))
+                self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-65,500,50,font1,self.choix[3]["text"],self.select_option,False,button_fillcolors,self.choix[3]))
         else:
             self.choix = []
             self.nb_choix = 0    
@@ -113,15 +113,13 @@ class UI:
                 
             if self.dialog_counter == -1:
                 
-                for button in self.choix_rendered:
-                    npc_update = button.process()
-                    self.screen.blit(button.image,(button.x,button.y))
-               
                 if self.current_dialog["type"] == "sans_choix":
                     #cas où le dialogue est terminé, on rajoute alors une indication de touche au joueur pour continuer
                     self.screen.blit(self.continue_indic, ((self.screen.get_width() - self.dialog_box.get_width())//2 + self.dialog_box.get_width() - self.continue_indic.get_width() - 15, 
                                                         self.screen.get_height() - self.continue_indic.get_height() - 25))
-            
+                for button in self.choix_rendered:
+                        npc_update = button.process()
+                        self.screen.blit(button.image,(button.x,button.y))
             #affichage de la surface à l'écran
             self.screen.blit(dialog_surf,((self.screen.get_width()-dialog_surf.get_width())//2,
                                 (self.screen.get_height() - self.dialog_box.get_height() - 10) + 
@@ -208,7 +206,6 @@ class UI:
     
     def quit_dialog(self,npc_name):
         """Ferme le dialogue en cours et renvoie les modifications à effectuer dans le code
-        TODO: Si le dialogue nécessite un choix, aller au dialogue choisi
         
         return : dict
         """
@@ -224,15 +221,16 @@ class UI:
 
         return {}
      
-    def select_option(self,next_dialog,npc_update):
-        self.load_dialog(next_dialog,self.current_npc)
-
-        if npc_update[1] == "lettre_moine":
-            # donne une lettre au joueur
-            self.add_item("note", 1, "Lettre d'un ancien moine|Prenez garde! Le Cristal de Feu a été brisé! Mais rassurez-vous.. Nils, oui, Nils viendra nous sauver! Je l'ai vu dans mes rêves, prévenez la cité des Orphèves que nous serons sauvés!")
-
-
-        return npc_update       
+    def select_option(self,choix):
+        print(choix)
+        next_dialog = choix.get("goto")
+        if next_dialog == "-1":
+            self.current_dialog = None
+            self.main_elmt.update_dialog_ended(choix,self.current_npc)
+        else:
+            self.load_dialog(next_dialog,self.current_npc)
+        
+        return choix.get("npc_update")       
         
     def add_transition_open(self):
         self.transitions.append(Transition(75,"black_to_white"))

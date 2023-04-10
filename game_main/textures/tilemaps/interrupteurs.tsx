@@ -2,11 +2,7 @@
 <tileset version="1.9" tiledversion="1.9.2" name="interrupteurs" tilewidth="64" tileheight="64" tilecount="100" columns="10">
  <image source="64x64switch.png" width="640" height="640"/>
  <tile id="0" class="wall_lever"/>
- <tile id="1" class="floor_lever1">
-  <properties>
-   <property name="fonction_to_call" value="lever1_triggered"/>
-  </properties>
- </tile>
+ <tile id="1" class="floor_lever1"/>
  <tile id="4" class="floor_lever2"/>
  <tile id="8" class="manivelle"/>
  <tile id="10" class="floor_lever3"/>

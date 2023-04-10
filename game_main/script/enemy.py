@@ -30,20 +30,11 @@ class Enemy(Entity):
         self.item_group = item_group
 
         self.textures = textures[name]
-        if speed:
-            self.speed = speed
-        else:
-            self.speed = enemy_caracteristics[self.name]["speed"]
-        if damages:    
-            self.damages = damages
-        else:
-            self.damages = enemy_caracteristics[self.name]["damages"]
-        if health:    
-            self.health = health
-            self.max_health = health
-        else:
-            self.health = enemy_caracteristics[self.name]["health"]
-            self.max_health = enemy_caracteristics[self.name]["health"]
+
+        self.speed = speed
+        self.damages = damages
+        self.health = health
+        self.max_health = health
 
         self.attack_cooldown = 60
         self.movement_condition = movement_condition
@@ -149,10 +140,11 @@ class Enemy(Entity):
             self.action = "death"
             
     def drop_item(self):
-        drop_items = enemy_caracteristics[self.name]["drops"]
+        drop_items = enemy_drops[self.name]
         for item in drop_items:
             tirage = random.randint(1,100)
             if item["drop_rate"]<=tirage:
-                offset = random.randint(-10,10)
-                positive = random.choice((-0.2,0.2))
-                Item(self.x+(offset*positive),self.rect.bottom + offset, self.item_images[item["name"]], self.item_group, item["name"], item["drop_count"])
+                offset = random.randint(-5,5)
+                positive_x = random.choice((-1,1))
+                positive_y = random.choice((-1,1))
+                Item(self.x+(offset*positive_x),self.rect.bottom + (offset*positive_y), self.item_images[item["name"]], self.item_group, item["name"], item["drop_count"])

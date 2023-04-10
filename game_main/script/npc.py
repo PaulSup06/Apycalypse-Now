@@ -1,6 +1,6 @@
 import pygame
 from settings import *
-import camera
+from inventaire import Item
 
 from entity import Entity
 
@@ -21,6 +21,7 @@ class Npc(Entity):
         super().__init__(x, y, image, groupes)
         self.name = name
         #self.textures = pygame.image.load(f"game_main\\npc\\{self.name}.png").convert_alpha()
+        self.item_imgs = load_item_imgs()
         self.image = pygame.image.load("..\\textures\\test\\spirit\\idle\\0.png").convert_alpha()
         self.change_state(talkable, indicator, first_dialog)
         
@@ -61,10 +62,13 @@ class Npc(Entity):
         pygame.draw.rect(surface,"black",indicator_rect,1,5)
         surface.blit(self.indicator_rendered, (self.x + self.surface.width + 10 - offset.x, self.y - 10 - offset.y))
         if self.is_talkable and self.check_distance_to((player.x,player.y),interact_distance):
-            surface.blit(font2.render(f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour parler") ,1,"black"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + indicator_rect.height - offset.y))
+            surface.blit(font2.render(f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour parler",1,"black"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + indicator_rect.height - offset.y))
 
     def interact(self):
         return self.next_dialog, self.name
+    
+    def drop_item(self, item_name, count,item_group):
+        Item(self.rect.centerx,self.rect.bottom + 20, self.item_imgs[item_name], item_group,item_name, count)
 
 class Door(Entity):
     def __init__(self, x, y, groupes, imgs, id=-1, locked=False):
