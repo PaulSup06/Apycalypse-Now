@@ -228,12 +228,10 @@ class Game:
                         self.inventaire.add_item("note#1", 1)
                         self.inventaire.add_item("invincibility_potion",4)
                         self.inventaire.add_item("manivelle",1)
-                        self.inventaire.inventory
-                    elif event.key==pygame.K_i:
-                        self.inventaire.drop(self.player,"Blue blob", [self.level.items],10)
 
                     elif self.waiting_for_key:
                         self.edit_key(event.key)
+                        
                 elif event.type==pygame.USEREVENT:
                     #musique fadout terminé 
                     pygame.mixer.music.load(os.path.join(music_folder,self.music_playing))

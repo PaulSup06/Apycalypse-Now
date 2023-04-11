@@ -230,7 +230,11 @@ class Inventaire:
             amount (int, optional): Nombre d'items à lacher. Par défaut un stack soit 64 items.
         """
         if not item_name:
-            item_name = self.inventory_grid[self.cursor_y][self.cursor_x][0]
+            item = self.inventory_grid[self.cursor_y][self.cursor_x]
+            if item:
+                item_name=item[0]
+            else:
+                return False #cas ou le joueur drop une case vide
         
         amount = self.remove_item(item_name, amount)
         if amount:

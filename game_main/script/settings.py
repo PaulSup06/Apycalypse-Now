@@ -19,7 +19,7 @@ CURSOR_COLOR = (255, 255, 0)
 
 MAX_ITEMS_PER_CELL = 64
 BACKGROUND_COLOR = (0, 0, 0)
-ITEM_SIZE = (32,32)
+ITEM_SIZE = (45,45)
 
 #son
 actual_sound_channel = 1
@@ -273,11 +273,17 @@ npc_dialogs = {
                     {"index":1,
                     "text": "Oui! Allons sauver la terre!",
                     "goto":"-1",
-                    "npc_update":["True","...","-1"],
+                    "npc_update":["True","...","7"],
                     "add_item":("note#2",1)
                     }
                 ]
-            }
+            },
+            "7":{
+                "type": "sans_choix",
+                "text":"Allons, pas de temps à perdre ! Fonce !",
+                "goto": "-1",
+                "npc_update":["True","...","7"],
+                }
         }
     }
 

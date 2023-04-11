@@ -66,7 +66,6 @@ class Level:
                     if entity.name == "player" and player_gen:
                         self.player = Player(entity.x,entity.y, self.visible_blocks, self.collision_blocks, player_life, player_max_life)
                     elif entity.name == 'npc':
-                        #NPC de test (Fairy)
                         npcs.append(Npc(entity.x,entity.y, entity.image,[self.visible_blocks, self.npcs],entity.npc_name,entity.talkable, entity.indicator, entity.first_dialog))
                         
                         # if tile_properties["class"] not in npc_path:
@@ -77,10 +76,10 @@ class Level:
                     elif entity.name == 'enemy':                         
                         Enemy(entity.x,entity.y,entity.image,[self.visible_blocks, self.enemies], self.collision_blocks, self.enemy_imgs, entity.movement,entity.enemy_name, self.items, entity.speed,entity.damages,entity.health)
                     
-                    elif tile_properties["class"][:4] == "door":
-                        Door(x*CASE_SIZE,y*CASE_SIZE,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,tile_properties["class"][5:7],tile_properties["class"][8]=="1")
-                    elif tile_properties["class"][:8]=="terminal":
-                        Terminal(x*CASE_SIZE,y*CASE_SIZE,[self.visible_blocks,self.collision_blocks,self.terminals], tile_properties["class"][9:11],tile_properties["class"][12]=="1")
+                    elif entity.name == "door":
+                        Door(entity.x,entity.y,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,entity.properties["id"],entity.properties["locked"])
+                    elif entity.name=="terminal":
+                        Terminal(entity.x,entity.y,[self.visible_blocks,self.collision_blocks,self.terminals], entity.properties["id"],entity.properties["locked"])
                     elif tile_properties["class"][:6]=="spikes":
                         Spike(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.spikes], self.spike_imgs,"spike")
 
