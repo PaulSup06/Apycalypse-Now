@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="48" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="19" nextobjectid="19">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="48" height="32" tilewidth="64" tileheight="64" infinite="0" nextlayerid="19" nextobjectid="62">
  <tileset firstgid="1" source="../textures/tilemaps/post apo1.tsx"/>
  <tileset firstgid="1041" source="../textures/tilemaps/NPCS ou mobs.tsx"/>
  <tileset firstgid="1057" source="../textures/tilemaps/triggers.tsx"/>
@@ -243,6 +243,26 @@
     <property name="speed" type="int" value="3"/>
    </properties>
   </object>
+  <object id="42" name="spikes" gid="1158" x="963.677" y="67.4375" width="64" height="64"/>
+  <object id="43" name="spikes" gid="1158" x="1025.34" y="68.1042" width="64" height="64"/>
+  <object id="44" name="spikes" gid="1158" x="1090.01" y="68.1042" width="64" height="64"/>
+  <object id="45" name="spikes" gid="1158" x="1152.51" y="67.7708" width="64" height="64"/>
+  <object id="46" name="spikes" gid="1158" x="1214.17" y="68.4375" width="64" height="64"/>
+  <object id="47" name="spikes" gid="1158" x="1280.84" y="131.77" width="64" height="64"/>
+  <object id="48" name="spikes" gid="1158" x="1279.68" y="68.1042" width="64" height="64"/>
+  <object id="49" name="spikes" gid="1158" x="1282.59" y="260.603" width="64" height="64"/>
+  <object id="50" name="spikes" gid="1158" x="1282.09" y="196.938" width="64" height="64"/>
+  <object id="51" name="spikes" gid="1158" x="1282.71" y="386.854" width="64" height="64"/>
+  <object id="52" name="spikes" gid="1158" x="1281.56" y="323.188" width="64" height="64"/>
+  <object id="53" name="spikes" gid="1158" x="961.738" y="195.688" width="64" height="64"/>
+  <object id="54" name="spikes" gid="1158" x="961.238" y="132.022" width="64" height="64"/>
+  <object id="55" name="spikes" gid="1158" x="961.73" y="260.313" width="64" height="64"/>
+  <object id="56" name="spikes" gid="1158" x="959.79" y="388.563" width="64" height="64"/>
+  <object id="57" name="spikes" gid="1158" x="959.29" y="324.897" width="64" height="64"/>
+  <object id="58" name="spikes" gid="1158" x="1026.1" y="387.938" width="64" height="64"/>
+  <object id="59" name="spikes" gid="1158" x="1090.77" y="387.938" width="64" height="64"/>
+  <object id="60" name="spikes" gid="1158" x="1153.27" y="387.604" width="64" height="64"/>
+  <object id="61" name="spikes" gid="1158" x="1214.93" y="388.271" width="64" height="64"/>
  </objectgroup>
  <objectgroup id="17" name="switches">
   <object id="6" name="floor_lever" class="floor_lever" gid="1165" x="257" y="508.667" width="64" height="64">

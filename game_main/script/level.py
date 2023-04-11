@@ -80,8 +80,8 @@ class Level:
                         Door(entity.x,entity.y,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,entity.properties["id"],entity.properties["locked"])
                     elif entity.name=="terminal":
                         Terminal(entity.x,entity.y,[self.visible_blocks,self.collision_blocks,self.terminals], entity.properties["id"],entity.properties["locked"])
-                    elif tile_properties["class"][:6]=="spikes":
-                        Spike(x*CASE_SIZE, y*CASE_SIZE,image, [self.visible_blocks, self.spikes], self.spike_imgs,"spike")
+                    elif entity.name=="spikes":
+                        Spike(entity.x,entity.y,image, [self.visible_blocks, self.spikes], self.spike_imgs,"spike")
 
             if layer.name == "ground props":
                 for x,y,gid in layer.iter_data():
