@@ -24,7 +24,7 @@ class Game:
         os.chdir(os.path.realpath(__file__)[:-7])
         
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH,HEIGHT),pygame.SCALED | pygame.FULLSCREEN)  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
         pygame.display.set_caption(GAME_TITLE) #ajouter titre du jeu ici
         pygame.display.set_icon(pygame.image.load("..\\textures\\test\\rock.png")) #TODO rajouter une petite icone sympa
         self.clock = pygame.time.Clock() #initialisation système de comptage de temps (fps cap) de pygame
@@ -267,7 +267,7 @@ class Game:
                 for term in self.level.terminals:
                     term.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings)
                 for trigger in self.level.trigger_blocks:
-                    trigger.handle(self.player)
+                    trigger.handle(self.player, self)
                 for switch in self.level.switches:
                     fonction_to_call = switch.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings, self.inventaire.have_item("manivelle"))
                     if fonction_to_call != None:
@@ -429,6 +429,14 @@ class Game:
         Args:
             current_world (int): Monde à générer
         """
+        if pos:
+            if type(pos)==tuple:
+                if len(pos)==2:
+                    try:
+                        pos = int(pos[0]), int(pos[1])
+                    except Exception as e:
+                        print(e,"Mauvaise position donnée... Changement de monde impossible")
+                        
         #rend le paramètre optionnel en utilisant la valeur de la classe Game
         self.ui = UI(self)   #reset l'ui lors du chargement (fix bug ui ouvert lors de fermeture d'une précédente page)
         self.changing_world = False 
@@ -441,7 +449,6 @@ class Game:
         self.player.weapon = self.player_weapon_name
         
         if pos:
-            pos = eval(pos)
             self.player.x = pos[0]
             self.player.y = pos[1]
         if self.npc_states.get(current_world):

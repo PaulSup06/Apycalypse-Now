@@ -292,6 +292,25 @@ button_fillcolors = {'normal': (0,0,0,0),
                      'hover': (0,0,0,100),
                      'pressed': (140,140,140,140),
                      'text':(255,255,255)}
+def convert_to_tuple(value):
+    if value[0]=='(':
+        value = value[1:]
+    if value[-1]==')':
+        value = value[:-1]
+    result = []
+    for row in value.split('),('):
+        row_tup = []
+        for field in (f.strip() for f in row.split(',')):
+            if (field[0]=="'"and field[-1]=="'") or (field[0]=='"' and field[-1]=='"'):
+                row_tup.append(field[1:-1])
+            else:
+                row_tup.append(field)
+        if len(row_tup)==1:
+            result.append(row_tup[0])
+        else:
+            result.append(tuple(row_tup))
+
+    return tuple(result)
 
 item_names_render = {
     "life_potion":"Potion de soin",
@@ -301,12 +320,6 @@ item_names_render = {
     "note":"Note",
     "invincibility_potion":"Potion d'invincibilité",
 }
-#temp
-#test_world = [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-#         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-#         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-#         [1,0,0,2,0,0,0,0,0,0,0,0,0,0,1],
-#         [1,0,0,1,0,0,0,0,0,0,0,0,0,0,1],
-#         [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-#         [1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],]
+
 showing_hitbox=False
+

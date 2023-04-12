@@ -64,3 +64,12 @@
 
 -pygame_menu (4.4.0 ou +)
 -pytmx (3.31 ou +)
+
+
+
+# NOTICE UTILISATION TILED
+Attention pour utiliser les triggers, il faut respecter la syntaxe :
+    Dans le cas d'un paramètre simple, pas de souci: param / (param)
+    Dans le cas de paramètres multiples : param1,param2 / (param1,param2)
+    Dans le cas de paramètres imbriqués (ex : la position du joueur au spawn, qui est une tuple (x,y) ): (param1),(param2,param3)
+    ATTENTION AUX ESPACES ! PAS D'ESPACE ENTRE LES ARGUMENTS/PARENTHESES/VIRGULES

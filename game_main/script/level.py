@@ -13,6 +13,7 @@ import pytmx
 import pygame
 import os
 import csv
+import ast
 
 class Level:
     def __init__(self, game, player_life, player_max_life, world=0,player_gen=True) -> None:
@@ -58,8 +59,8 @@ class Level:
         
         for layer in self.world_tmx.layers:
             if layer.name == "collision":
-                for x,y,image in layer.tiles():
-                    Case(x*CASE_SIZE, y*CASE_SIZE, [self.collision_blocks], image, pygame.Surface((CASE_SIZE, 32)))
+                for collider in layer:
+                    Case(collider.x,collider.y, [self.collision_blocks], None, pygame.Surface((collider.width,collider.height)))
             if layer.name == "entitees":
                 for entity in layer:
 
@@ -91,18 +92,11 @@ class Level:
                         Case(x*CASE_SIZE, y*CASE_SIZE, [self.visible_blocks], image, basey=(y+int(str(tile_properties["class"])[1:]))*CASE_SIZE)
 
             if layer.name == "triggers":
-                for x,y,gid in layer.iter_data():
-                    if gid!=0:
-                        tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
-                        trigger_id = tile_properties["class"]
-                        image = self.world_tmx.get_tile_image_by_gid(gid)
-                        if trigger_id[:5]=="level":           
-                            Trigger(x*CASE_SIZE, y*CASE_SIZE, [self.trigger_blocks], image,self.game.change_level,image,None,int(trigger_id[5:]))
-                        if trigger_id[:8]=='poslevel':
-                            
-                            Trigger(x*CASE_SIZE, y*CASE_SIZE, [self.trigger_blocks], image,self.game.change_level,image,None,int(trigger_id[8:10]),trigger_id[10:])
-                        elif trigger_id[:5]=="music":
-                            Trigger(x*CASE_SIZE, y*CASE_SIZE, [self.trigger_blocks], image,self.game.play_music,image,None,f"{trigger_id[5:]}.wav")
+                for trigger in layer:
+                    trigger_args = trigger.properties["args"]
+                    trigger_args = convert_to_tuple(trigger_args)
+                    
+                    Trigger(trigger.x,trigger.y, [self.trigger_blocks], None, trigger.properties["function"], trigger.width, trigger.height, *trigger_args)
             
             if layer.name == "switches":
                 for switch in layer:

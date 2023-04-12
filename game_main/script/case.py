@@ -25,7 +25,7 @@ class Case(pygame.sprite.Sprite):
             self.basey = basey
         
 class Trigger(Case):
-    def __init__(self, x, y, groupes, texture,trigger_func, surface=pygame.Surface((CASE_SIZE, CASE_SIZE)), basey=None, *args):
+    def __init__(self, x, y, groupes, texture,trigger_func,width=CASE_SIZE,height=CASE_SIZE,*args):
         """Case spéciale contenant une fonction activée lorsque le joueur est dans la surface de la case
 
         Args:
@@ -37,13 +37,14 @@ class Trigger(Case):
             surface (pygame.Surface, optional): Surface personnalisée pour la case. Par défaut une surface de la taille standard d'une case.
             basey (int, optional): Position y de la base de la case pour l'affichage (si =None, utilisation de la base de la surface) . Defaults to None.
         """
-        super().__init__(x, y, groupes, texture, surface, basey)
+        surface = pygame.Surface((width,height))
+        super().__init__(x, y, groupes, texture, surface, basey=None)
         self.func = trigger_func
         self.args = args
         self.activated = False
         
         
-    def handle(self, player):
+    def handle(self, player, main):
         """Appelle la fonction assignée au bloc trigger si le player est sur la case
 
         Args:
@@ -55,6 +56,8 @@ class Trigger(Case):
         if player.rect.colliderect(self.surface):
             if self.activated==False:
                 self.activated = True
-                return self.func(*self.args)
+                func = getattr(main, self.func)
+                print(self.args)
+                return func(*self.args)
         elif self.activated:
             self.activated = False
