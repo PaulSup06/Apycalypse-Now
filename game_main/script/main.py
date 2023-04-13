@@ -198,7 +198,7 @@ class Game:
                                                     self.inventaire.remove_item("manivelle")
                                                 else:
                                                     methode = getattr(self, methode_to_call)
-                                                    methode()
+                                                    methode(switch.action) # action ="left" ou "right"
 
                         elif event.key == int(self.settings["k_escape"]):
                             self.game_state = "menu"
@@ -272,8 +272,7 @@ class Game:
                     fonction_to_call = switch.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings, self.inventaire.have_item("manivelle"))
                     if fonction_to_call != None:
                         methode = getattr(self, fonction_to_call)
-                        methode()
-
+                        methode(switch.action) # "pressed" ou "unpressed"
                     switch.animate()
                 for item in self.level.items:
                     if item.handle(self.player, self.level.visible_blocks.offset):
@@ -684,8 +683,8 @@ class Game:
     #=====================================================================
     #FONCTIONS LIEES AUX SWITCHES
     #=====================================================================
-    def lever2_triggered(self):
-        self.debug_message("switch tiré/poussé/tourné!")
+    def lever2_triggered(self, action):
+        self.debug_message("switch tiré/poussé/tourné! vers " + action)
         return False
     
     #=====================================================================
