@@ -48,6 +48,7 @@ class Inventaire:
         overflow = []
 
         for key, value in self.inventory.items():
+            value = int(value)
             elmt_pose = False
             x=0
             y=0
@@ -181,6 +182,7 @@ class Inventaire:
         return:
             overflow (list): Liste d'items avec leur nombre qui n'ont pas pu être ajoutés à l'inventaire
         """
+        amount = int(amount)
         if args != "":
             item_name = item_name + "|" + args
 
@@ -206,6 +208,7 @@ class Inventaire:
         Returns:
             Int: nombre d'items effectivement retirés (None si aucun disponible)
         """
+        amount = int(amount)
         if item_name in self.inventory.keys():
             amount_before = self.inventory[item_name]
             if amount>amount_before:
