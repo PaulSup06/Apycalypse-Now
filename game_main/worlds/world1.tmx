@@ -165,7 +165,7 @@
   </object>
   <object id="85" x="2000" y="403" width="90" height="96">
    <properties>
-    <property name="args" value="1"/>
+    <property name="args" value="2"/>
     <property name="function" value="change_level"/>
    </properties>
   </object>
