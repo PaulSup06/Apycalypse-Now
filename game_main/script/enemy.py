@@ -5,7 +5,7 @@ from inventaire import Item
 import random
 
 class Enemy(Entity):
-    def __init__(self, x, y, image, groupes, collision_blocks, textures, movement_type, name, item_group, speed=None, damages=None, health=None, movement_condition=True):
+    def __init__(self, x, y, image, groupes, collision_blocks, item_group, textures, movement_type, name, speed, damages, health, movement_condition=True):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:

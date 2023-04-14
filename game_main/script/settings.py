@@ -292,7 +292,16 @@ button_fillcolors = {'normal': (0,0,0,0),
                      'hover': (0,0,0,100),
                      'pressed': (140,140,140,140),
                      'text':(255,255,255)}
+
 def convert_to_tuple(value):
+    """Convertit les arguments des triggers en tuple exploitable
+
+    Args:
+        value (str): argument tiled des triggers
+
+    Returns:
+        tuple: arguments du trigger
+    """
     if value[0]=='(':
         value = value[1:]
     if value[-1]==')':

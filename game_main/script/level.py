@@ -8,6 +8,7 @@ from npc import Npc, Door
 from enemy import Enemy
 from spike import Spike
 from ui import Button
+from inventaire import Item
 from browser import Terminal
 import pytmx
 import pygame
@@ -38,6 +39,7 @@ class Level:
         self.spike_imgs = load_spike_imgs()
         self.switch_imgs = load_switches_imgs()
         self.door_imgs = load_door_imgs()
+        self.item_imgs = load_item_imgs()
         
         #pygame sprite groups
         self.visible_blocks = Camera(world)
@@ -75,7 +77,7 @@ class Level:
                         #     npc_path[tile_properties["class"].split(':')[1]]["npc_pos"] = (x, y)
                         
                     elif entity.name == 'enemy':                         
-                        Enemy(entity.x,entity.y,entity.image,[self.visible_blocks, self.enemies], self.collision_blocks, self.enemy_imgs, entity.movement,entity.enemy_name, self.items, entity.speed,entity.damages,entity.health)
+                        Enemy(entity.x,entity.y,entity.image,[self.visible_blocks, self.enemies], self.collision_blocks, self.items, self.enemy_imgs, entity.movement,entity.enemy_name, entity.speed,entity.damages,entity.health)
                     
                     elif entity.name == "door":
                         Door(entity.x,entity.y,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,entity.properties["id"],entity.properties["locked"])
@@ -105,17 +107,22 @@ class Level:
                     y = switch.y
                     image = switch.image
                     if switch.name == "floor_lever":
-                        Lever(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs[f"floor_lever{switch.properties['type']}"], function_to_call, "lever")
+                        Lever(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs[f"floor_lever{switch.properties['type']}"], function_to_call, "lever", switch.properties['id'])
 
                     elif switch.name == "pressure_plate":
-                        PressurePlate(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs[f"pressure_plate{switch.properties['type']}"], function_to_call, "pressure_plate")
+                        PressurePlate(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs[f"pressure_plate{switch.properties['type']}"], function_to_call, "pressure_plate",switch.properties['id'])
                         
                     elif switch.name == "manivelle":
-                        Manivelle(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs["manivelle"], function_to_call, "manivelle", switch.properties["has_manivelle"])
+                        Manivelle(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs["manivelle"], function_to_call, "manivelle", switch.properties['id'], switch.properties["has_manivelle"])
                         
                     elif switch.name == "wall_lever":
-                        Lever(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs["wall_lever"], function_to_call, "lever",basey=y+switch.properties['height']*CASE_SIZE +1)
-                            
+                        Lever(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs["wall_lever"], function_to_call, "lever",switch.properties['id'],basey=y+switch.properties['height']*CASE_SIZE +1)
+
+            if layer.name == "items":
+                for item in layer:
+                    Item(item.x, item.y, self.item_imgs[item.properties["name"]], self.items, item.properties["name"], item.properties["amount"])
+
+
             if layer.name == "npc_path":
 
                 for x,y,gid in layer.iter_data():
