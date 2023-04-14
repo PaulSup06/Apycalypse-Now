@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="45" height="45" tilewidth="64" tileheight="64" infinite="1" nextlayerid="17" nextobjectid="22">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="45" height="45" tilewidth="64" tileheight="64" infinite="1" nextlayerid="17" nextobjectid="23">
  <tileset firstgid="1" source="../textures/tilemaps/post apo1.tsx"/>
  <tileset firstgid="1041" source="../textures/tilemaps/roof.tsx"/>
  <tileset firstgid="1209" source="../textures/tilemaps/lv_sign.tsx"/>
  <tileset firstgid="1263" name="enemies" tilewidth="64" tileheight="64" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="0" type="enemy:bamboo">
+  <tile id="0" class="enemy:bamboo">
    <image width="64" height="64" source="../textures/enemies/bamboo/idle/0.png"/>
   </tile>
  </tileset>
@@ -16,7 +16,7 @@
  <tileset firstgid="1637" source="../textures/tilemaps/rails.tsx"/>
  <tileset firstgid="1893" source="../textures/tilemaps/lab2.tsx"/>
  <tileset firstgid="2149" source="../textures/tilemaps/graveyard.tsx"/>
- <tileset firstgid="2821" source="../textures/tilemaps/terres.tsx"/>
+ <tileset firstgid="2191" source="../textures/tilemaps/terres.tsx"/>
  <layer id="1" name="Sol" width="45" height="45">
   <data encoding="csv">
    <chunk x="-16" y="-48" width="16" height="16">
@@ -828,8 +828,8 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2973,2974,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,2989,2990,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,2343,2344,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,2359,2360,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -1133,7 +1133,7 @@
  </layer>
  <objectgroup id="12" name="entitees">
   <object id="4" name="player" gid="1014" x="226" y="662.667" width="64" height="64"/>
-  <object id="16" name="npc" type="npc" gid="1621" x="3017.33" y="-666.667" width="64" height="64">
+  <object id="16" name="npc" class="npc" gid="1621" x="3017.33" y="-666.667" width="64" height="64">
    <properties>
     <property name="first_dialog" value="1"/>
     <property name="indicator" value="..."/>
@@ -1185,6 +1185,7 @@
     <property name="function" value="change_level"/>
    </properties>
   </object>
+  <object id="22" x="2296" y="-124"/>
  </objectgroup>
  <objectgroup id="13" name="collision">
   <object id="7" x="108" y="318.25" width="12" height="226.75"/>
