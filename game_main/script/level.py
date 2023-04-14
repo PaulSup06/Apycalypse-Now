@@ -93,7 +93,7 @@ class Level:
                         image = self.world_tmx.get_tile_image_by_gid(gid)
                         classe = tile_properties.get("class")
                         if classe:
-                            height = int(str(classe))[1:]
+                            height = int(str(classe)[1:])
                         else:
                             height = 0
                         Case(x*CASE_SIZE, y*CASE_SIZE, [self.visible_blocks], image, basey=(y+height)*CASE_SIZE)
