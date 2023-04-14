@@ -24,7 +24,7 @@ class Game:
         os.chdir(os.path.realpath(__file__)[:-7])
         
         pygame.init()
-        self.screen = pygame.display.set_mode((WIDTH,HEIGHT))  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
+        self.screen = pygame.display.set_mode((WIDTH,HEIGHT),pygame.SCALED | pygame.FULLSCREEN)  #initialisation système vidéo pygame      ,pygame.SCALED | pygame.FULLSCREEN
         pygame.display.set_caption(GAME_TITLE) #ajouter titre du jeu ici
         pygame.display.set_icon(pygame.image.load("..\\textures\\test\\rock.png")) #TODO rajouter une petite icone sympa
         self.clock = pygame.time.Clock() #initialisation système de comptage de temps (fps cap) de pygame
@@ -55,7 +55,7 @@ class Game:
         self.settings = get_actual_settings() #décodage du fichier CSV de paramètres du jeu
         self.npc_states = {}
         self.current_life = self.max_life = default_player_life
-        self.changin_world = False
+        self.changing_world = False
         self.player_weapon_name = None
         self.is_in_a_note = False
 
@@ -228,6 +228,7 @@ class Game:
                         self.inventaire.add_item("note#1", 1)
                         self.inventaire.add_item("invincibility_potion",4)
                         self.inventaire.add_item("manivelle",1)
+                        self.inventaire.add_item("speed_potion", 2)
 
                     elif self.waiting_for_key:
                         self.edit_key(event.key)
@@ -246,7 +247,7 @@ class Game:
                 for enemy in self.level.enemies:
                     damages = enemy.move(self.player)
                     if damages:
-                        # un ennemie fait des dégâts au joueur
+                        # un ennemi fait des dégâts au joueur
                         if self.player.invincibility == False:
                             self.player.life -= damages
                             if self.player.life<=0:
@@ -254,7 +255,7 @@ class Game:
                 for spike in self.level.spikes:
                     damages = spike.check_trigger(self.player)
                     if damages:
-                        # un ennemie fait des dégâts au joueur
+                        # un ennemi fait des dégâts au joueur
                         if self.player.invincibility == False:
                             self.player.life -= damages
                             if self.player.life<=0:
@@ -283,7 +284,7 @@ class Game:
                 if self.inventaire.enabled:
                     self.inventaire.draw_inventory(self.screen, self.settings)
                     
-                #hitbox pour débugd
+                #hitbox pour débug
                 if showing_hitbox:
                     for block in self.level.collision_blocks:
                         pygame.draw.rect(self.screen,'white',pygame.Rect(block.surface.x - self.level.visible_blocks.offset.x,block.surface.y - self.level.visible_blocks.offset.y, block.surface.width, block.surface.height),2)

@@ -94,7 +94,7 @@ class Enemy(Entity):
             else:
                 self.change_direction()
 
-            if not self.check_collision(self.collision_blocks, "vertical", self.movement.x * self.speed):
+            if not self.check_collision(self.collision_blocks, "vertical", self.movement.y * self.speed):
                 self.y += self.movement.y * self.speed
             else:
                 self.change_direction()
