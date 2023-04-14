@@ -91,7 +91,12 @@ class Level:
                     if gid!=0:
                         tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
                         image = self.world_tmx.get_tile_image_by_gid(gid)
-                        Case(x*CASE_SIZE, y*CASE_SIZE, [self.visible_blocks], image, basey=(y+int(str(tile_properties["class"])[1:]))*CASE_SIZE)
+                        classe = tile_properties.get("class")
+                        if classe:
+                            height = int(str(classe))[1:]
+                        else:
+                            height = 0
+                        Case(x*CASE_SIZE, y*CASE_SIZE, [self.visible_blocks], image, basey=(y+height)*CASE_SIZE)
 
             if layer.name == "triggers":
                 for trigger in layer:
@@ -103,20 +108,22 @@ class Level:
             if layer.name == "switches":
                 for switch in layer:
                     function_to_call = switch.properties["function_to_call"]
+                    args = switch.properties["args"]
+                    args = convert_to_tuple(args)
                     x = switch.x
                     y = switch.y
                     image = switch.image
                     if switch.name == "floor_lever":
-                        Lever(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs[f"floor_lever{switch.properties['type']}"], function_to_call, "lever", switch.properties['id'])
+                        Lever(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs[f"floor_lever{switch.properties['type']}"], function_to_call,self.game, "lever", switch.properties['id'],None, *args)
 
                     elif switch.name == "pressure_plate":
-                        PressurePlate(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs[f"pressure_plate{switch.properties['type']}"], function_to_call, "pressure_plate",switch.properties['id'])
+                        PressurePlate(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs[f"pressure_plate{switch.properties['type']}"], function_to_call,self.game, "pressure_plate",switch.properties['id'],*args)
                         
                     elif switch.name == "manivelle":
-                        Manivelle(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs["manivelle"], function_to_call, "manivelle", switch.properties['id'], switch.properties["has_manivelle"])
+                        Manivelle(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs["manivelle"], function_to_call,self.game, "manivelle", switch.properties['id'], switch.properties["has_manivelle"],*args)
                         
                     elif switch.name == "wall_lever":
-                        Lever(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs["wall_lever"], function_to_call, "lever",switch.properties['id'],basey=y+switch.properties['height']*CASE_SIZE +1)
+                        Lever(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs["wall_lever"], function_to_call,self.game, "lever",switch.properties['id'],(y+switch.properties['height']*CASE_SIZE+1),*args)
 
             if layer.name == "items":
                 for item in layer:

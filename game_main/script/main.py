@@ -270,10 +270,7 @@ class Game:
                 for trigger in self.level.trigger_blocks:
                     trigger.handle(self.player, self)
                 for switch in self.level.switches:
-                    fonction_to_call = switch.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings, self.inventaire.have_item("manivelle"))
-                    if fonction_to_call != None:
-                        methode = getattr(self, fonction_to_call)
-                        methode(switch.action) # "pressed" ou "unpressed"
+                    switch.handle(self.player, self.screen, self.level.visible_blocks.offset,self.settings, self.inventaire.have_item("manivelle"))
                     switch.animate()
                 for item in self.level.items:
                     if item.handle(self.player, self.level.visible_blocks.offset):
@@ -684,14 +681,63 @@ class Game:
     #=====================================================================
     #FONCTIONS LIEES AUX SWITCHES
     #=====================================================================
-    def lever2_triggered(self, action):
-        self.debug_message("switch tiré/poussé/tourné! vers " + action)
-        return False
 
-    def unlock_door(self, door_to_unlock, active, inactive):
+    def unlock_door(self, door_to_unlock, active=(), inactive=()):
+        """Déverrouille une porte en fonction de la position de switchs donnés
+
+        Args:
+            door_to_unlock (str/int): id de la porte à déverrouiller
+            active (tuple): id de tous les switchs requis en position "on"
+            inactive (tuple): id de tous les switchs requis en position "off"
+
+        Returns:
+            bool: True si la porte a bien été ouverte, sinon false
+        """
+        door_to_unlock = int(door_to_unlock)
+        opening = True
+        for switch in self.level.switches:
+            if switch.id in active and not switch.activated:
+                opening = False                
+            if switch.id in inactive and switch.activated:
+                opening = False
+            
         for door in self.level.doors:
-            pass #A FINIR LES BOGOSS
-    
+            if door.id == door_to_unlock:
+                if opening:
+                    door.unlock()
+                    return True
+                else:
+                    door.lock()
+                    return False
+
+    def unlock_terminal(self, term_to_unlock, active=(), inactive=()):
+        """Déverrouille un terminal en fonction de la position de switchs donnés
+
+        Args:
+            door_to_unlock (str/int): id du terminal à déverrouiller
+            active (tuple): id de tous les switchs requis en position "on"
+            inactive (tuple): id de tous les switchs requis en position "off"
+
+        Returns:
+            bool: True si la porte a bien été ouverte, sinon false
+        """
+        
+        term_to_unlock = int(term_to_unlock)
+        opening = True
+        for switch in self.level.switches:
+            if switch.id in active and not switch.activated:
+                opening = False                
+            if switch.id in inactive and switch.activated:
+                opening = False
+            
+        for term in self.level.terminals:
+            if term.id == term_to_unlock:
+                if opening:
+                    term.unlock()
+                    return True
+                else:
+                    term.lock()
+                    return False
     #=====================================================================
     #DEBUG
     #=====================================================================

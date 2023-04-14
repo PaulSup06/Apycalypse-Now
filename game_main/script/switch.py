@@ -5,7 +5,7 @@ from inventaire import Item
 import random
 
 class Lever(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, name,id=-1, basey=None):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, main_elmt, name,id=-1,basey=None, *args):
         """Levier héritant de la classe Entité, est utile au joueur
         Args:
             x (int): pos x
@@ -17,16 +17,15 @@ class Lever(Entity):
         """ 
         super().__init__(x, y, image, groupes)
         self.textures = textures
-        self.action = "left"
-        self.function_to_call = function_to_call
+        self.activated = False
+        self.function_to_call = getattr(main_elmt,function_to_call)
+        self.args = args
         self.animation_counter_fps = 0
         self.player_near = False
         self.name = name
         self.id = id
         self.is_animited = False
-        self.is_off = True
-        if basey:
-            self.basey = basey
+
 
     def handle(self,player,surface, offset, settings, has_manivelle):
         if player.check_distance_to(self.surface.center, interact_distance):
@@ -44,14 +43,15 @@ class Lever(Entity):
             self.is_animited = True
 
             # animation levier activé
-            self.is_off = False if self.is_off else True
+            #inversion valeur d'activation du levier
+            self.activated = self.activated == False
             
-            self.action = "right" if self.action == "left" else "left"
             # joue son trigger
             pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\lever.mp3")))
             actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
-            return self.function_to_call
+            self.function_to_call(*self.args)
+            self.animate()
         
     def animate(self):
         """ Anim levier
@@ -59,7 +59,7 @@ class Lever(Entity):
         if self.is_animited:
 
             # anime vers la droite
-            if self.action == "right":
+            if self.activated:
                 self.animation_counter_fps += 1
                 self.image = self.textures[self.animation_counter_fps // (FPS//5)]
 
@@ -67,7 +67,7 @@ class Lever(Entity):
                     self.is_animited = False
 
             # anime vers la gauche
-            if self.action == "left":
+            if not self.activated:
                 self.animation_counter_fps -= 1
                 self.image = self.textures[self.animation_counter_fps // (FPS//5)]
 
@@ -76,7 +76,7 @@ class Lever(Entity):
 
 
 class PressurePlate(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, name,id=-1):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, main_elmt, name,id=-1,*args):
         """PressurePlate héritant de la classe Entité, est utile au joueur
 
         Args:
@@ -89,13 +89,14 @@ class PressurePlate(Entity):
         """ 
         super().__init__(x, y, image, groupes,hitbox=pygame.Rect(x+15,y+8, 40, 40))
         self.textures = textures
-        self.action = "unpressed"
+        self.activated = False
         self.name = name
         self.id = id
         self.is_animating = False
 
         self.basey = self.surface.top # pressure plate apparait derrière le joueur
-        self.function_to_call = function_to_call
+        self.function_to_call = getattr(main_elmt,function_to_call)
+        self.args = args
         self.animation_counter_fps = 0
         self.player_on_it = False
 
@@ -104,28 +105,31 @@ class PressurePlate(Entity):
         if self.rect.colliderect(player.rect):
             if not self.player_on_it:
                 self.player_on_it = True
-                self.action = "pressed"
+                self.activated = True
                 self.is_animating = True
                 # joue son trigger
                 pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\pressureplate.mp3")))
                 actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
-                return self.function_to_call
+                
+                self.function_to_call(*self.args)
+                self.animate()
         else:
             if self.player_on_it:
                 self.player_on_it = False
-                self.action = "unpressed"
+                self.activated = False
                 self.is_animating = True
                 # joue son trigger
                 pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\pressure_plate_up.mp3")))
                 actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
-                return self.function_to_call
+                self.animate()
+                
 
 
     def animate(self):
         """ Anim pressure plate
         """
         if self.is_animating :
-            if self.action == "pressed":
+            if self.activated:
                 self.animation_counter_fps += 1
                 self.image = self.textures[self.animation_counter_fps // (FPS//14)]
 
@@ -134,7 +138,7 @@ class PressurePlate(Entity):
                     self.animation_counter_fps = 0
                     self.is_animating = False
 
-            if self.action == "unpressed":
+            if not self.activated:
                 self.animation_counter_fps += 1
                 self.image = self.textures[3 - self.animation_counter_fps // (FPS//14)]
 
@@ -146,7 +150,7 @@ class PressurePlate(Entity):
 
 
 class Manivelle(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, name, id,manivelle):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, main_elmt, name, id,manivelle=True, *args):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:
@@ -162,13 +166,15 @@ class Manivelle(Entity):
         super().__init__(x, y, image, groupes)
         self.textures = textures
         self.action = "idle"
+        self.activated = False
         if manivelle:
             self.action = "manivelle"
             self.image = self.textures[1]
         self.name = name
         self.id = id
-
-        self.function_to_call = function_to_call
+        
+        self.function_to_call = getattr(main_elmt,function_to_call)
+        self.args = args
         self.animation_counter_fps = 0
         self.player_near = False
         self.is_off = True
@@ -181,7 +187,7 @@ class Manivelle(Entity):
             self.show_indicator(surface, offset, settings, have_manivelle)
         else:
             self.player_near = False
-        
+        self.animate()
 
           
     def show_indicator(self,surface, offset, settings, have_manivelle):
@@ -210,12 +216,14 @@ class Manivelle(Entity):
             self.is_off = False
             
             self.action = "turning"
+            self.activated = True
             self.animation_counter_fps =  1
             # joue son trigger
             pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\manivelle.mp3")))
             actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
-            return self.function_to_call
+            self.function_to_call(*self.args)
+            
         
     def animate(self):
         """Anime manivelle

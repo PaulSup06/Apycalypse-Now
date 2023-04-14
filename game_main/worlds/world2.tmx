@@ -949,7 +949,7 @@
   </object>
   <object id="76" name="wall_lever" gid="1502" x="1789.33" y="3730.67" width="64" height="64">
    <properties>
-    <property name="args" value="(10, 100004"/>
+    <property name="args" value="(10, 100004)"/>
     <property name="function_to_call" value="unlock_terminal"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100004"/>

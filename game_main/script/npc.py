@@ -115,3 +115,6 @@ class Door(Entity):
             
     def unlock(self):
         self.locked = False
+        
+    def lock(self):
+        self.locked = True
