@@ -5,7 +5,7 @@ from inventaire import Item
 import random
 
 class Lever(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, name, basey=None):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, name,id=-1, basey=None):
         """Levier héritant de la classe Entité, est utile au joueur
         Args:
             x (int): pos x
@@ -22,6 +22,7 @@ class Lever(Entity):
         self.animation_counter_fps = 0
         self.player_near = False
         self.name = name
+        self.id = id
         self.is_animited = False
         self.is_off = True
         if basey:
@@ -75,7 +76,7 @@ class Lever(Entity):
 
 
 class PressurePlate(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, name):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, name,id=-1):
         """PressurePlate héritant de la classe Entité, est utile au joueur
 
         Args:
@@ -90,6 +91,7 @@ class PressurePlate(Entity):
         self.textures = textures
         self.action = "unpressed"
         self.name = name
+        self.id = id
         self.is_animating = False
 
         self.basey = self.surface.top # pressure plate apparait derrière le joueur
@@ -144,7 +146,7 @@ class PressurePlate(Entity):
 
 
 class Manivelle(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, name, manivelle):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, name, id,manivelle):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:
@@ -164,6 +166,7 @@ class Manivelle(Entity):
             self.action = "manivelle"
             self.image = self.textures[1]
         self.name = name
+        self.id = id
 
         self.function_to_call = function_to_call
         self.animation_counter_fps = 0

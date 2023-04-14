@@ -687,6 +687,10 @@ class Game:
     def lever2_triggered(self, action):
         self.debug_message("switch tiré/poussé/tourné! vers " + action)
         return False
+
+    def unlock_door(self, door_to_unlock, active, inactive):
+        for door in self.level.doors:
+            pass #A FINIR LES BOGOSS
     
     #=====================================================================
     #DEBUG
