@@ -965,13 +965,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="16" name="items">
-  <object id="255" x="4608" y="5676">
-   <properties>
-    <property name="name" value="(&quot;Speed_Potion&quot;)"/>
-   </properties>
-  </object>
- </objectgroup>
+ <objectgroup id="16" name="items"/>
  <objectgroup id="15" name="collision">
   <object id="144" x="4098" y="3844" width="114" height="764"/>
   <object id="145" x="3580" y="4038" width="120" height="564"/>
