@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="16" nextobjectid="253">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="255">
  <tileset firstgid="1" source="../textures/tilemaps/post apo1.tsx"/>
  <tileset firstgid="1041" source="../textures/tilemaps/triggers.tsx"/>
  <tileset firstgid="1141" source="../textures/tilemaps/Lab.tsx"/>
@@ -845,7 +845,7 @@
   </object>
  </objectgroup>
  <objectgroup id="10" name="switches">
-  <object id="31" name="wall_lever" gid="1502" x="3384" y="4948" width="64" height="64">
+  <object id="31" name="wall_lever" gid="1502" x="3370" y="4957.33" width="64" height="64">
    <properties>
     <property name="args" value="(2, 2)"/>
     <property name="function_to_call" value="unlock_terminal"/>
@@ -906,22 +906,17 @@
   </object>
   <object id="62" name="pressure_plate" gid="1555" x="3182" y="3984" width="64" height="64">
    <properties>
+    <property name="args" value="(9, 9)"/>
     <property name="function_to_call" value="unlock_door"/>
-    <property name="id" value="9"/>
+    <property name="id" value="90001"/>
     <property name="type" value="1"/>
    </properties>
   </object>
   <object id="63" name="pressure_plate" gid="1555" x="3723" y="3568" width="64" height="64">
    <properties>
-    <property name="function_to_call" value="null"/>
-    <property name="id" value="-1"/>
-    <property name="type" value="1"/>
-   </properties>
-  </object>
-  <object id="64" name="pressure_plate" gid="1555" x="2831" y="3607" width="64" height="64">
-   <properties>
-    <property name="function_to_call" value="null"/>
-    <property name="id" value="-1"/>
+    <property name="args" value="(3438, 3676, &quot;to_player&quot;, &quot;bamboo&quot;, 3, 1, 15)"/>
+    <property name="function_to_call" value="spawn_enemy"/>
+    <property name="id" value="90003"/>
     <property name="type" value="1"/>
    </properties>
   </object>
@@ -961,7 +956,16 @@
     <property name="type" value="1"/>
    </properties>
   </object>
+  <object id="253" name="pressure_plate" gid="1555" x="2838.67" y="3608" width="64" height="64">
+   <properties>
+    <property name="args" value="(3438, 3676, &quot;to_player&quot;, &quot;bamboo&quot;, 3, 1, 15)"/>
+    <property name="function_to_call" value="spawn_enemy"/>
+    <property name="id" value="90002"/>
+    <property name="type" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
+ <objectgroup id="16" name="items"/>
  <objectgroup id="15" name="collision">
   <object id="144" x="4098" y="3844" width="114" height="764"/>
   <object id="145" x="3580" y="4038" width="120" height="564"/>
