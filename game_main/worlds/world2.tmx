@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="256">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="266">
  <tileset firstgid="1" source="../textures/tilemaps/post apo1.tsx"/>
  <tileset firstgid="1041" source="../textures/tilemaps/triggers.tsx"/>
  <tileset firstgid="1141" source="../textures/tilemaps/Lab.tsx"/>
@@ -966,9 +966,34 @@
   </object>
  </objectgroup>
  <objectgroup id="16" name="items">
-  <object id="255" x="4608" y="5676">
+  <object id="256" x="4583.33" y="5653.33">
    <properties>
-    <property name="name" value="(&quot;Speed_Potion&quot;)"/>
+    <property name="amount" value="1"/>
+    <property name="name" value="speed_potion"/>
+   </properties>
+  </object>
+  <object id="257" x="3103.42" y="3195.47">
+   <properties>
+    <property name="amount" value="1"/>
+    <property name="name" value="strength_potion"/>
+   </properties>
+  </object>
+  <object id="258" x="2082.33" y="2972.17">
+   <properties>
+    <property name="amount" value="2"/>
+    <property name="name" value="speed_potion"/>
+   </properties>
+  </object>
+  <object id="264" x="3947.33" y="5943.33">
+   <properties>
+    <property name="amount" value="1"/>
+    <property name="name" value="note1"/>
+   </properties>
+  </object>
+  <object id="265" x="4336.67" y="5980.67">
+   <properties>
+    <property name="amount" value="1"/>
+    <property name="name" value="note1"/>
    </properties>
   </object>
  </objectgroup>
