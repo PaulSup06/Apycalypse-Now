@@ -176,21 +176,68 @@
  <tile id="458" probability="0.05"/>
  <tile id="459" probability="0.05"/>
  <tile id="586" class="h3"/>
+ <tile id="589" class="h11"/>
+ <tile id="590" class="h11"/>
+ <tile id="591" class="h11"/>
+ <tile id="592" class="h11"/>
  <tile id="593" class="h11"/>
  <tile id="594" class="h11"/>
+ <tile id="595" class="h11"/>
+ <tile id="596" class="h11"/>
+ <tile id="597" class="h11"/>
+ <tile id="598" class="h11"/>
+ <tile id="599" class="h11"/>
+ <tile id="600" class="h1"/>
+ <tile id="601" class="h1"/>
+ <tile id="602" class="h1"/>
+ <tile id="603" class="h1"/>
+ <tile id="604" class="h1"/>
+ <tile id="605" class="h1"/>
  <tile id="626" class="h2"/>
+ <tile id="629" class="h10"/>
+ <tile id="630" class="h10"/>
+ <tile id="631" class="h10"/>
+ <tile id="632" class="h10"/>
  <tile id="633" class="h10"/>
  <tile id="634" class="h10"/>
  <tile id="635" class="h10"/>
+ <tile id="636" class="h10"/>
+ <tile id="637" class="h10"/>
+ <tile id="638" class="h10"/>
+ <tile id="639" class="h10"/>
+ <tile id="640" class="h1"/>
+ <tile id="641" class="h1"/>
+ <tile id="642" class="h1"/>
+ <tile id="643" class="h1"/>
+ <tile id="644" class="h1"/>
+ <tile id="645" class="h1"/>
+ <tile id="664" class="h1"/>
+ <tile id="665" class="h1"/>
  <tile id="666" class="h1"/>
  <tile id="667" class="h1"/>
  <tile id="668" class="h1"/>
+ <tile id="669" class="h9"/>
+ <tile id="670" class="h9"/>
+ <tile id="671" class="h9"/>
  <tile id="672" class="h9"/>
  <tile id="673" class="h9"/>
  <tile id="674" class="h9"/>
  <tile id="675" class="h9"/>
+ <tile id="676" class="h9"/>
+ <tile id="677" class="h9"/>
+ <tile id="678" class="h9"/>
+ <tile id="679" class="h9"/>
+ <tile id="680" class="h1"/>
+ <tile id="681" class="h1"/>
+ <tile id="682" class="h1"/>
+ <tile id="683" class="h1"/>
+ <tile id="684" class="h1"/>
+ <tile id="685" class="h1"/>
+ <tile id="704" class="h1"/>
+ <tile id="705" class="h1"/>
  <tile id="707" class="h1"/>
  <tile id="708" class="h1"/>
+ <tile id="709" class="h8"/>
  <tile id="710" class="h8"/>
  <tile id="711" class="h8"/>
  <tile id="712" class="h8"/>
@@ -199,7 +246,16 @@
  <tile id="715" class="h8"/>
  <tile id="716" class="h8"/>
  <tile id="717" class="h8"/>
- <tile id="746" class="h1"/>
+ <tile id="718" class="h8"/>
+ <tile id="719" class="h8"/>
+ <tile id="720" class="h1"/>
+ <tile id="721" class="h1"/>
+ <tile id="722" class="h1"/>
+ <tile id="723" class="h1"/>
+ <tile id="724" class="h1"/>
+ <tile id="725" class="h1"/>
+ <tile id="746" class="h2"/>
+ <tile id="749" class="h7"/>
  <tile id="750" class="h7"/>
  <tile id="751" class="h7"/>
  <tile id="752" class="h7"/>
@@ -208,7 +264,16 @@
  <tile id="755" class="h7"/>
  <tile id="756" class="h7"/>
  <tile id="757" class="h7"/>
- <tile id="786" class="h0"/>
+ <tile id="758" class="h7"/>
+ <tile id="759" class="h7"/>
+ <tile id="760" class="h1"/>
+ <tile id="761" class="h1"/>
+ <tile id="762" class="h1"/>
+ <tile id="763" class="h1"/>
+ <tile id="764" class="h1"/>
+ <tile id="765" class="h1"/>
+ <tile id="786" class="h1"/>
+ <tile id="789" class="h6"/>
  <tile id="790" class="h6"/>
  <tile id="791" class="h6"/>
  <tile id="792" class="h6"/>
@@ -217,38 +282,86 @@
  <tile id="795" class="h6"/>
  <tile id="796" class="h6"/>
  <tile id="797" class="h6"/>
+ <tile id="798" class="h6"/>
+ <tile id="799" class="h6"/>
+ <tile id="800" class="h1"/>
+ <tile id="801" class="h1"/>
+ <tile id="802" class="h1"/>
+ <tile id="803" class="h1"/>
+ <tile id="804" class="h1"/>
+ <tile id="805" class="h1"/>
+ <tile id="826" class="h2"/>
+ <tile id="829" class="h5"/>
+ <tile id="830" class="h5"/>
+ <tile id="831" class="h5"/>
+ <tile id="832" class="h5"/>
  <tile id="833" class="h5"/>
  <tile id="834" class="h5"/>
  <tile id="835" class="h5"/>
  <tile id="836" class="h5"/>
+ <tile id="837" class="h5"/>
+ <tile id="838" class="h5"/>
+ <tile id="839" class="h5"/>
+ <tile id="840" class="h1"/>
+ <tile id="841" class="h1"/>
+ <tile id="842" class="h1"/>
+ <tile id="843" class="h1"/>
+ <tile id="844" class="h1"/>
+ <tile id="845" class="h1"/>
  <tile id="866" class="h1"/>
  <tile id="869" class="h1"/>
+ <tile id="870" class="h4"/>
+ <tile id="871" class="h4"/>
+ <tile id="872" class="h4"/>
  <tile id="873" class="h4"/>
  <tile id="874" class="h4"/>
  <tile id="875" class="h4"/>
+ <tile id="876" class="h4"/>
+ <tile id="877" class="h4"/>
+ <tile id="878" class="h4"/>
+ <tile id="879" class="h4"/>
  <tile id="906" class="h0"/>
  <tile id="907" class="h2"/>
  <tile id="908" class="h2"/>
  <tile id="909" class="h0"/>
+ <tile id="910" class="h3"/>
+ <tile id="911" class="h3"/>
+ <tile id="912" class="h3"/>
  <tile id="913" class="h3"/>
  <tile id="914" class="h3"/>
  <tile id="915" class="h3"/>
+ <tile id="916" class="h3"/>
+ <tile id="917" class="h3"/>
+ <tile id="918" class="h3"/>
+ <tile id="919" class="h3"/>
  <tile id="945" class="h1"/>
  <tile id="946" class="h1"/>
  <tile id="947" class="h1"/>
  <tile id="948" class="h1"/>
  <tile id="949" class="h1"/>
+ <tile id="950" class="h2"/>
+ <tile id="951" class="h2"/>
+ <tile id="952" class="h2"/>
  <tile id="953" class="h2"/>
  <tile id="954" class="h2"/>
  <tile id="955" class="h2"/>
+ <tile id="956" class="h2"/>
+ <tile id="957" class="h2"/>
+ <tile id="958" class="h2"/>
  <tile id="985" class="h0"/>
  <tile id="986" class="h0"/>
  <tile id="987" class="h0"/>
  <tile id="988" class="h0"/>
  <tile id="989" class="h0"/>
+ <tile id="991" class="h1"/>
+ <tile id="992" class="h1"/>
  <tile id="993" class="h1"/>
  <tile id="994" class="h1"/>
  <tile id="995" class="h1"/>
+ <tile id="996" class="h1"/>
+ <tile id="997" class="h1"/>
+ <tile id="998" class="h1"/>
+ <tile id="999" class="h1"/>
  <tile id="1013" class="player"/>
  <wangsets>
   <wangset name="sol/chemin" type="edge" tile="-1">

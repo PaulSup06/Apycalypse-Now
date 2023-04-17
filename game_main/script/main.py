@@ -465,7 +465,7 @@ class Game:
         self.main_menu.disable()
         self.inventaire = Inventaire(self)
         #génération du monde
-        self.current_world = 0
+        self.current_world = 1
         self.generate_world(self.current_world)
         self.current_life = self.max_life = default_player_life
             
@@ -747,6 +747,8 @@ class Game:
         self.debug_text_timer = 0
         self.debug_text_showing = True
 
+    def open_castle_door(self):
+        pass
     
 #===============================================================
 #====PROGRAMME PRINCIPAL========================================

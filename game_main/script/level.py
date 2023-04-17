@@ -91,11 +91,15 @@ class Level:
                     if gid!=0:
                         tile_properties = self.world_tmx.get_tile_properties_by_gid(gid)
                         image = self.world_tmx.get_tile_image_by_gid(gid)
-                        classe = tile_properties.get("class")
-                        if classe:
-                            height = int(str(classe)[1:])
+
+                        if tile_properties:
+                            classe = tile_properties.get("class")
+                            if classe:
+                                height = int(str(classe)[1:])
+                            else:
+                                height = 0
                         else:
-                            height = 0
+                            height = 0 # cell vide mais ds ground props
                         Case(x*CASE_SIZE, y*CASE_SIZE, [self.visible_blocks], image, basey=(y+height)*CASE_SIZE)
 
             if layer.name == "triggers":
@@ -148,8 +152,8 @@ class Level:
             npc_path[key]["npc_trajectoire"] = self.trouver_chemin(npc_path[key]["npc_trajectoire"], npc_path[key]["npc_pos"])
 
         # ajoute les trajectoires aux npc
-        for npc in npcs:
-            npc.path = npc_path[npc.name]
+        #for npc in npcs:
+        #    npc.path = npc_path[npc.name]
 
     def trouver_chemin(self, coordonnees, coordonnee_depart):
         """Algorithme de parcours en profondeur (DFS)
