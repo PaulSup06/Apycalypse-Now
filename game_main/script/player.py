@@ -17,8 +17,9 @@ class Player(Entity):
         self.player_imgs = load_player_imgs()
         self.image = self.player_imgs["up"]["up_0.png"]
         super().__init__(x, y, self.image, groupes)
-        self.surface = self.image.get_rect(topleft=(x,y))
-        self.rect = pygame.Rect(self.x, self.y + 10, 64, self.surface.height - hitbox_offset * 2) #à modif
+        self.surface = self.image.get_bounding_rect()
+        self.surface.topleft = (x,y)
+        self.rect = pygame.Rect(self.x, self.y + hitbox_offset, self.surface.width, self.surface.height - hitbox_offset * 2) 
         self.collision_blocks = collision_blocks
         self.basey = self.rect.bottom
         self.direction = "down"

@@ -55,7 +55,7 @@ def get_actual_settings():
 
 #variables de gameplay
 playerspeed = 5
-hitbox_offset = 15 #marge pour les collisions du joueur
+hitbox_offset = 30 #marge pour les collisions du joueur
 walk_anim_duration = 12 #nombre de frames que dure 1 image de l'animation de marche
 default_player_life = 6
 default_player_attack_cooldown = 20 #cooldown par défaut quand main vide
@@ -126,7 +126,12 @@ def load_player_imgs():
     for folder in os.listdir(player_img_folder):
         player_imgs[folder] = {}
         for file in os.listdir(os.path.join(player_img_folder, folder)):
-            player_imgs[folder][file] = pygame.image.load(os.path.join(player_img_folder,folder,file)).convert_alpha()
+            
+            base_img = pygame.image.load(os.path.join(player_img_folder,folder,file)).convert_alpha()
+            rect = base_img.get_bounding_rect()
+            #supposons que l'image est centrée et avec la base en bas
+            img_cropped = base_img.subsurface(pygame.Rect((base_img.get_width()-rect.width)//2, base_img.get_height() - rect.height, rect.width, rect.height))
+            player_imgs[folder][file] = pygame.transform.scale(img_cropped,(rect.width*4, rect.height*4))
     return player_imgs
 
 def load_enemy_imgs():

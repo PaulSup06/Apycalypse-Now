@@ -131,7 +131,7 @@ class Level:
 
             if layer.name == "items":
                 for item in layer:
-                    Item(item.x, item.y, self.item_imgs[item.properties["name"]], self.items, item.properties["name"], item.properties["amount"])
+                    Item(item.x, item.y, self.item_imgs[item.name], self.items, item.name, item.properties["amount"])
 
 
             if layer.name == "npc_path":
