@@ -3,7 +3,7 @@ from settings import *
 
 class Camera(pygame.sprite.Group):
     def __init__(self, world):
-        """Objet caméra : affiche les objets visibles à l'écran et calcule leur offset pour garder le joueur au centre
+        """Objet caméra : affiche les objets visibles à l'écran et calcule leur offset pour garder le joueur au centre. Hérite de pygame.sprite.Group car contient les éléments (sprites) à afficher.
 
         Args:
             world (int): id du monde en cours (affichage de l'arrière plan)

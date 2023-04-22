@@ -76,6 +76,12 @@ class Terminal(Entity):
 
 class Browser:
     def __init__(self, html, title) -> None:
+        """Objet Browser à l’intérieur d’un terminal, ouvre une fenêtre web via librairie pywebview
+
+        Args:
+            html (str): code html à passer dans la fenêtre pywebview
+            title (str): titre de la fenêtre
+        """
         self.api = Api()
         self.html = html
         self.title = title
@@ -83,6 +89,8 @@ class Browser:
         self.succeded = False
 
     def show_browser(self):
+        """Créé la fenêtre et l'affiche à l'écran. Code python arrêté dans cette fonction tant que la fenêtre n'est pas refermée
+        """
         self.window = webview.create_window(self.title, html=self.html, resizable=False, fullscreen=True, js_api=self.api, background_color="#003300")
         self.api.set_window(self.window)
         webview.start()  
@@ -93,6 +101,8 @@ class Browser:
 class Api:
 
     def __init__(self):
+        """Classe API permettant d'intéragir avec le code Javascript de la fenêtre pywebview. Voir documentation de la librairie pour plus de détails
+        """
         self._window = None
         self.succeded =False
 

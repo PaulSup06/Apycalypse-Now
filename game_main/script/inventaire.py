@@ -6,6 +6,12 @@ import random
 
 class Inventaire:    
     def __init__(self, main, inventory=None) -> None:
+        """Inventaire du joueur
+
+        Args:
+            main (Game): élément Game, utilisé pour faire référence à des fonctions de l'objet Game
+            inventory (dict, optional): inventaire enregistré si besoin, sinon inventaire vide.
+        """
         self.enabled = False
         self.cell_image = pygame.image.load("..\\textures\\ui\\cell.jpg")
         #Dictionary to hold images
@@ -280,10 +286,24 @@ class Item(Entity):
         self.surface = pygame.display.get_surface()
     
     def pickup(self):
+        """Ramasse un item au sol et supprime l'objet
+
+        Returns:
+            int: quantité ramassée
+        """
         self.kill()
         return self.amount
     
     def handle(self,player,offset):
+        """Gère l'objet, son affichage et sa distance par rapport au joueur
+
+        Args:
+            player (Player): objet du joueur
+            offset (Camera.offset): offset pour l'affichage
+
+        Returns:
+            int: quantité ramassée par le joueur
+        """
         self.draw(offset)
         if self.rect.colliderect(player.rect):
             return self.pickup()
@@ -291,6 +311,14 @@ class Item(Entity):
             return None
         
     def stack(self,items):
+        """Empile les items dans un même objet si plusieurs items du même type sont proches
+
+        Args:
+            items (group): level.item, groupe des items au sol
+
+        Returns:
+            bool: True si l'item a été empilé
+        """
         for item in items:
             if item!=self and item.name==self.name and self.check_distance_to((item.x,item.y), stackable_range) and item.amount<MAX_ITEMS_PER_CELL:
                 total = self.amount + item.amount
@@ -303,6 +331,11 @@ class Item(Entity):
         
         
     def draw(self,offset):
+        """Gère l'affichage de l'item sur l'écran
+
+        Args:
+            offset (Camera.offset): offset d'affichage
+        """
         self.amount_rendered = font2.render(str(self.amount),1,"black")
         self.surface.blit(pygame.transform.scale(self.image, ITEM_SIZE),(self.x-offset.x,self.y-offset.y))
         self.surface.blit(self.amount_rendered,(self.x -offset.x + ITEM_SIZE[0] + 5,self.y - offset.y + ITEM_SIZE[1] + 5))

@@ -6,7 +6,7 @@ import random
 
 class Spike(Entity):
     def __init__(self, x, y, image, groupes, textures, name):
-        """Enemy héritant de la classe Entité, est hostile au joueur
+        """Spike héritant de la classe Entité, est hostile au joueur
 
         Args:
             x (int): pos x
