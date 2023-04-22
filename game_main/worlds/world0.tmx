@@ -181,7 +181,7 @@
    <properties>
     <property name="first_dialog" value="1"/>
     <property name="indicator" value="..."/>
-    <property name="npc_name" value="Osborn Turtledove"/>
+    <property name="npc_name" value="soldier"/>
     <property name="talkable" type="bool" value="true"/>
    </properties>
   </object>

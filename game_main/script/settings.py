@@ -289,8 +289,123 @@ npc_dialogs = {
                 "goto": "-1",
                 "npc_update":["True","...","7"],
                 }
-        }
+        },
+    
+    "soldier":{
+        "1":{
+            "type": "sans_choix",
+                "text":"Bonjour ! Te voilà enfin réveillé ! ",
+                "goto": "2",
+                "npc_update":["True","...","2"],
+        },
+        "2":{
+                "type": "avec_choix",
+                "text":"Tu as dormi pendant très longtemps ! Te souviens-tu de ce qui t'es arrivé ?",
+                "choix":[
+                    {"index":1,
+                    "text": "Oui! (passer tutoriel)",
+                    "goto":"-1",
+                    "npc_update":["True","...","10"],
+                    },
+                    {"index":2,
+                    "text": "Vaguement... (aller à l'histoire)",
+                    "goto":"6",
+                    "npc_update":["True","...","6"],
+                    },
+                    {"index":3,
+                    "text": "Non... (tutoriel de base)",
+                    "goto":"3",
+                    "npc_update":["True","...","3"],
+                    }
+                ]
+            },
+        #TUTORIEL DE BASE
+        "3":{
+            "type": "sans_choix",
+            "text":"Très bien... Je suppose que tu as dû te cogner suffisamment fort pour oublier tout cela...\nQuoi qu'il en soit reprenons du début.\nTu peux utiliser la touche ECHAP de ton clavier pour accéder au menu de pause.\nDe là, accède au menu des paramètres. Tu y trouveras les touches importantes.",
+            "goto": "4",
+            "npc_update":["True","...","4"],},
+        "4":{
+            "type": "sans_choix",
+            "text":"Ensuite, de ce même menu de pause, tu pourras sauvegarder la partie.\nTu retrouveras tes sauvegardes depuis le menu principal.\nAttention ! Toute progression non sauvegardée sera perdue.",
+            "goto": "5",
+            "npc_update":["True","...","5"],},
+        "5":{
+            "type": "sans_choix",
+            "text":"Dans le cas très improbable où tu viendrais à mourir, ne t'inquiète pas tu as la possibilité de te réanimer.\nCependant si comme nous tu es un puriste, tu peux toujours recommencer à ta dernière sauvegarde ou du début !",
+            "goto": "6",
+            "npc_update":["True","...","6"],},
+        
+        #HISTOIRE
+        "6":{
+            "type": "avec_choix",
+            "text":"Bien... Je suppose que je vais maintenant devoir te raconter l'histoire de la catastrophe...",
+            "choix":[
+                {"index":1,
+                "text": "La catastrophe ?",
+                "goto":"7",
+                "npc_update":["True","...","7"],
+                },
+                {"index":2,
+                "text": "Non merci, je suis au courant",
+                "goto":"-1",
+                "npc_update":["True","...","6"],
+                }
+                
+            ]
+        },
+        "7":{
+            "type": "sans_choix",
+            "text":"Tout a démarré il y a quelques années, lorsque ce docteur, Osborn Turtledove, s'est mis en tête de sauver l'humanité...\nLa crise et les pénuries de pétrol grandissant, il a développé une molécule qui\n selont lui aurait permis de diviser par 100 la consommation énergétique du monde.",
+            "goto": "8",
+            "npc_update":["True","...","8"],},
+        "8":{
+            "type": "sans_choix",
+            "text":"Tout d'abord, personne ne s'est rendu compte de rien, le produit produisait l'effet escompté\n et le docteur Turledove était porté en héros dans le monde entier.\nMais après quelques mois, son produit répandu partout se révéla être toxique.",
+            "goto": "15",
+            "npc_update":["True","...","15"],},
+        "15":{
+            "type": "sans_choix",
+            "text":"Les êtres vivants les plus exposés commencèrent à tomber malade...\nIls agirent de manière étrange, attaquant sans raison apparente leurs congénères.\nLes humains ne furent pas épargnés, et le monde sombra dans le chaos.",
+            "goto": "9",
+            "npc_update":["True","...","9"],},
+        "9":{
+            "type": "sans_choix",
+            "text":"Depuis, de nombreuses personnes essayent d'accéder à son laboratoire afin de trouver un antidote,\n mais personne n'a pour l'instant réussi.\nC'est à l'entrée de celui-ci que je t'ai trouvé, tu dois surement être un autre aventurier...\nPeu m'importe, vas donc remplir ta mission, que je ne t'aie pas sauvé pour rien !",
+            "goto": "10",
+            "npc_update":["True","...","10"],},
+        "10":{
+            "type": "avec_choix",
+            "text":"Bien... As-tu des questions ?",
+            "choix":[
+                {"index":1,
+                "text": "On parle bien de zombies là ??",
+                "goto":"11",
+                "npc_update":["True","...","10"],
+                },
+                {"index":2,
+                "text": "Où dois-je aller ?",
+                "goto":"12",
+                "npc_update":["True","...","10"],
+                },
+                {"index":3,
+                "text": "Non",
+                "goto":"-1",
+                "npc_update":["True","...","10"],
+                }
+                
+            ]
+        },
+        "11":{"type": "sans_choix",
+            "text":"Certaines personnes ont employé ces mots, mais leur comportement n'est pas le même.\nIls attaquent pour tuer et non pour contaminer ou pour se nourrir. De plus, personne n'a réussi\nà déterminer la cause réelle de ce phénomène, ni à identifier un quelconque virus ou parasite.",
+            "goto": "10",
+            "npc_update":["True","...","10"],},
+        "12":{"type": "sans_choix",
+            "text":"Le laboratoire de Turtledove se trouve plus au nord,\nnous avons trouvé il y a quelques mois une entrée cachée par ce chateau en ruines, \nmais personne depuis n'a réussi à franchir les portes blindées qui en gardent l'entrée souterraine.",
+            "goto": "10",
+            "npc_update":["True","...","10"],},
     }
+}
 
 #misc
 button_fillcolors = {'normal': (0,0,0,0),
