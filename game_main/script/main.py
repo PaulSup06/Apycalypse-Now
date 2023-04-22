@@ -8,6 +8,7 @@ from settings import *
 from level import Level
 from debug import debug
 from player import Player
+from enemy import Enemy
 from ui import *
 from inventaire import Inventaire
 from datetime import datetime
@@ -222,7 +223,7 @@ class Game:
                     if event.key == pygame.K_k: #temporaire pour tests
                         self.play_music("8.wav")
                     elif event.key == pygame.K_y: #temporaire pour tests
-                        self.change_level(1)
+                        self.change_level(2)
                     elif event.key==pygame.K_u:
                         self.inventaire.add_item("strength_potion",2)
                         self.inventaire.add_item("note#1", 1)
@@ -738,6 +739,20 @@ class Game:
                 else:
                     term.lock()
                     return False
+                
+    def spawn_enemy(self,x,y,movement_type,name,speed,damages,health, movement_condition=True):
+        """Fait apparaître un ennemi sur la map selon des paramètres donnés
+
+        Args:
+            paramètres de l'ennemi à passer via Tiled
+        """
+        #conversion des paramètres en int (passés en string via Tiled)
+        x = int(x)
+        y = int(y)
+        speed = int(speed)
+        damages = int(damages)
+        health = int(health)
+        Enemy(x,y,None, self.level.enemies,self.level.collision_blocks,self.level.items,self.level.enemy_imgs[name], movement_type,name,speed,damages,health,movement_condition)
     #=====================================================================
     #DEBUG
     #=====================================================================

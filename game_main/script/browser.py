@@ -31,6 +31,9 @@ class Terminal(Entity):
             
     def unlock(self):
         self.locked=False
+    
+    def lock(self):
+        self.locked = True
             
     def show_indicator(self,surface, offset, settings):
         if self.locked:

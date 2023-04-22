@@ -543,19 +543,11 @@
    </properties>
   </object>
   <object id="7" name="player" gid="1014" x="4066" y="6127" width="64" height="64"/>
-  <object id="11" gid="1205" x="3936" y="4802" width="64" height="64"/>
   <object id="14" name="door" gid="1168" x="3456" y="5376" width="64" height="64">
    <properties>
     <property name="id" value="-1"/>
    </properties>
   </object>
-  <object id="15" gid="1203" x="3459" y="5475" width="64" height="64"/>
-  <object id="16" gid="1203" x="3468.5" y="5317" width="64" height="64"/>
-  <object id="17" gid="1203" x="3442.5" y="5307.5" width="64" height="64"/>
-  <object id="18" gid="1203" x="3463" y="5328.5" width="64" height="64"/>
-  <object id="19" gid="1203" x="3453.5" y="5283" width="64" height="64"/>
-  <object id="25" gid="1203" x="3421" y="5254" width="64" height="64"/>
-  <object id="26" gid="1203" x="3457" y="5304.5" width="64" height="64"/>
   <object id="27" name="terminal" gid="1162" x="3456" y="4928" width="64" height="64">
    <properties>
     <property name="id" value="2"/>
@@ -598,23 +590,18 @@
     <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="39" gid="1201" x="3134.67" y="4309.33" width="64" height="64"/>
-  <object id="40" gid="1201" x="3134.67" y="4266.67" width="64" height="64"/>
   <object id="41" name="door" gid="1168" x="4544" y="4288" width="64" height="64">
    <properties>
     <property name="id" value="5"/>
     <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="42" gid="1153" x="4776" y="4398.67" width="64" height="64"/>
   <object id="43" name="door" gid="1168" x="4288" y="4544" width="64" height="64">
    <properties>
     <property name="id" value="3"/>
     <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="44" gid="1208" x="4590.67" y="4804" width="64" height="64"/>
-  <object id="45" gid="1208" x="4294.67" y="4553.33" width="64" height="64"/>
   <object id="56" name="enemy" gid="1602" x="3805.33" y="4401.33" width="64" height="64">
    <properties>
     <property name="damages" type="int" value="1"/>
@@ -773,7 +760,6 @@
     <property name="speed" type="int" value="1"/>
    </properties>
   </object>
-  <object id="92" gid="1214" x="3952.67" y="4502" width="64" height="64"/>
   <object id="94" name="door" gid="1168" x="1600.33" y="2432" width="64" height="64">
    <properties>
     <property name="id" value="-1"/>
@@ -847,7 +833,7 @@
  <objectgroup id="10" name="switches">
   <object id="31" name="wall_lever" gid="1502" x="3370" y="4957.33" width="64" height="64">
    <properties>
-    <property name="args" value="(2, 2)"/>
+    <property name="args" value="(2),(2)"/>
     <property name="function_to_call" value="unlock_terminal"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="2"/>
@@ -856,7 +842,7 @@
   </object>
   <object id="46" name="floor_lever" gid="1512" x="3454.67" y="4248" width="64" height="64">
    <properties>
-    <property name="args" value="(5, 5)"/>
+    <property name="args" value="(5),(5)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="id" value="5"/>
     <property name="type" value="1"/>
@@ -864,7 +850,7 @@
   </object>
   <object id="47" name="floor_lever" gid="1512" x="4289.33" y="4248" width="64" height="64">
    <properties>
-    <property name="args" value="(4, 4)"/>
+    <property name="args" value="(4),(4)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="id" value="4"/>
     <property name="type" value="1"/>
@@ -872,7 +858,7 @@
   </object>
   <object id="48" name="floor_lever" gid="1503" x="4569.33" y="4220" width="64" height="64">
    <properties>
-    <property name="args" value="(6, 6)"/>
+    <property name="args" value="(6),(6)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="id" value="6"/>
     <property name="type" value="1"/>
@@ -880,7 +866,7 @@
   </object>
   <object id="49" name="floor_lever" gid="1503" x="3164" y="4217.33" width="64" height="64">
    <properties>
-    <property name="args" value="(7, 7)"/>
+    <property name="args" value="(7),(7)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="id" value="7"/>
     <property name="type" value="1"/>
@@ -888,7 +874,7 @@
   </object>
   <object id="55" name="wall_lever" gid="1502" x="3294.67" y="4578.67" width="64" height="64">
    <properties>
-    <property name="args" value="(3, 3)"/>
+    <property name="args" value="(3),(3)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="3"/>
@@ -897,7 +883,7 @@
   </object>
   <object id="60" name="wall_lever" gid="1502" x="4002.67" y="3936" width="64" height="64">
    <properties>
-    <property name="args" value="(8, 8)"/>
+    <property name="args" value="(8),(8)"/>
     <property name="function_to_call" value="unlock_terminal"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="8"/>
@@ -906,7 +892,7 @@
   </object>
   <object id="62" name="pressure_plate" gid="1555" x="3182" y="3984" width="64" height="64">
    <properties>
-    <property name="args" value="(9, 9)"/>
+    <property name="args" value="(9),(9)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="id" value="90001"/>
     <property name="type" value="1"/>
@@ -922,7 +908,7 @@
   </object>
   <object id="73" name="wall_lever" gid="1502" x="1473.33" y="3729.33" width="64" height="64">
    <properties>
-    <property name="args" value="(10, 100001)"/>
+    <property name="args" value="(10),(100001)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100001"/>
@@ -931,7 +917,7 @@
   </object>
   <object id="74" name="wall_lever" gid="1502" x="1532" y="3728" width="64" height="64">
    <properties>
-    <property name="args" value="(10, 100002)"/>
+    <property name="args" value="(10),(100002)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100002"/>
@@ -940,7 +926,7 @@
   </object>
   <object id="75" name="wall_lever" gid="1502" x="1730.67" y="3730.67" width="64" height="64">
    <properties>
-    <property name="args" value="(10, 100003)"/>
+    <property name="args" value="(10),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100003"/>
@@ -949,7 +935,7 @@
   </object>
   <object id="76" name="wall_lever" gid="1502" x="1789.33" y="3730.67" width="64" height="64">
    <properties>
-    <property name="args" value="(10, 100004)"/>
+    <property name="args" value="(10),(100004)"/>
     <property name="function_to_call" value="unlock_terminal"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100004"/>
@@ -966,34 +952,24 @@
   </object>
  </objectgroup>
  <objectgroup id="16" name="items">
-  <object id="256" x="4583.33" y="5653.33">
+  <object id="256" name="speed_potion" x="4583.33" y="5653.33">
    <properties>
     <property name="amount" value="1"/>
-    <property name="name" value="speed_potion"/>
    </properties>
   </object>
-  <object id="257" x="3103.42" y="3195.47">
+  <object id="257" name="strength_potion" x="3103.42" y="3195.47">
    <properties>
     <property name="amount" value="1"/>
-    <property name="name" value="strength_potion"/>
    </properties>
   </object>
-  <object id="258" x="2082.33" y="2972.17">
+  <object id="258" name="speed_potion" x="2082.33" y="2972.17">
    <properties>
     <property name="amount" value="2"/>
-    <property name="name" value="speed_potion"/>
    </properties>
   </object>
-  <object id="264" x="3947.33" y="5943.33">
+  <object id="265" name="note1" x="4336.67" y="5980.67">
    <properties>
     <property name="amount" value="1"/>
-    <property name="name" value="note1"/>
-   </properties>
-  </object>
-  <object id="265" x="4336.67" y="5980.67">
-   <properties>
-    <property name="amount" value="1"/>
-    <property name="name" value="note1"/>
    </properties>
   </object>
  </objectgroup>

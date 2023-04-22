@@ -25,6 +25,8 @@ class Lever(Entity):
         self.name = name
         self.id = id
         self.is_animited = False
+        if basey:
+            self.basey = basey
 
 
     def handle(self,player,surface, offset, settings, has_manivelle):
