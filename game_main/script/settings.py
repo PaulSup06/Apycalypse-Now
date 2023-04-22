@@ -356,7 +356,7 @@ npc_dialogs = {
         },
         "7":{
             "type": "sans_choix",
-            "text":"Tout a démarré il y a quelques années, lorsque ce docteur, Osborn Turtledove, s'est mis en tête de sauver l'humanité...\nLa crise et les pénuries de pétrol grandissant, il a développé une molécule qui\n selont lui aurait permis de diviser par 100 la consommation énergétique du monde.",
+            "text":"Tout a démarré il y a quelques années, lorsque ce docteur, Osborn Turtledove, s'est mis en tête de sauver l'humanité...\nLa crise et les pénuries grandissant, il a développé une molécule qui, introduite dans les sources d'énergies fossiles\n (gaz, pétrole, ...) aurait selont lui permis de diviser par 100 la consommation énergétique du monde.",
             "goto": "8",
             "npc_update":["True","...","8"],},
         "8":{
