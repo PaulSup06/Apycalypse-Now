@@ -5,6 +5,15 @@ from settings import *
 
 class Terminal(Entity):
     def __init__(self, x, y, groupes, id=-1, locked=False):
+        """Objet Terminal interactif par le joueur, créé une instance de Browser si interaction.
+
+        Args:
+            x (int): position x
+            y (int): position y
+            groupes (list): liste de pygame.sprite.Group auxquels ajouter le terminal
+            id (int, optional): id du terminal. Defaults to -1.
+            locked (bool, optional): True si le terminal est bloqué par défaut. Defaults to False.
+        """
         self.image = load_terminal_img()
         super().__init__(x, y, self.image, groupes)
         self.id = int(str(id).strip())
@@ -15,10 +24,23 @@ class Terminal(Entity):
         self.basey = self.surface.bottom
 
     def handle(self,player,surface, offset, settings):
+        """Gère l'affichage des en-tête d'aide au joueur
+
+        Args:
+            player (player object): objet du joueur
+            surface (Rect): rectangle de position du terminal
+            offset (Camera.offset): vector2 d'offset de la caméra
+            settings (dict): dictionnaire des paramètres pour les touches d'intéraction 
+        """
         if player.check_distance_to(self.surface.midbottom, interact_distance) and self.surface.y < player.y:
             self.show_indicator(surface, offset, settings)
 
     def interact(self):
+        """Interaction du joueur sur le terminal, créé l'instance Browser afin de proposer le quiz HTML au joueur
+
+        Returns:
+            bool: True si le joueur a réussi le quiz
+        """
         if not self.locked:
             self.using = True
             browser = Browser(self.html,"TERMINAL")
@@ -30,12 +52,23 @@ class Terminal(Entity):
                 return False, self.id
             
     def unlock(self):
+        """Déverrouille le terminal
+        """
         self.locked=False
     
     def lock(self):
+        """Verrouille le terminal
+        """
         self.locked = True
             
     def show_indicator(self,surface, offset, settings):
+        """Affiche l'indicateur d'aide au joueur
+
+        Args:
+            surface (Rect): rectangle de position du terminal
+            offset (Camera.offset): vector2 d'offset de la caméra
+            settings (dict): dictionnaire des paramètres pour les touches d'intéraction 
+        """
         if self.locked:
             surface.blit(font2.render("[Terminal verrouillé]",1,"white"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + self.surface.height - offset.y))
         else:

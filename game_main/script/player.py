@@ -81,7 +81,7 @@ class Player(Entity):
             self.basey = self.surface.bottom
 
     def update(self):
-        """Gère les animations du joueur en fonction de ses déplacemens
+        """Gère les animations du joueur en fonction de ses déplacements
         """
         if not self.attacking:
             if self.movement.length() == 0:
@@ -109,6 +109,11 @@ class Player(Entity):
             pass
     
     def attack(self, enemies):
+        """Gère l'attaque du joueur sur les ennemies
+
+        Args:
+            enemies (_type_): _description_
+        """
         if not self.attacking:
             self.attacking = True
             self.attack_counter=0

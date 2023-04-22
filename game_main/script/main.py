@@ -421,8 +421,7 @@ class Game:
     #FONCTIONS LIEES AUX MENUS ET TRIGGERS
     #======================================================================
     def generate_world(self, current_world=None,pos=None):
-        """Methode appellée à la création d'un monde
-        TODO: ajouter une manière de modifier le monde en fonction des choses déjà effectuées par le joueur
+        """
 
         Args:
             current_world (int): Monde à générer
@@ -564,7 +563,6 @@ class Game:
     #gestion de la musique
     def play_music(self,file_name):
         """Charge une musique dans le mixer pygame
-        TODO: ajouter une transition dynamique entre les musiques/écourter la précédente si besoin
 
         Args:
             file_name (str): nom de fichier de la musique à jouer (avec extension)
@@ -598,13 +596,19 @@ class Game:
             writer.writerow(self.settings)   
     
     def to_main_menu(self):
+        """Retourne au menu principal (sans sauvegarde)
+        """
         self.game_state = 'menu'
         self.main_menu.enable()         
     
     def retry(self):
+        """Recommence la partie entièrement
+        """
         self.create_new_game()
 
     def continue_game(self):
+        """Fonction de "triche" qui permet de revivre après être mort
+        """
         self.player.life = self.player.max_life
         self.current_life = self.max_life = self.player.max_life
         self.game_state = "playing"
@@ -615,6 +619,14 @@ class Game:
     #FONCTIONS LIEES AUX ITEMS DU JEU
     #=====================================================================
     def heal_player(self, amount=2):
+        """Rajoute de la vie au joueur
+
+        Args:
+            amount (int, optional): Vie à ajouter. Par défaut 2 soit 1 coeur.
+
+        Returns:
+            bool: Capacité du joueur à être soigné
+        """
         if self.player.life < self.player.max_life:
             self.player.life += amount #ajoute 1 coeur entier par défaut
             if self.player.life > self.player.max_life:
@@ -625,34 +637,47 @@ class Game:
             return False
     
     def speed_player(self):
-        # change vitesse du joueur pendant 15 secondes
-        #if self.player.speed_multiplier == 1:
-            self.player.speed_multiplier = speed_potion_mutltiplier
-            self.ui.speed_potion_timer = 0
-            return True
-        #else: # déjà du speed
-        #    return False
+        """Multiplie la vitesse du joueur par un facteur
+
+        Returns:
+            bool: Capacité du joueur à recevoir l'effet
+        """
+        self.player.speed_multiplier = speed_potion_multiplier
+        self.ui.speed_potion_timer = 0
+        return True
+
         
     def strength_player(self):
-        # change vitesse du joueur pendant 15 secondes
-        #if self.player.strength_multiplier == 1:
-            self.player.strength_multiplier = strength_potion_mutltiplier
-            self.ui.strength_potion_timer = 0
-            return True
-        #else: # déjà du strength
-        #    return False
+        """Multiplie la force du joueur par un facteur
+
+        Returns:
+            bool: Capacité du joueur à recevoir l'effet
+        """ 
+        self.player.strength_multiplier = strength_potion_mutltiplier
+        self.ui.strength_potion_timer = 0
+        return True
+
         
     def invincibility_player(self):
-        # change vitesse du joueur pendant 15 secondes
-        #if self.player.invincibility == False:
-            self.player.invincibility = True
-            self.ui.invincibility_potion_timer = 0
-            return True
-        #else: # déjà de l'invincibility
-        #    return False
+        """Rend le joueur invicible pendant un certain temps
+
+        Returns:
+            bool: Capacité du joueur à recevoir l'effet
+        """ 
+        self.player.invincibility = True
+        self.ui.invincibility_potion_timer = 0
+        return True
+
         
     def read_note(self, note):
-        # ouvre une note
+        """Ouvre un note
+
+        Args:
+            note (str): nom de la note
+
+        Returns:
+            bool: True si note consommée et détruite (toujours False sauf cas particulier)
+        """
 
         self.note_img = pygame.image.load(os.path.join(items_folder,note+".png"))
         self.note_rect = self.note_img.get_rect()
@@ -663,11 +688,22 @@ class Game:
         return False
     
     def add_player_heart(self,amount=2):
+        """Ajoute de la vie à la vie max du joueur
+
+        Args:
+            amount (int, optional): Vie à ajouter. Defaults to 2 soit 1 coeur.
+        """
         self.max_life += amount
         self.player.max_life = self.max_life
 
     #FONCTION D'UI    
     def update_dialog_ended(self,fin_dialogue, npc_name):
+        """Fonction appelée à la fin d'un dialogue, peut modifier certaines variables du jeu
+
+        Args:
+            fin_dialogue (dict): dictionnaire des actions à effectuer à la fin du dialogue
+            npc_name (str): nom du npc à l'origine de la requête
+        """
         for npc in  self.level.npcs:
             if npc.name == npc_name:
                 current_npc = npc

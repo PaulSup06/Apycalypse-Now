@@ -87,7 +87,7 @@ spike_damage = 1
 
 # variable potion
 speed_potion_duration = 15 # en seconde
-speed_potion_mutltiplier = 1.5 
+speed_potion_multiplier = 1.5 
 
 strength_potion_duration = 15 # en seconde
 strength_potion_mutltiplier = 2.5 
