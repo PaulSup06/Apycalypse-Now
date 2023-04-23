@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.9" tiledversion="1.9.2" name="post apo1" tilewidth="64" tileheight="64" tilecount="1040" columns="40">
+<tileset version="1.10" tiledversion="1.10.1" name="post apo1" tilewidth="64" tileheight="64" tilecount="1040" columns="40">
  <image source="post apo1.png" width="2560" height="1664"/>
  <tile id="19" class="h4"/>
  <tile id="20" class="h4"/>
@@ -308,6 +308,13 @@
  <tile id="843" class="h1"/>
  <tile id="844" class="h1"/>
  <tile id="845" class="h1"/>
+ <tile id="858" class="h4"/>
+ <tile id="859" class="h4"/>
+ <tile id="860" class="h4"/>
+ <tile id="861" class="h4"/>
+ <tile id="862" class="h3"/>
+ <tile id="863" class="h3"/>
+ <tile id="864" class="h3"/>
  <tile id="866" class="h1"/>
  <tile id="869" class="h1"/>
  <tile id="870" class="h4"/>
@@ -320,6 +327,13 @@
  <tile id="877" class="h4"/>
  <tile id="878" class="h4"/>
  <tile id="879" class="h4"/>
+ <tile id="898" class="h3"/>
+ <tile id="899" class="h3"/>
+ <tile id="900" class="h3"/>
+ <tile id="901" class="h3"/>
+ <tile id="902" class="h2"/>
+ <tile id="903" class="h2"/>
+ <tile id="904" class="h2"/>
  <tile id="906" class="h0"/>
  <tile id="907" class="h2"/>
  <tile id="908" class="h2"/>
@@ -334,6 +348,13 @@
  <tile id="917" class="h3"/>
  <tile id="918" class="h3"/>
  <tile id="919" class="h3"/>
+ <tile id="938" class="h2"/>
+ <tile id="939" class="h2"/>
+ <tile id="940" class="h2"/>
+ <tile id="941" class="h2"/>
+ <tile id="942" class="h1"/>
+ <tile id="943" class="h1"/>
+ <tile id="944" class="h1"/>
  <tile id="945" class="h1"/>
  <tile id="946" class="h1"/>
  <tile id="947" class="h1"/>
@@ -348,6 +369,10 @@
  <tile id="956" class="h2"/>
  <tile id="957" class="h2"/>
  <tile id="958" class="h2"/>
+ <tile id="978" class="h1"/>
+ <tile id="979" class="h1"/>
+ <tile id="980" class="h1"/>
+ <tile id="981" class="h1"/>
  <tile id="985" class="h0"/>
  <tile id="986" class="h0"/>
  <tile id="987" class="h0"/>
@@ -364,7 +389,7 @@
  <tile id="999" class="h1"/>
  <tile id="1013" class="player"/>
  <wangsets>
-  <wangset name="sol/chemin" type="edge" tile="-1">
+  <wangset name="sol/chemin" class="edge" tile="-1">
    <wangcolor name="sol" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="chemin" color="#00ff00" tile="-1" probability="1"/>
    <wangtile tileid="81" wangid="1,0,1,0,1,0,1,0"/>
@@ -409,7 +434,7 @@
    <wangtile tileid="564" wangid="1,0,2,0,1,0,2,0"/>
    <wangtile tileid="565" wangid="1,0,1,0,1,0,2,0"/>
   </wangset>
-  <wangset name="sol/terre" type="corner" tile="-1">
+  <wangset name="sol/terre" class="corner" tile="-1">
    <wangcolor name="sol" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="terre" color="#00ff00" tile="-1" probability="1"/>
    <wangtile tileid="81" wangid="0,1,0,1,0,1,0,1"/>
@@ -499,7 +524,7 @@
    <wangtile tileid="575" wangid="0,1,0,1,0,1,0,2"/>
    <wangtile tileid="576" wangid="0,1,0,2,0,1,0,1"/>
   </wangset>
-  <wangset name="chemin/vide" type="edge" tile="-1">
+  <wangset name="chemin/vide" class="edge" tile="-1">
    <wangcolor name="chemin" color="#ff0000" tile="-1" probability="1"/>
    <wangtile tileid="600" wangid="0,0,0,0,1,0,0,0"/>
    <wangtile tileid="601" wangid="0,0,1,0,1,0,0,0"/>
@@ -537,7 +562,7 @@
    <wangtile tileid="844" wangid="0,0,1,0,0,0,1,0"/>
    <wangtile tileid="845" wangid="0,0,0,0,0,0,1,0"/>
   </wangset>
-  <wangset name="vide/terre" type="corner" tile="-1">
+  <wangset name="vide/terre" class="corner" tile="-1">
    <wangcolor name="vide" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="terre" color="#00ff00" tile="-1" probability="1"/>
    <wangtile tileid="606" wangid="0,1,0,2,0,1,0,1"/>

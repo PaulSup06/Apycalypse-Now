@@ -465,7 +465,7 @@ class Game:
         self.main_menu.disable()
         self.inventaire = Inventaire(self)
         #génération du monde
-        self.current_world = 1
+        self.current_world = 0
         self.generate_world(self.current_world)
         self.current_life = self.max_life = default_player_life
             
