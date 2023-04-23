@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="266">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="267">
  <tileset firstgid="1" source="../textures/tilemaps/post apo1.tsx"/>
  <tileset firstgid="1041" source="../textures/tilemaps/triggers.tsx"/>
  <tileset firstgid="1141" source="../textures/tilemaps/Lab.tsx"/>
  <tileset firstgid="1502" source="../textures/tilemaps/interrupteurs.tsx"/>
  <tileset firstgid="1602" source="../textures/tilemaps/enemies.tsx"/>
  <tileset firstgid="1603" source="../textures/tilemaps/NPCS ou mobs.tsx"/>
- <tileset firstgid="1619" source="../textures/tilemaps/spikes.tsx"/>
+ <tileset firstgid="1620" source="../textures/tilemaps/spikes.tsx"/>
  <group id="5" name="premier layer">
   <layer id="2" name="bg" width="75" height="100">
    <data encoding="csv">
@@ -539,7 +539,7 @@
   <object id="6" name="door" gid="1168" x="4160" y="5824" width="64" height="64">
    <properties>
     <property name="id" value="1"/>
-    <property name="locked" type="bool" value="false"/>
+    <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
   <object id="7" name="player" gid="1014" x="4066" y="6127" width="64" height="64"/>
@@ -557,7 +557,7 @@
   <object id="28" name="door" gid="1168" x="3840" y="4928" width="64" height="64">
    <properties>
     <property name="id" value="2"/>
-    <property name="locked" type="bool" value="false"/>
+    <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
   <object id="32" name="terminal" gid="1162" x="3840" y="4096" width="64" height="64">
@@ -602,7 +602,7 @@
     <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="56" name="enemy" gid="1602" x="3805.33" y="4401.33" width="64" height="64">
+  <object id="56" name="enemy" gid="1602" x="3863.33" y="4399.33" width="64" height="64">
    <properties>
     <property name="damages" type="int" value="1"/>
     <property name="enemy_name" value="vampire"/>
@@ -775,37 +775,37 @@
     <property name="id" value="-1"/>
    </properties>
   </object>
-  <object id="98" name="spikes" gid="1619" x="1533.33" y="2242.67" width="64" height="64"/>
-  <object id="99" name="spikes" gid="1619" x="1600" y="2241.33" width="64" height="64"/>
-  <object id="100" name="spikes" gid="1619" x="1665.33" y="2242.67" width="64" height="64"/>
-  <object id="101" name="spikes" gid="1619" x="1725.33" y="2240" width="64" height="64"/>
+  <object id="98" name="spikes" gid="1620" x="1533.33" y="2242.67" width="64" height="64"/>
+  <object id="99" name="spikes" gid="1620" x="1600" y="2241.33" width="64" height="64"/>
+  <object id="100" name="spikes" gid="1620" x="1665.33" y="2242.67" width="64" height="64"/>
+  <object id="101" name="spikes" gid="1620" x="1725.33" y="2240" width="64" height="64"/>
   <object id="102" name="door" gid="1168" x="1600" y="1088" width="64" height="64">
    <properties>
     <property name="id" value="-1"/>
    </properties>
   </object>
-  <object id="112" name="spikes" gid="1619" x="1533" y="1925.34" width="64" height="64"/>
-  <object id="113" name="spikes" gid="1619" x="1599.67" y="1923.99" width="64" height="64"/>
-  <object id="114" name="spikes" gid="1619" x="1665" y="1925.34" width="64" height="64"/>
-  <object id="115" name="spikes" gid="1619" x="1725" y="1922.66" width="64" height="64"/>
-  <object id="124" name="spikes" gid="1619" x="1536" y="1789.34" width="64" height="64"/>
-  <object id="125" name="spikes" gid="1619" x="1602.67" y="1787.99" width="64" height="64"/>
-  <object id="126" name="spikes" gid="1619" x="1668" y="1789.34" width="64" height="64"/>
-  <object id="127" name="spikes" gid="1619" x="1728" y="1786.66" width="64" height="64"/>
-  <object id="128" name="spikes" gid="1619" x="1531" y="1667.34" width="64" height="64"/>
-  <object id="129" name="spikes" gid="1619" x="1597.67" y="1665.99" width="64" height="64"/>
-  <object id="130" name="spikes" gid="1619" x="1663" y="1667.34" width="64" height="64"/>
-  <object id="131" name="spikes" gid="1619" x="1723" y="1664.66" width="64" height="64"/>
-  <object id="132" name="spikes" gid="1619" x="1534" y="1218" width="64" height="64"/>
-  <object id="133" name="spikes" gid="1619" x="1662" y="1219" width="64" height="64"/>
-  <object id="134" name="spikes" gid="1619" x="1595" y="1280" width="64" height="64"/>
-  <object id="135" name="spikes" gid="1619" x="1728" y="1280" width="64" height="64"/>
-  <object id="136" name="spikes" gid="1619" x="1533" y="1346" width="64" height="64"/>
-  <object id="137" name="spikes" gid="1619" x="1664" y="1346" width="64" height="64"/>
-  <object id="138" name="spikes" gid="1619" x="1728" y="1405" width="64" height="64"/>
-  <object id="139" name="spikes" gid="1619" x="1595" y="1405" width="64" height="64"/>
-  <object id="140" name="spikes" gid="1619" x="1536" y="1473" width="64" height="64"/>
-  <object id="141" name="spikes" gid="1619" x="1661" y="1472" width="64" height="64"/>
+  <object id="112" name="spikes" gid="1620" x="1533" y="1925.34" width="64" height="64"/>
+  <object id="113" name="spikes" gid="1620" x="1599.67" y="1923.99" width="64" height="64"/>
+  <object id="114" name="spikes" gid="1620" x="1665" y="1925.34" width="64" height="64"/>
+  <object id="115" name="spikes" gid="1620" x="1725" y="1922.66" width="64" height="64"/>
+  <object id="124" name="spikes" gid="1620" x="1536" y="1789.34" width="64" height="64"/>
+  <object id="125" name="spikes" gid="1620" x="1602.67" y="1787.99" width="64" height="64"/>
+  <object id="126" name="spikes" gid="1620" x="1668" y="1789.34" width="64" height="64"/>
+  <object id="127" name="spikes" gid="1620" x="1728" y="1786.66" width="64" height="64"/>
+  <object id="128" name="spikes" gid="1620" x="1531" y="1667.34" width="64" height="64"/>
+  <object id="129" name="spikes" gid="1620" x="1597.67" y="1665.99" width="64" height="64"/>
+  <object id="130" name="spikes" gid="1620" x="1663" y="1667.34" width="64" height="64"/>
+  <object id="131" name="spikes" gid="1620" x="1723" y="1664.66" width="64" height="64"/>
+  <object id="132" name="spikes" gid="1620" x="1534" y="1218" width="64" height="64"/>
+  <object id="133" name="spikes" gid="1620" x="1662" y="1219" width="64" height="64"/>
+  <object id="134" name="spikes" gid="1620" x="1595" y="1280" width="64" height="64"/>
+  <object id="135" name="spikes" gid="1620" x="1728" y="1280" width="64" height="64"/>
+  <object id="136" name="spikes" gid="1620" x="1533" y="1346" width="64" height="64"/>
+  <object id="137" name="spikes" gid="1620" x="1664" y="1346" width="64" height="64"/>
+  <object id="138" name="spikes" gid="1620" x="1728" y="1405" width="64" height="64"/>
+  <object id="139" name="spikes" gid="1620" x="1595" y="1405" width="64" height="64"/>
+  <object id="140" name="spikes" gid="1620" x="1536" y="1473" width="64" height="64"/>
+  <object id="141" name="spikes" gid="1620" x="1661" y="1472" width="64" height="64"/>
   <object id="248" name="enemy" gid="1602" x="2788" y="3290" width="64" height="64">
    <properties>
     <property name="damages" type="int" value="1"/>
@@ -813,6 +813,15 @@
     <property name="health" type="int" value="5"/>
     <property name="movement" value="ligne_h"/>
     <property name="speed" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="266" name="enemy" gid="1602" x="3180" y="4418" width="64" height="64">
+   <properties>
+    <property name="damages" type="int" value="1"/>
+    <property name="enemy_name" value="vampire"/>
+    <property name="health" type="int" value="3"/>
+    <property name="movement" value="to_player"/>
+    <property name="speed" type="int" value="2"/>
    </properties>
   </object>
  </objectgroup>
@@ -908,7 +917,7 @@
   </object>
   <object id="73" name="wall_lever" gid="1502" x="1473.33" y="3729.33" width="64" height="64">
    <properties>
-    <property name="args" value="(10),(100001)"/>
+    <property name="args" value="(10),(100001,100002,100004),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100001"/>
@@ -917,7 +926,7 @@
   </object>
   <object id="74" name="wall_lever" gid="1502" x="1532" y="3728" width="64" height="64">
    <properties>
-    <property name="args" value="(10),(100002)"/>
+    <property name="args" value="(10),(100001,100002,100004),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100002"/>
@@ -926,7 +935,7 @@
   </object>
   <object id="75" name="wall_lever" gid="1502" x="1730.67" y="3730.67" width="64" height="64">
    <properties>
-    <property name="args" value="(10),(100003)"/>
+    <property name="args" value="(10),(100001,100002,100004),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100003"/>
@@ -935,8 +944,8 @@
   </object>
   <object id="76" name="wall_lever" gid="1502" x="1789.33" y="3730.67" width="64" height="64">
    <properties>
-    <property name="args" value="(10),(100004)"/>
-    <property name="function_to_call" value="unlock_terminal"/>
+    <property name="args" value="(10),(100001,100002,100004),(100003)"/>
+    <property name="function_to_call" value="unlock_door"/>
     <property name="height" type="int" value="2"/>
     <property name="id" value="100004"/>
     <property name="type" value="1"/>

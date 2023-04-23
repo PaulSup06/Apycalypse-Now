@@ -87,7 +87,7 @@ class Enemy(Entity):
                 player_pos = player.x, player.y
                 self.movement.x = player_pos[0] - self.x
                 self.movement.y = player_pos[1] - self.y
-                self.movement.normalize()
+                self.movement = self.movement.normalize()
             
             if not self.check_collision(self.collision_blocks, "horizontal", self.movement.x * self.speed):
                 self.x += self.movement.x * self.speed

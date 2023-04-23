@@ -17,6 +17,7 @@ class Lever(Entity):
         """ 
         super().__init__(x, y, image, groupes)
         self.textures = textures
+        self.image = self.textures[0]
         self.activated = False
         self.function_to_call = getattr(main_elmt,function_to_call)
         self.args = args
@@ -91,6 +92,7 @@ class PressurePlate(Entity):
         """ 
         super().__init__(x, y, image, groupes,hitbox=pygame.Rect(x+15,y+8, 40, 40))
         self.textures = textures
+        self.image = self.textures[0]
         self.activated = False
         self.name = name
         self.id = id
