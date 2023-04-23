@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.1" name="post apo1" tilewidth="64" tileheight="64" tilecount="1040" columns="40">
+<tileset version="1.9" tiledversion="1.9.2" name="post apo1" tilewidth="64" tileheight="64" tilecount="1040" columns="40">
  <image source="post apo1.png" width="2560" height="1664"/>
  <tile id="19" class="h4"/>
  <tile id="20" class="h4"/>
@@ -254,6 +254,8 @@
  <tile id="723" class="h1"/>
  <tile id="724" class="h1"/>
  <tile id="725" class="h1"/>
+ <tile id="738" class="h2"/>
+ <tile id="739" class="h2"/>
  <tile id="746" class="h2"/>
  <tile id="749" class="h7"/>
  <tile id="750" class="h7"/>
@@ -272,6 +274,8 @@
  <tile id="763" class="h1"/>
  <tile id="764" class="h1"/>
  <tile id="765" class="h1"/>
+ <tile id="778" class="h2"/>
+ <tile id="779" class="h2"/>
  <tile id="786" class="h1"/>
  <tile id="789" class="h6"/>
  <tile id="790" class="h6"/>
@@ -290,6 +294,8 @@
  <tile id="803" class="h1"/>
  <tile id="804" class="h1"/>
  <tile id="805" class="h1"/>
+ <tile id="818" class="h1"/>
+ <tile id="819" class="h1"/>
  <tile id="826" class="h2"/>
  <tile id="829" class="h5"/>
  <tile id="830" class="h5"/>
@@ -389,7 +395,7 @@
  <tile id="999" class="h1"/>
  <tile id="1013" class="player"/>
  <wangsets>
-  <wangset name="sol/chemin" class="edge" tile="-1">
+  <wangset name="sol/chemin" class="edge" type="mixed" tile="-1">
    <wangcolor name="sol" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="chemin" color="#00ff00" tile="-1" probability="1"/>
    <wangtile tileid="81" wangid="1,0,1,0,1,0,1,0"/>
@@ -434,7 +440,7 @@
    <wangtile tileid="564" wangid="1,0,2,0,1,0,2,0"/>
    <wangtile tileid="565" wangid="1,0,1,0,1,0,2,0"/>
   </wangset>
-  <wangset name="sol/terre" class="corner" tile="-1">
+  <wangset name="sol/terre" class="corner" type="mixed" tile="-1">
    <wangcolor name="sol" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="terre" color="#00ff00" tile="-1" probability="1"/>
    <wangtile tileid="81" wangid="0,1,0,1,0,1,0,1"/>
@@ -524,7 +530,7 @@
    <wangtile tileid="575" wangid="0,1,0,1,0,1,0,2"/>
    <wangtile tileid="576" wangid="0,1,0,2,0,1,0,1"/>
   </wangset>
-  <wangset name="chemin/vide" class="edge" tile="-1">
+  <wangset name="chemin/vide" class="edge" type="mixed" tile="-1">
    <wangcolor name="chemin" color="#ff0000" tile="-1" probability="1"/>
    <wangtile tileid="600" wangid="0,0,0,0,1,0,0,0"/>
    <wangtile tileid="601" wangid="0,0,1,0,1,0,0,0"/>
@@ -562,7 +568,7 @@
    <wangtile tileid="844" wangid="0,0,1,0,0,0,1,0"/>
    <wangtile tileid="845" wangid="0,0,0,0,0,0,1,0"/>
   </wangset>
-  <wangset name="vide/terre" class="corner" tile="-1">
+  <wangset name="vide/terre" class="corner" type="mixed" tile="-1">
    <wangcolor name="vide" color="#ff0000" tile="-1" probability="1"/>
    <wangcolor name="terre" color="#00ff00" tile="-1" probability="1"/>
    <wangtile tileid="606" wangid="0,1,0,2,0,1,0,1"/>

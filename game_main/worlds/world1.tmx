@@ -444,42 +444,6 @@
     <property name="talkable" type="bool" value="true"/>
    </properties>
   </object>
-  <object id="17" name="enemy" gid="1625" x="2930.67" y="796" width="64" height="64">
-   <properties>
-    <property name="damages" type="int" value="1"/>
-    <property name="enemy_name" value="bamboo"/>
-    <property name="health" type="int" value="3"/>
-    <property name="movement" value="ligne_h"/>
-    <property name="speed" type="int" value="3"/>
-   </properties>
-  </object>
-  <object id="18" name="enemy" gid="1625" x="3484.67" y="788" width="64" height="64">
-   <properties>
-    <property name="damages" type="int" value="1"/>
-    <property name="enemy_name" value="bamboo"/>
-    <property name="health" type="int" value="3"/>
-    <property name="movement" value="ligne_h"/>
-    <property name="speed" type="int" value="3"/>
-   </properties>
-  </object>
-  <object id="19" name="enemy" gid="1625" x="414.667" y="794.67" width="64" height="64">
-   <properties>
-    <property name="damages" type="int" value="1"/>
-    <property name="enemy_name" value="bamboo"/>
-    <property name="health" type="int" value="3"/>
-    <property name="movement" value="ligne_h"/>
-    <property name="speed" type="int" value="3"/>
-   </properties>
-  </object>
-  <object id="20" name="enemy" gid="1625" x="801.333" y="785.33" width="64" height="64">
-   <properties>
-    <property name="damages" type="int" value="1"/>
-    <property name="enemy_name" value="bamboo"/>
-    <property name="health" type="int" value="3"/>
-    <property name="movement" value="ligne_h"/>
-    <property name="speed" type="int" value="3"/>
-   </properties>
-  </object>
  </objectgroup>
  <objectgroup id="9" name="triggers" visible="0">
   <properties>

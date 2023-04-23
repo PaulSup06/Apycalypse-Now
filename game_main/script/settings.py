@@ -116,6 +116,7 @@ spike_img_folder = "..\\textures\\spike"
 lever_img_folder = "..\\textures\\lever"
 misc_folder = "..\\textures\\misc"
 items_folder="..\\textures\\items"
+npc_img_folder = "..\\textures\\npc"
 
 def load_imgs():
     """Charge les textures principales du jeu (appellée après initialisation vidéo pygame car convertion)

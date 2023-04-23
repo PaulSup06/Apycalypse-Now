@@ -1,4 +1,5 @@
 import pygame
+import os
 from settings import *
 from inventaire import Item
 
@@ -20,9 +21,8 @@ class Npc(Entity):
         """
         super().__init__(x, y, image, groupes)
         self.name = name
-        #self.textures = pygame.image.load(f"game_main\\npc\\{self.name}.png").convert_alpha()
         self.item_imgs = load_item_imgs()
-        self.image = pygame.image.load("..\\textures\\test\\spirit\\idle\\0.png").convert_alpha()
+        self.basey = self.y + self.image.get_height()
         self.change_state(talkable, indicator, first_dialog)
         
 
@@ -54,7 +54,6 @@ class Npc(Entity):
             surface (pygame.Surface): Destination d'affichage (screen)
             offset (Vector2): Camera offset pour l'affichage
         """
-        
         indicator_rect = pygame.Rect(self.x + self.surface.width + 5 - offset.x, self.y - 15 - offset.y, self.indicator_rendered.get_width()+10, self.indicator_rendered.get_height()+10)
         indicator_rect_surf = pygame.Surface(indicator_rect.size, pygame.SRCALPHA)
         pygame.draw.rect(indicator_rect_surf,(240,240,240,180),indicator_rect_surf.get_rect(),0,5)
