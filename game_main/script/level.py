@@ -13,8 +13,6 @@ from browser import Terminal
 import pytmx
 import pygame
 import os
-import csv
-import ast
 
 class Level:
     def __init__(self, game, player_life, player_max_life, world=0,player_gen=True) -> None:

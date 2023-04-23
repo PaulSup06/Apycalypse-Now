@@ -1,8 +1,6 @@
 from entity import Entity
 import pygame
 from settings import *
-from inventaire import Item
-import random
 
 class Spike(Entity):
     def __init__(self, x, y, image, groupes, textures, name):

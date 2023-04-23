@@ -1,6 +1,5 @@
 import pygame
 import os
-import time
 import csv
 
 #Paramètres généraux
@@ -61,7 +60,7 @@ default_player_life = 6
 default_player_attack_cooldown = 20 #cooldown par défaut quand main vide
 default_player_attack_range = 40 #nombre de pixels du range de l'attaque avec les mains vides
 default_player_damages = 2
-enemy_anim_duration = 8 #nombre de frames pour chaque image de l'animation des enemies 
+enemy_anim_duration = 15 #nombre de frames pour chaque image de l'animation des enemies 
 distance_affichage_npc_prompt = 300
 interact_distance = 100
 dialog_cooldown = 2 #nombre de frames entre l'affichage de chaque caractère du dialogue
@@ -94,6 +93,17 @@ enemy_drops = {
                             "drop_count":1,                                    
                         }
                     ], 
+                "zombie":[
+                    {
+                            "name":"life_potion",
+                            "drop_rate":25,
+                            "drop_count":1,                                    
+                        },{
+                            "name":"strength_potion",
+                            "drop_rate":40,
+                            "drop_count":1,                                    
+                        }
+                ]
                 }
                        
 

@@ -1,8 +1,6 @@
 from entity import Entity
 import pygame
 from settings import *
-from inventaire import Item
-import random
 
 class Lever(Entity):
     def __init__(self, x, y, image, groupes, textures, function_to_call, main_elmt, name,id=-1,basey=None, *args):
