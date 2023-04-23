@@ -539,7 +539,7 @@
   <object id="6" name="door" gid="1168" x="4160" y="5824" width="64" height="64">
    <properties>
     <property name="id" value="1"/>
-    <property name="locked" type="bool" value="true"/>
+    <property name="locked" type="bool" value="false"/>
    </properties>
   </object>
   <object id="7" name="player" gid="1014" x="4066" y="6127" width="64" height="64"/>
@@ -557,12 +557,12 @@
   <object id="28" name="door" gid="1168" x="3840" y="4928" width="64" height="64">
    <properties>
     <property name="id" value="2"/>
-    <property name="locked" type="bool" value="true"/>
+    <property name="locked" type="bool" value="false"/>
    </properties>
   </object>
   <object id="32" name="terminal" gid="1162" x="3840" y="4096" width="64" height="64">
    <properties>
-    <property name="id" value="3"/>
+    <property name="id" value="8"/>
     <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
@@ -605,7 +605,7 @@
   <object id="56" name="enemy" gid="1602" x="3805.33" y="4401.33" width="64" height="64">
    <properties>
     <property name="damages" type="int" value="1"/>
-    <property name="enemy_name" value="bamboo"/>
+    <property name="enemy_name" value="vampire"/>
     <property name="health" type="int" value="3"/>
     <property name="movement" value="ligne_h"/>
     <property name="speed" type="int" value="2"/>
@@ -629,7 +629,7 @@
   <object id="66" name="enemy" gid="1602" x="3274" y="3720" width="64" height="64">
    <properties>
     <property name="damages" type="int" value="1"/>
-    <property name="enemy_name" value="bamboo"/>
+    <property name="enemy_name" value="vampire"/>
     <property name="health" type="int" value="3"/>
     <property name="movement" value="ligne_v"/>
     <property name="speed" type="int" value="3"/>
@@ -809,7 +809,7 @@
   <object id="248" name="enemy" gid="1602" x="2788" y="3290" width="64" height="64">
    <properties>
     <property name="damages" type="int" value="1"/>
-    <property name="enemy_name" value="bamboo"/>
+    <property name="enemy_name" value="vampire"/>
     <property name="health" type="int" value="5"/>
     <property name="movement" value="ligne_h"/>
     <property name="speed" type="int" value="1"/>
@@ -973,7 +973,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="15" name="collision">
+ <objectgroup id="15" name="collision" visible="0">
   <object id="144" x="4098" y="3844" width="114" height="764"/>
   <object id="145" x="3580" y="4038" width="120" height="564"/>
   <object id="148" x="3970" y="6357" width="252" height="41"/>

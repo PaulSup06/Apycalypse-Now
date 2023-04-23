@@ -57,7 +57,6 @@ class Trigger(Case):
             if self.activated==False:
                 self.activated = True
                 func = getattr(main, self.func)
-                print(self.args)
                 return func(*self.args)
         elif self.activated:
             self.activated = False

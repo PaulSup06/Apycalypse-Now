@@ -78,7 +78,22 @@ enemy_drops = {
                             "drop_rate":50,
                             "drop_count":1,                                    
                         }
-                    ]
+                    ],
+                "vampire":[
+                        {
+                            "name":"life_potion",
+                            "drop_rate":30,
+                            "drop_count":2,                                    
+                        }, {
+                            "name":"invincibility_potion",
+                            "drop_rate":10,
+                            "drop_count":1,                                    
+                        },{
+                            "name":"strength_potion",
+                            "drop_rate":60,
+                            "drop_count":1,                                    
+                        }
+                    ], 
                 }
                        
 

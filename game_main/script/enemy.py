@@ -115,10 +115,11 @@ class Enemy(Entity):
         elif self.action == "stunt":
             self.image = self.textures["idle"][0]
         else:
-            self.image = self.textures[self.action][self.animation_counter//enemy_anim_duration]
-            self.animation_counter +=1  
             if self.animation_counter//enemy_anim_duration > len(self.textures[self.action])-1:
                 self.animation_counter = 0
+            self.image = self.textures[self.action][self.animation_counter//enemy_anim_duration]
+            self.animation_counter +=1  
+            
 
 
     def change_direction(self):
