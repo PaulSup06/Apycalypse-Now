@@ -374,8 +374,8 @@ npc_dialogs = {
                 },
                 {"index":2,
                 "text": "Non merci, je suis au courant",
-                "goto":"-1",
-                "npc_update":["True","...","6"],
+                "goto":"10",
+                "npc_update":["True","...","10"],
                 }
                 
             ]
