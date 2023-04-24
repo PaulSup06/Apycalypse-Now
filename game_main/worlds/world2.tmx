@@ -834,7 +834,7 @@
   </object>
   <object id="252" x="1543.33" y="697.333" width="244" height="56">
    <properties>
-    <property name="args" value="(3)"/>
+    <property name="args" value="(4)"/>
     <property name="function" value="change_level"/>
    </properties>
   </object>
