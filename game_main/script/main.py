@@ -43,8 +43,8 @@ class Game:
         self.editing_button = None
           
         #génération des interfaces
-        self.blood_screen_img = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\blood_screen.png"), (WIDTH,HEIGHT)).convert_alpha()
-        self.item_picked_up_img = pygame.image.load("..\\textures\\ui\\item_picked_up.png").convert_alpha()
+        
+        
 
         self.game_state = "menu"
         self.inventaire = Inventaire(self)  
@@ -286,23 +286,6 @@ class Game:
 
                 self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx, self.settings)
 
-                if self.player.life <= 2:
-                    # image sang
-                    self.screen.blit(self.blood_screen_img, (0, 0))
-
-                if self.item_picked_up_animation[0]:
-                    #self.item_picked_up_animation[0] : une notification est-elle à afficher?
-                    #self.item_picked_up_animation[1] : nom de l'item ajouté
-                    #self.item_picked_up_animation[2] : combien
-                    #self.item_picked_up_animation[3] : timer fps avant que la notification se cache
-
-                    if self.item_picked_up_animation[3] <= FPS * pick_up_notification_duration: 
-                        self.screen.blit(self.item_picked_up_img, ((WIDTH / 2) - (self.item_picked_up_img.get_width() / 2), 0))
-                        text = font1.render("Vous avez récupéré " + str(self.item_picked_up_animation[2]) + "x " + self.item_picked_up_animation[1] + " !" ,1,"black")
-                        self.screen.blit(text,(((WIDTH-text.get_width())//2, 105)))
-                        self.item_picked_up_animation[3] += 1
-                    else:
-                        self.item_picked_up_animation = [False]
 
                 for door in self.level.doors:
                     door.update(self.player)
@@ -334,7 +317,7 @@ class Game:
             #UI
             #========================================================================================
                 
-                ui_return = self.ui.show_ui(self.player)
+                ui_return = self.ui.show_ui(self.player, self.item_picked_up_animation)
                 if ui_return['npc_update']:
                     for npc in self.level.npcs:
                         if npc.name == self.ui.current_npc:

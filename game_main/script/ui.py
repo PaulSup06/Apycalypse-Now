@@ -13,6 +13,10 @@ class UI:
             pygame.transform.scale(pygame.image.load("..\\textures\\ui\\heart_half.png"),(32,32)),
             pygame.transform.scale(pygame.image.load("..\\textures\\ui\\heart_empty.png"),(32,32)),
         ]
+        self.blood_screen_img = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\blood_screen.png"), (WIDTH,HEIGHT)).convert_alpha()
+        self.blood_screen_counter = FPS * bloodscreen_show_time
+        self.item_picked_up_img = pygame.image.load("..\\textures\\ui\\item_picked_up.png").convert_alpha()
+        
         self.continue_indic = font2.render("[E] pour continuer...", 1,"white")
         self.screen = pygame.display.get_surface()
         self.current_dialog = None
@@ -45,7 +49,7 @@ class UI:
             self.choix = self.current_dialog["choix"]
             self.nb_choix = len(self.choix)
             if self.nb_choix ==1:
-                self.choix_rendered.append(Button((WIDTH//4) * 2 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]))
+                self.choix_rendered.append(Button((WIDTH//4) * 2 - 250,HEIGHT-75,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]))
             if self.nb_choix ==2:
                 self.choix_rendered.append(Button(WIDTH//4 - 250,HEIGHT-100,500,50,font1,self.choix[0]["text"],self.select_option,False,button_fillcolors, self.choix[0]))
                 self.choix_rendered.append(Button((WIDTH//4)*3 - 250,HEIGHT-100,500,50,font1,self.choix[1]["text"],self.select_option,False,button_fillcolors,self.choix[1]))
@@ -62,7 +66,7 @@ class UI:
             self.choix = []
             self.nb_choix = 0    
 
-    def show_ui(self, player):
+    def show_ui(self, player,item_picked_up_animation):
 
         #initialisation des variables renvoyées
         npc_update= None
@@ -100,8 +104,10 @@ class UI:
             max_width = 0
             for element in dialog_rendered:
                 total_height += element.get_height() + 10
-                if 1 <= self.nb_choix <=3:
-                    total_height += 75
+                if self.nb_choix ==1:
+                    total_height += 25
+                if 2 <= self.nb_choix <=3:
+                    total_height += 65
                 elif 4<= self.nb_choix<=6:
                     total_height += 85
                 if max_width<element.get_width():
@@ -174,7 +180,27 @@ class UI:
                 life_surf.blit(self.hearts[2],(i*self.hearts[0].get_width(),0))
         
         self.screen.blit(life_surf, (15, HEIGHT - life_surf.get_height() - 15))
-        #affichage des items
+        if player.life <= 2 and self.blood_screen_counter > 0:
+            # image sang
+            self.screen.blit(self.blood_screen_img, (0, 0))
+            self.blood_screen_counter -=1
+        elif player.life > 2 and self.blood_screen_counter <= FPS * bloodscreen_show_time:
+            self.blood_screen_counter = FPS * bloodscreen_show_time
+            
+        #affichage des items ramassés
+        if item_picked_up_animation[0]:
+            #self.item_picked_up_animation[0] : une notification est-elle à afficher?
+            #self.item_picked_up_animation[1] : nom de l'item ajouté
+            #self.item_picked_up_animation[2] : combien
+            #self.item_picked_up_animation[3] : timer fps avant que la notification se cache
+
+            if item_picked_up_animation[3] <= FPS * pick_up_notification_duration: 
+                self.screen.blit(self.item_picked_up_img, ((WIDTH / 2) - (self.item_picked_up_img.get_width() / 2), 0))
+                text = font1.render("Vous avez récupéré " + str(item_picked_up_animation[2]) + "x " + item_picked_up_animation[1] + " !" ,1,"black")
+                self.screen.blit(text,(((WIDTH-text.get_width())//2, 105)))
+                item_picked_up_animation[3] += 1
+            else:
+                item_picked_up_animation = [False]
         #affichage de l'inventaire
         # 
         #gestion transitions

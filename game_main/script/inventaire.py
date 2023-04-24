@@ -203,7 +203,11 @@ class Inventaire:
             self.remove_item(item,value)
 
         # affiche petite bulle informant qu'on a reçu un item
-        self.main_elmt.item_picked_up_animation = [True, item_names_render[item_name], amount, 0]
+        if item_names_render.get(item_name):
+            item_name_rendered = item_names_render.get(item_name)
+        else:
+            item_name_rendered = item_name
+        self.main_elmt.item_picked_up_animation = [True, item_name_rendered, amount, 0]
             
         return overflow
 

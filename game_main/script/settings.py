@@ -20,8 +20,6 @@ MAX_ITEMS_PER_CELL = 64
 BACKGROUND_COLOR = (0, 0, 0)
 ITEM_SIZE = (45,45)
 
-#ui
-pick_up_notification_duration = 3 #sec
 
 #son
 actual_sound_channel = 1
@@ -120,6 +118,10 @@ strength_potion_duration = 15 # en seconde
 strength_potion_mutltiplier = 2.5 
 
 invincibility_potion_duration = 5 # en seconde
+
+#ui
+pick_up_notification_duration = 2 #sec
+bloodscreen_show_time = 3
 
 #textures
 player_img_folder = "..\\textures\\player"
@@ -242,6 +244,7 @@ button_font = pygame.font.SysFont("Arial",35, True)
 
 #dialogues
 npc_dialogs = {
+    #TURTLEDOVE A MODIFIER
     "Osborn Turtledove":{
         
             "1":{
@@ -251,12 +254,12 @@ npc_dialogs = {
                         {"index":1,
                         "text": "Oui, c'est moi",
                         "goto":"2",
-                        "npc_update":["True","...","1"],
+                        "npc_update":[True,"...","1"],
                         },
                         {"index":2,
                         "text": "Qui vous a parlé de moi ?",
                         "goto":"3",
-                        "npc_update":["True","...","3"],
+                        "npc_update":[True,"...","3"],
                         }
                     ]
                 },
@@ -267,12 +270,12 @@ npc_dialogs = {
                         {"index":1,
                         "text": "Qu'est-ce que le \"Cristal de Feu\"?..",
                         "goto":"4",
-                        "npc_update":["True","...","4"],
+                        "npc_update":[True,"...","4"],
                         },
                         {"index":2,
                         "text": "J'ai entendu, c'est pour ça que je suis ici",
                         "goto":"5",
-                        "npc_update":["True","...","5"],
+                        "npc_update":[True,"...","5"],
                         }
                     ]
                 },
@@ -283,7 +286,7 @@ npc_dialogs = {
                         {"index":1,
                         "text": "Merci",
                         "goto":"2",
-                        "npc_update":["True","...","2"],
+                        "npc_update":[True,"...","2"],
                         }
                     ]
                 },
@@ -291,13 +294,13 @@ npc_dialogs = {
                 "type": "sans_choix",
                 "text":"Le Cristal de Feu est une pierre dont la forme est parfaite. Jamais l'humanité a-t-elle pu reproduire une telle perfection. ",
                 "goto": "5",
-                "npc_update":["True","...","5"],
+                "npc_update":[True,"...","5"],
             },
             "5":{
                 "type": "sans_choix",
                 "text":"D'après une légende ancienne, le jour où ce cristal se brisera, la Terre connaîtra son trépas, \npollution et destruction règneront en maîtres, et l'humanité en paiera les êtres.",
                 "goto": "6",
-                "npc_update":["True","...","6"],
+                "npc_update":[True,"...","6"],
             },
             "6":{
                 "type": "avec_choix",
@@ -306,7 +309,7 @@ npc_dialogs = {
                     {"index":1,
                     "text": "Oui! Allons sauver la terre!",
                     "goto":"-1",
-                    "npc_update":["True","...","7"],
+                    "npc_update":[True,"...","7"],
                     "add_item":("note#2",1)
                     }
                 ]
@@ -315,16 +318,20 @@ npc_dialogs = {
                 "type": "sans_choix",
                 "text":"Allons, pas de temps à perdre ! Fonce !",
                 "goto": "-1",
-                "npc_update":["True","...","7"],
+                "npc_update":[True,"...","7"],
                 }
         },
+    
+    #==============================================================================================================================================================================
+    #SOLDAT PNJ DE TUTORIEL
+    #==============================================================================================================================================================================
     
     "soldier":{
         "1":{
             "type": "sans_choix",
                 "text":"Bonjour ! Te voilà enfin réveillé ! ",
                 "goto": "2",
-                "npc_update":["True","...","2"],
+                "npc_update":[True,"...","2"],
         },
         "2":{
                 "type": "avec_choix",
@@ -333,17 +340,17 @@ npc_dialogs = {
                     {"index":1,
                     "text": "Oui! (passer tutoriel)",
                     "goto":"-1",
-                    "npc_update":["True","...","10"],
+                    "npc_update":[True,"...","10"],
                     },
                     {"index":2,
                     "text": "Vaguement... (aller à l'histoire)",
                     "goto":"6",
-                    "npc_update":["True","...","6"],
+                    "npc_update":[True,"...","6"],
                     },
                     {"index":3,
                     "text": "Non... (tutoriel de base)",
                     "goto":"3",
-                    "npc_update":["True","...","3"],
+                    "npc_update":[True,"...","3"],
                     }
                 ]
             },
@@ -352,17 +359,17 @@ npc_dialogs = {
             "type": "sans_choix",
             "text":"Très bien... Je suppose que tu as dû te cogner suffisamment fort pour oublier tout cela...\nQuoi qu'il en soit reprenons du début.\nTu peux utiliser la touche ECHAP de ton clavier pour accéder au menu de pause.\nDe là, accède au menu des paramètres. Tu y trouveras les touches importantes.",
             "goto": "4",
-            "npc_update":["True","...","4"],},
+            "npc_update":[True,"...","4"],},
         "4":{
             "type": "sans_choix",
             "text":"Ensuite, de ce même menu de pause, tu pourras sauvegarder la partie.\nTu retrouveras tes sauvegardes depuis le menu principal.\nAttention ! Toute progression non sauvegardée sera perdue.",
             "goto": "5",
-            "npc_update":["True","...","5"],},
+            "npc_update":[True,"...","5"],},
         "5":{
             "type": "sans_choix",
             "text":"Dans le cas très improbable où tu viendrais à mourir, ne t'inquiète pas tu as la possibilité de te réanimer.\nCependant si comme nous tu es un puriste, tu peux toujours recommencer à ta dernière sauvegarde ou du début !",
             "goto": "6",
-            "npc_update":["True","...","6"],},
+            "npc_update":[True,"...","6"],},
         
         #HISTOIRE
         "6":{
@@ -372,12 +379,12 @@ npc_dialogs = {
                 {"index":1,
                 "text": "La catastrophe ?",
                 "goto":"7",
-                "npc_update":["True","...","7"],
+                "npc_update":[True,"...","7"],
                 },
                 {"index":2,
                 "text": "Non merci, je suis au courant",
                 "goto":"10",
-                "npc_update":["True","...","10"],
+                "npc_update":[True,"...","10"],
                 }
                 
             ]
@@ -386,22 +393,22 @@ npc_dialogs = {
             "type": "sans_choix",
             "text":"Tout a démarré il y a quelques années, lorsque ce docteur, Osborn Turtledove, s'est mis en tête de sauver l'humanité...\nLa crise et les pénuries grandissant, il a développé une molécule qui, introduite dans les sources d'énergies fossiles\n (gaz, pétrole, ...) aurait selont lui permis de diviser par 100 la consommation énergétique du monde.",
             "goto": "8",
-            "npc_update":["True","...","8"],},
+            "npc_update":[True,"...","8"],},
         "8":{
             "type": "sans_choix",
             "text":"Tout d'abord, personne ne s'est rendu compte de rien, le produit produisait l'effet escompté\n et le docteur Turledove était porté en héros dans le monde entier.\nMais après quelques mois, son produit répandu partout se révéla être toxique.",
             "goto": "15",
-            "npc_update":["True","...","15"],},
+            "npc_update":[True,"...","15"],},
         "15":{
             "type": "sans_choix",
             "text":"Les êtres vivants les plus exposés commencèrent à tomber malade...\nIls agirent de manière étrange, attaquant sans raison apparente leurs congénères.\nLes humains ne furent pas épargnés, et le monde sombra dans le chaos.",
             "goto": "9",
-            "npc_update":["True","...","9"],},
+            "npc_update":[True,"...","9"],},
         "9":{
             "type": "sans_choix",
             "text":"Depuis, de nombreuses personnes essayent d'accéder à son laboratoire afin de trouver un antidote,\n mais personne n'a pour l'instant réussi.\nC'est à l'entrée de celui-ci que je t'ai trouvé, tu dois surement être un autre aventurier...\nPeu m'importe, vas donc remplir ta mission, que je ne t'aie pas sauvé pour rien !",
             "goto": "10",
-            "npc_update":["True","...","10"],},
+            "npc_update":[True,"...","10"],},
         "10":{
             "type": "avec_choix",
             "text":"Bien... As-tu des questions ?",
@@ -409,17 +416,17 @@ npc_dialogs = {
                 {"index":1,
                 "text": "On parle bien de zombies là ??",
                 "goto":"11",
-                "npc_update":["True","...","10"],
+                "npc_update":[True,"...","10"],
                 },
                 {"index":2,
                 "text": "Où dois-je aller ?",
                 "goto":"12",
-                "npc_update":["True","...","10"],
+                "npc_update":[True,"...","10"],
                 },
                 {"index":3,
                 "text": "Non",
                 "goto":"-1",
-                "npc_update":["True","...","10"],
+                "npc_update":[True,"...","10"],
                 }
                 
             ]
@@ -427,91 +434,104 @@ npc_dialogs = {
         "11":{"type": "sans_choix",
             "text":"Certaines personnes ont employé ces mots, mais leur comportement n'est pas le même.\nIls attaquent pour tuer et non pour contaminer ou pour se nourrir. De plus, personne n'a réussi\nà déterminer la cause réelle de ce phénomène, ni à identifier un quelconque virus ou parasite.",
             "goto": "10",
-            "npc_update":["True","...","10"],},
+            "npc_update":[True,"...","10"],},
         "12":{"type": "sans_choix",
             "text":"Le laboratoire de Turtledove se trouve plus au nord,\nnous avons trouvé il y a quelques mois une entrée cachée par ce chateau en ruines, \nmais personne depuis n'a réussi à franchir les portes blindées qui en gardent l'entrée souterraine.",
             "goto": "10",
-            "npc_update":["True","...","10"],},
+            "npc_update":[True,"...","10"],},
     },
 
+    #==============================================================================================================================================================================
+    #WOODBARON, PNJ ENTREE CHATEAU
+    #==============================================================================================================================================================================
+    
     "Reimond Woodbaron":{
             
                 "1":{
                         "type": "sans_choix",
-                        'text':'Un habitant des contrées! Je croyais être seul dans ce désert... ',
+                        'text':"Ah! Voilà quelqu'un... Je croyais pourtant être seul dans ce désert... ",
                         "goto": "2",
-                        "npc_update":["True","...","2"],
+                        "npc_update":[True,"...","2"],
                     },
                 "2":{
                         "type": "avec_choix",
-                        'text':"Dit moi, qu'est-ce qui t'amène alors que les zombies pullulent les rues ?",
+                        'text':"Mais qui peut-il bien être... Mystère.",
                         "choix":[
                             {"index":1,
                             "text": "Je vous retourne la question",
                             "goto":"3",
-                            "npc_update":["True","...","4"],
+                            "npc_update":[True,"...","4"],
                             },
                             {"index":2,
                             "text": "Je viens accomplir une mission",
-                            "goto":"9",
-                            "npc_update":["True","...","9"],
+                            "goto":"3",
+                            "npc_update":[True,"...","3"],
                             }
                         ]
                     },
                 "3":{
-                        "type": "sans_choix",
-                        "text":"Qui ? À moi ? ah, j'suis bête.. à qui d'autre pourrais-tu parler ici",
-                        "goto": "4",
-                        "npc_update":["True","...","4"],
+                        "type": "avec_choix",
+                        "text":"Il parle en plus ? Mais a qui... À moi ?\nEnfin, à qui d'autre pourrais-il parler ici...",
+                        "choix":[
+                            {"index":1,
+                            "text": "Je cherche quelque chose ici",
+                            "goto":"4",
+                            "npc_update":[True,"...","4"],
+                            },],
                         
                     },
                 "4":{
                     "type": "sans_choix",
-                    "text":"Je suis venu voir le roi.. on m'a rapporté qu'il cachait quelque chose dans le château...",
-                    "goto": "5",
-                    "npc_update":["True","...","5"],
-                },
-                "5":{
-                    "type": "sans_choix",
-                    "text":"Quelque chose de si important que les survivants de mon village disent être le seul moyen de s'en sortir vivant",
+                    "text":"Il cherche quelque chose ?\n Enfin, tout le monde sait que rien ne vit ici à part des infectés !\n M'enfin, s'il peut m'aider à rentrer, je ne dirais pas non...",
                     "goto": "6",
-                    "npc_update":["True","...","6"],
+                    "npc_update":[True,"...","6"],
                 },
+
                 "6":{
                     "type": "avec_choix",
-                    "text":"Mais pour cela, je dois trouver la manivelle permettant d'actionner la herse du château.",
+                    "text":"Mais pour cela, je dois trouver la manivelle permettant d'actionner la herse du château.\nOui, c'est ça, une manivelle. Peut-être sait-il comment la trouver ?",
                     "choix":[
                         {"index":1,
-                        "text": "As-tu une idée de où elle peut bien être?",
+                        "text": "Eh oh, je suis là...",
                         "goto":"7",
-                        "npc_update":["True","...","7"],
+                        "npc_update":[True,"...","7"],
                         }
                     ]
                 },
                 "7":{
                     "type": "sans_choix",
-                    "text":"Oui, quelque part près de là où les âmes siègent, à en croire ma carte. Tiens, je te la mets dans ton inventaire!",
+                    "text":"Bon... Je vais lui donner ma carte, il saura surement mieux la déchiffrer que moi...",
                     "goto": "8",
-                    "npc_update":["True","...","8"],
+                    "npc_update":[True,"...","8"],
                     "add_item":("note#1",1)
                 },
                 "8":{
-                    "type": "sans_choix",
-                    "text":"Trouve la manivelle, et nous pourrons découvrir les mystères enfuis sous ce château!",
-                    "goto": "-1",
-                    "npc_update":["True","...","-1"]
+                    "type": "avec_choix",
+                    "text":"...",
+                    "choix":[
+                        {"index":1,
+                        "text": "Mais où dois-je aller ?",
+                        "goto":"9",
+                        "npc_update":[True,"...","9"],
+                        },
+                        {"index":2,
+                        "text": "Je n'y comprends rien...",
+                        "goto":"9",
+                        "npc_update":[True,"...","9"],
+                        },
+                        {"index":3,
+                        "text": "Au revoir",
+                        "goto":"-1",
+                        "npc_update":[True,"...","9"],
+                        }
+                        
+                    ]
                 },
                 "9":{
                     "type": "sans_choix",
-                    "text":"J'ai, à vrai dire, aussi une mission...",
-                    "goto": "10",
-                    "npc_update":["True","...","10"],
-                },
-                "10":{
-                    "type": "sans_choix",
-                    "text":"et je pense que nos missions sont étroitement liées.",
-                    "goto": "4",
-                    "npc_update":["True","...","4"],
+                    "text":"...",
+                    "goto": "-1",
+                    "npc_update":[False,"La fin est proche...","9"],
                 },
             },
         
