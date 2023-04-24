@@ -201,6 +201,9 @@ class Inventaire:
         self.inventory_grid, overflow = self.update_grid()
         for item,value in overflow:
             self.remove_item(item,value)
+
+        # affiche petite bulle informant qu'on a reçu un item
+        self.main_elmt.item_picked_up_animation = [True, item_names_render[item_name], amount, 0]
             
         return overflow
 

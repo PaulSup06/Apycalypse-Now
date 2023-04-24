@@ -43,7 +43,8 @@ class Game:
         self.editing_button = None
           
         #génération des interfaces
-        self.blood_screen = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\blood_screen.png"), (WIDTH,HEIGHT)).convert_alpha()
+        self.blood_screen_img = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\blood_screen.png"), (WIDTH,HEIGHT)).convert_alpha()
+        self.item_picked_up_img = pygame.image.load("..\\textures\\ui\\item_picked_up.png").convert_alpha()
 
         self.game_state = "menu"
         self.inventaire = Inventaire(self)  
@@ -65,6 +66,7 @@ class Game:
         # variable de jeu
         self.spawn_item_if_interact = (False,)
         self.item_prise = False
+        self.item_picked_up_animation = [False]
 
         # debug
         self.debug_text_showing = False
@@ -209,6 +211,10 @@ class Game:
 
                                 if self.spawn_item_if_interact[0]:
                                     self.level.place_item_on_map(self.spawn_item_if_interact[1],self.spawn_item_if_interact[2], self.spawn_item_if_interact[3])
+                                    # son digging
+                                    global actual_sound_channel
+                                    pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "misc\\shovel_dirt.mp3")))
+                                    actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
                                     self.item_prise = True
 
                         elif event.key == int(self.settings["k_escape"]):
@@ -221,6 +227,7 @@ class Game:
 
                         if self.inventaire.enabled:
                             self.inventaire.move_cursor(event.key,self.settings)
+
 
                     if event.key == pygame.K_f: #temporaire pour tests
                         self.play_music("4.wav")
@@ -235,7 +242,7 @@ class Game:
                     elif event.key == pygame.K_y: #temporaire pour tests
                         self.change_level(2)
                     elif event.key==pygame.K_u:
-                        self.inventaire.add_item("strength_potion",2)
+                        self.inventaire.add_item("pelle",2)
                         self.inventaire.add_item("note#1", 1)
                         self.inventaire.add_item("invincibility_potion",4)
                         self.inventaire.add_item("manivelle",1)
@@ -263,7 +270,6 @@ class Game:
                             self.player.life -= damages
 
                             # son hurt
-                            global actual_sound_channel
                             pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "player\\hurt.mp3")))
                             actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
@@ -282,7 +288,21 @@ class Game:
 
                 if self.player.life <= 2:
                     # image sang
-                    self.screen.blit(self.blood_screen, (0, 0))
+                    self.screen.blit(self.blood_screen_img, (0, 0))
+
+                if self.item_picked_up_animation[0]:
+                    #self.item_picked_up_animation[0] : une notification est-elle à afficher?
+                    #self.item_picked_up_animation[1] : nom de l'item ajouté
+                    #self.item_picked_up_animation[2] : combien
+                    #self.item_picked_up_animation[3] : timer fps avant que la notification se cache
+
+                    if self.item_picked_up_animation[3] <= FPS * pick_up_notification_duration: 
+                        self.screen.blit(self.item_picked_up_img, ((WIDTH / 2) - (self.item_picked_up_img.get_width() / 2), 0))
+                        text = font1.render("Vous avez récupéré " + str(self.item_picked_up_animation[2]) + "x " + self.item_picked_up_animation[1] + " !" ,1,"black")
+                        self.screen.blit(text,(((WIDTH-text.get_width())//2, 105)))
+                        self.item_picked_up_animation[3] += 1
+                    else:
+                        self.item_picked_up_animation = [False]
 
                 for door in self.level.doors:
                     door.update(self.player)

@@ -20,6 +20,9 @@ MAX_ITEMS_PER_CELL = 64
 BACKGROUND_COLOR = (0, 0, 0)
 ITEM_SIZE = (45,45)
 
+#ui
+pick_up_notification_duration = 3 #sec
+
 #son
 actual_sound_channel = 1
 
@@ -558,6 +561,7 @@ item_names_render = {
     "strength_potion":"Potion de force",
     "pelle":"Pelle",
     "note":"Note",
+    "note#1":"Carte",
     "invincibility_potion":"Potion d'invincibilité",
 }
 
