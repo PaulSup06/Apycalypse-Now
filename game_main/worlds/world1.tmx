@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="73" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="22" nextobjectid="105">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="73" height="55" tilewidth="64" tileheight="64" infinite="0" nextlayerid="22" nextobjectid="115">
  <tileset firstgid="1" source="../textures/tilemaps/post apo1.tsx"/>
  <tileset firstgid="1041" source="../textures/tilemaps/roof.tsx"/>
  <tileset firstgid="1209" source="../textures/tilemaps/lv_sign.tsx"/>
@@ -501,6 +501,30 @@
     <property name="function" value="change_level"/>
    </properties>
   </object>
+  <object id="106" x="44" y="1972" width="2154" height="1428">
+   <properties>
+    <property name="args" value="3.wav"/>
+    <property name="function" value="play_music"/>
+   </properties>
+  </object>
+  <object id="107" x="76" y="162" width="2048" height="1312">
+   <properties>
+    <property name="args" value="5.wav"/>
+    <property name="function" value="play_music"/>
+   </properties>
+  </object>
+  <object id="109" x="2126.03" y="495.091" width="2175.21" height="1467.39">
+   <properties>
+    <property name="args" value="3.wav"/>
+    <property name="function" value="play_music"/>
+   </properties>
+  </object>
+  <object id="110" x="3044" y="14" width="378" height="140">
+   <properties>
+    <property name="args" value="2"/>
+    <property name="function" value="change_level"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="13" name="collision">
   <object id="7" x="428" y="2494.25" width="12" height="226.75"/>
@@ -567,6 +591,10 @@
   <object id="89" x="2454.67" y="1934.67" width="2153.33" height="49.3333"/>
   <object id="90" x="4561.33" y="0" width="26.6667" height="1957.33"/>
   <object id="102" x="521.333" y="2676" width="117.333" height="17.3333"/>
+  <object id="111" x="-2" y="-3.20225" width="4673.29" height="17.3742"/>
+  <object id="112" x="0" y="12" width="8" height="3510"/>
+  <object id="113" x="-2" y="3498" width="4674" height="22"/>
+  <object id="114" x="4652.67" y="0" width="18" height="3514.67"/>
  </objectgroup>
  <objectgroup id="21" name="items">
   <object id="103" name="invincibility_potion" x="437" y="621" width="17" height="27">

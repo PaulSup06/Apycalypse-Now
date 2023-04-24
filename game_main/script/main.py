@@ -788,7 +788,7 @@ class Game:
         speed = int(speed)
         damages = int(damages)
         health = int(health)
-        Enemy(x,y,None, self.level.enemies,self.level.collision_blocks,self.level.items,self.level.enemy_imgs[name], movement_type,name,speed,damages,health,movement_condition)
+        Enemy(x,y,None, [self.level.enemies, self.level.visible_blocks],self.level.collision_blocks,self.level.items,self.level.enemy_imgs, movement_type,name,speed,damages,health,movement_condition)
     #=====================================================================
     #DEBUG
     #=====================================================================

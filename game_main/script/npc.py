@@ -101,7 +101,6 @@ class Door(Entity):
             if player.check_distance_to((self.x,self.y), door_unlock_range):
                 if self.counter//5 < 4:
                     self.counter +=1
-                self.image = self.images[self.counter//5]
                 if self.counter//5==4:
                     self.surface = pygame.Rect(self.x,self.y,0,0)
             else:
@@ -109,8 +108,12 @@ class Door(Entity):
                     self.counter -= 1
                     self.surface = pygame.Rect(self.x, self.y+CASE_SIZE,CASE_SIZE*2,32)
                     
-            self.image = self.images[self.counter//5]
             
+        else:
+            if self.counter > 0:
+                    self.counter -= 1
+                    self.surface = pygame.Rect(self.x, self.y+CASE_SIZE,CASE_SIZE*2,32)   
+        self.image = self.images[self.counter//5]
             
     def unlock(self):
         self.locked = False

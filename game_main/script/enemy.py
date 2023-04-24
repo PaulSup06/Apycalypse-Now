@@ -22,14 +22,16 @@ class Enemy(Entity):
             speed (int): Vitesse de déplacement de l'ennemi
             movement_condition (bool, optional): Condition pour laquelle l'ennemi se déplace. Defaults to True.
         """ 
-        super().__init__(x, y, image, groupes)
+        self.textures = textures[name]
+        self.image = self.textures["idle"][0]
+        super().__init__(x, y, self.image, groupes)
         self.collision_blocks = collision_blocks
         self.movement_type = movement_type
         self.name = name
         self.item_images = load_item_imgs()
         self.item_group = item_group
 
-        self.textures = textures[name]
+        
 
         self.speed = speed
         self.damages = damages

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="267">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="75" height="100" tilewidth="64" tileheight="64" infinite="0" nextlayerid="17" nextobjectid="268">
  <tileset firstgid="1" source="../textures/tilemaps/post apo1.tsx"/>
  <tileset firstgid="1041" source="../textures/tilemaps/triggers.tsx"/>
  <tileset firstgid="1141" source="../textures/tilemaps/Lab.tsx"/>
@@ -539,7 +539,7 @@
   <object id="6" name="door" gid="1168" x="4160" y="5824" width="64" height="64">
    <properties>
     <property name="id" value="1"/>
-    <property name="locked" type="bool" value="true"/>
+    <property name="locked" type="bool" value="false"/>
    </properties>
   </object>
   <object id="7" name="player" gid="1014" x="4066" y="6127" width="64" height="64"/>
@@ -557,7 +557,7 @@
   <object id="28" name="door" gid="1168" x="3840" y="4928" width="64" height="64">
    <properties>
     <property name="id" value="2"/>
-    <property name="locked" type="bool" value="true"/>
+    <property name="locked" type="bool" value="false"/>
    </properties>
   </object>
   <object id="32" name="terminal" gid="1162" x="3840" y="4096" width="64" height="64">
@@ -569,7 +569,7 @@
   <object id="33" name="door" gid="1168" x="3712" y="4096" width="64" height="64">
    <properties>
     <property name="id" value="8"/>
-    <property name="locked" type="bool" value="true"/>
+    <property name="locked" type="bool" value="false"/>
    </properties>
   </object>
   <object id="34" name="door" gid="1168" x="3968" y="4096" width="64" height="64">
@@ -838,6 +838,12 @@
     <property name="function" value="change_level"/>
    </properties>
   </object>
+  <object id="267" x="3845" y="5782" width="742" height="430">
+   <properties>
+    <property name="args" value="7.wav"/>
+    <property name="function" value="play_music"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup id="10" name="switches">
   <object id="31" name="wall_lever" gid="1502" x="3370" y="4957.33" width="64" height="64">
@@ -909,7 +915,7 @@
   </object>
   <object id="63" name="pressure_plate" gid="1555" x="3723" y="3568" width="64" height="64">
    <properties>
-    <property name="args" value="(3438, 3676, &quot;to_player&quot;, &quot;bamboo&quot;, 3, 1, 15)"/>
+    <property name="args" value="(3438),(3676),(&quot;to_player&quot;),(&quot;zombie&quot;),(3),(1),(15)"/>
     <property name="function_to_call" value="spawn_enemy"/>
     <property name="id" value="90003"/>
     <property name="type" value="1"/>
@@ -953,7 +959,7 @@
   </object>
   <object id="253" name="pressure_plate" gid="1555" x="2838.67" y="3608" width="64" height="64">
    <properties>
-    <property name="args" value="(3438, 3676, &quot;to_player&quot;, &quot;bamboo&quot;, 3, 1, 15)"/>
+    <property name="args" value="(3438),(3676),(&quot;to_player&quot;),(&quot;zombie&quot;),(3),(1),(15)"/>
     <property name="function_to_call" value="spawn_enemy"/>
     <property name="id" value="90002"/>
     <property name="type" value="1"/>
