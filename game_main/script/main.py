@@ -180,7 +180,7 @@ class Game:
                                 self.inventaire.use()
                             else:
                                 for npc in self.level.npcs:
-                                    if npc.check_distance_to((self.player.x,self.player.y),interact_distance):
+                                    if npc.check_distance_to(self.player.rect.center,interact_distance):
                                         if not self.ui.current_dialog:
                                             self.ui.load_dialog(*npc.interact())
                                         elif self.ui.ongoing_dialog:

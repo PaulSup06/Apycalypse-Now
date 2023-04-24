@@ -60,7 +60,7 @@ class Npc(Entity):
         surface.blit(indicator_rect_surf, indicator_rect)
         pygame.draw.rect(surface,"black",indicator_rect,1,5)
         surface.blit(self.indicator_rendered, (self.x + self.surface.width + 10 - offset.x, self.y - 10 - offset.y))
-        if self.is_talkable and self.check_distance_to((player.x,player.y),interact_distance):
+        if self.is_talkable and self.check_distance_to(player.rect.center,interact_distance):
             surface.blit(font2.render(f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour parler" ,1,"black"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + indicator_rect.height - offset.y))
 
     def interact(self):
@@ -99,7 +99,7 @@ class Door(Entity):
             player (Player object): Joueur 
         """
         if not self.locked:
-            if player.check_distance_to((self.x,self.y), door_unlock_range):
+            if player.check_distance_to((self.x + CASE_SIZE, self.y + CASE_SIZE), door_unlock_range):
                 if self.counter//5 < 4:
                     self.counter +=1
                 if self.counter//5==4:
@@ -108,8 +108,6 @@ class Door(Entity):
                 if self.counter > 0:
                     self.counter -= 1
                     self.surface = pygame.Rect(self.x, self.y+CASE_SIZE,CASE_SIZE*2,32)
-                    
-            
         else:
             if self.counter > 0:
                     self.counter -= 1

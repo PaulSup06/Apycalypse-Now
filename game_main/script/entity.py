@@ -73,8 +73,8 @@ class Entity(pygame.sprite.Sprite):
             Bool: True si la distance est inférieure à distance_max, sinon False
         """
         distance = pygame.math.Vector2()
-        distance.x = (self.rect.left) - target_pos[0] + 20
-        distance.y = self.rect.top - target_pos[1]
+        distance.x = (self.rect.centerx) - target_pos[0]
+        distance.y = self.rect.centery - target_pos[1]
 
         if distance.length()<=distance_max:
             return True

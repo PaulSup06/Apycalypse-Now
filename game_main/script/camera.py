@@ -86,7 +86,7 @@ class Camera(pygame.sprite.Group):
             pygame.draw.rect(self.screen, (128,0,0), (offset_pos.x -10, offset_pos.y - 13, health, 6))
         
         for npc in npcs:
-            if npc.check_distance_to([player.x,player.y],distance_affichage_npc_prompt):  
+            if npc.check_distance_to(player.rect.center,distance_affichage_npc_prompt):  
                 npc.show_indicator(self.screen, self.offset, settings, player)  
 
                 

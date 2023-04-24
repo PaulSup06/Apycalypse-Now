@@ -327,7 +327,7 @@ class Item(Entity):
             bool: True si l'item a été empilé
         """
         for item in items:
-            if item!=self and item.name==self.name and self.check_distance_to((item.x,item.y), stackable_range) and item.amount<MAX_ITEMS_PER_CELL:
+            if item!=self and item.name==self.name and self.check_distance_to(item.rect.center, stackable_range) and item.amount<MAX_ITEMS_PER_CELL:
                 total = self.amount + item.amount
                 if total > MAX_ITEMS_PER_CELL:
                     item.amount = MAX_ITEMS_PER_CELL

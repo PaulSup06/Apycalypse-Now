@@ -15,7 +15,7 @@ class Enemy(Entity):
             groupes (list): liste de groupes auquels appartient l'Enemy
             collision_blocks (pygame.group.Group): Blocks de collisions pour les déplacements
             textures (dict): dictionnaire contenant les textures rendues pygame
-            movement_type (string): Types de mouvements possibles : -ligne_h -ligne_v -to_player 
+            movement_type (string): Types de mouvements possibles : -ligne_h -ligne_v -to_player -static 
             TODO: implémenter -pathfind_to_player -teleport ???
                         
             name (str): Nom de la classe de l'ennemi
@@ -90,6 +90,8 @@ class Enemy(Entity):
                 self.movement.x = player_pos[0] - self.x
                 self.movement.y = player_pos[1] - self.y
                 self.movement = self.movement.normalize()
+            elif self.movement_type == "static":
+                self.movement = (0,0)
             
             if not self.check_collision(self.collision_blocks, "horizontal", self.movement.x * self.speed):
                 self.x += self.movement.x * self.speed
@@ -102,7 +104,11 @@ class Enemy(Entity):
                 self.change_direction()
                 
             self.rect.topleft = (self.x,self.y)
-            self.action = "move"
+            
+            if self.movement.length() >= 0:
+                self.action = "move"
+            else:
+                self.action = "idle" 
 
         else:
             self.action = "idle" 
