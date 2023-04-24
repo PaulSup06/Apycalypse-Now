@@ -43,6 +43,8 @@ class Game:
         self.editing_button = None
           
         #génération des interfaces
+        self.blood_screen = pygame.transform.scale(pygame.image.load("..\\textures\\ui\\blood_screen.png"), (WIDTH,HEIGHT)).convert_alpha()
+
         self.game_state = "menu"
         self.inventaire = Inventaire(self)  
         self.ui = UI(self)  
@@ -59,6 +61,10 @@ class Game:
         self.changing_world = False
         self.player_weapon_name = None
         self.is_in_a_note = False
+
+        # variable de jeu
+        self.spawn_item_if_interact = (False,)
+        self.item_prise = False
 
         # debug
         self.debug_text_showing = False
@@ -201,6 +207,10 @@ class Game:
                                                     methode = getattr(self, methode_to_call)
                                                     methode(switch.action) # action ="left" ou "right"
 
+                                if self.spawn_item_if_interact[0]:
+                                    self.level.place_item_on_map(self.spawn_item_if_interact[1],self.spawn_item_if_interact[2], self.spawn_item_if_interact[3])
+                                    self.item_prise = True
+
                         elif event.key == int(self.settings["k_escape"]):
                             self.game_state = "menu"
                             self.escape_menu.enable()
@@ -251,6 +261,12 @@ class Game:
                         # un ennemi fait des dégâts au joueur
                         if self.player.invincibility == False:
                             self.player.life -= damages
+
+                            # son hurt
+                            global actual_sound_channel
+                            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "player\\hurt.mp3")))
+                            actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
+
                             if self.player.life<=0:
                                 self.game_state="death"
                 for spike in self.level.spikes:
@@ -263,6 +279,10 @@ class Game:
                                 self.game_state="death"
 
                 self.level.visible_blocks.draw_visible(self.player, self.level.npcs,self.level.enemies, self.level.world_tmx, self.settings)
+
+                if self.player.life <= 2:
+                    # image sang
+                    self.screen.blit(self.blood_screen, (0, 0))
 
                 for door in self.level.doors:
                     door.update(self.player)
@@ -714,7 +734,19 @@ class Game:
         item_dropped = fin_dialogue.get("add_item")
         if item_dropped:
             current_npc.drop_item(item_dropped[0],item_dropped[1],self.level.items)
-            
+
+    def key_to_interact(self, args, is_out_of_the_trigger = False):
+        # si il a déjà récup la manivelle on ne la donne pas à nouveau
+        if args[0] == "pelle" and not self.item_prise:
+            if is_out_of_the_trigger == False:
+                # vérifie qu'il possède une pelle
+                if Inventaire.have_item(self.inventaire, "pelle"):
+                    self.screen.blit(font2.render(f"[{pygame.key.name(int(self.settings['k_interact'])).upper()}] pour creuser",1,"white"), (int(args[1]) - self.level.visible_blocks.offset.x, int(args[2]) - self.level.visible_blocks.offset.y))
+                    self.spawn_item_if_interact = (True, int(args[1]), int(args[2]), "manivelle")
+                else:
+                    self.screen.blit(font2.render("Il vous faut une pelle",1,"white"), (int(args[1]) - self.level.visible_blocks.offset.x, int(args[2]) - self.level.visible_blocks.offset.y))
+        else:
+            self.spawn_item_if_interact = (False,)
     #=====================================================================
     #FONCTIONS LIEES AUX SWITCHES
     #=====================================================================
@@ -798,7 +830,7 @@ class Game:
         self.debug_text_timer = 0
         self.debug_text_showing = True
 
-    def open_castle_door(self):
+    def open_castle_door(self, args):
         pass
     
 #===============================================================

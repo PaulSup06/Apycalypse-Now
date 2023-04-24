@@ -25,7 +25,6 @@ actual_sound_channel = 1
 
 #folders et paths
 music_folder = "..\\audio"
-sound_folder = "..\\sound"
 settings_path ="..\\misc\\settings.csv"
 default_settings_path ="..\\misc\\default_settings.csv"
 
@@ -70,18 +69,18 @@ enemy_drops = {
                 "bamboo":[
                         {
                             "name":"life_potion",
-                            "drop_rate":50,
+                            "drop_rate":40,
                             "drop_count":1,                                    
                         }, {
                             "name":"speed_potion",
-                            "drop_rate":50,
+                            "drop_rate":30,
                             "drop_count":1,                                    
                         }
                     ],
                 "vampire":[
                         {
                             "name":"life_potion",
-                            "drop_rate":30,
+                            "drop_rate":25,
                             "drop_count":2,                                    
                         }, {
                             "name":"invincibility_potion",
@@ -89,18 +88,18 @@ enemy_drops = {
                             "drop_count":1,                                    
                         },{
                             "name":"strength_potion",
-                            "drop_rate":60,
+                            "drop_rate":45,
                             "drop_count":1,                                    
                         }
                     ], 
                 "zombie":[
                     {
                             "name":"life_potion",
-                            "drop_rate":25,
+                            "drop_rate":15,
                             "drop_count":1,                                    
                         },{
                             "name":"strength_potion",
-                            "drop_rate":40,
+                            "drop_rate":25,
                             "drop_count":1,                                    
                         }
                 ]
@@ -430,8 +429,93 @@ npc_dialogs = {
             "text":"Le laboratoire de Turtledove se trouve plus au nord,\nnous avons trouvé il y a quelques mois une entrée cachée par ce chateau en ruines, \nmais personne depuis n'a réussi à franchir les portes blindées qui en gardent l'entrée souterraine.",
             "goto": "10",
             "npc_update":["True","...","10"],},
-    }
+    },
+
+    "Reimond Woodbaron":{
+            
+                "1":{
+                        "type": "sans_choix",
+                        'text':'Un habitant des contrées! Je croyais être seul dans ce désert... ',
+                        "goto": "2",
+                        "npc_update":["True","...","2"],
+                    },
+                "2":{
+                        "type": "avec_choix",
+                        'text':"Dit moi, qu'est-ce qui t'amène alors que les zombies pullulent les rues ?",
+                        "choix":[
+                            {"index":1,
+                            "text": "Je vous retourne la question",
+                            "goto":"3",
+                            "npc_update":["True","...","4"],
+                            },
+                            {"index":2,
+                            "text": "Je viens accomplir une mission",
+                            "goto":"9",
+                            "npc_update":["True","...","9"],
+                            }
+                        ]
+                    },
+                "3":{
+                        "type": "sans_choix",
+                        "text":"Qui ? À moi ? ah, j'suis bête.. à qui d'autre pourrais-tu parler ici",
+                        "goto": "4",
+                        "npc_update":["True","...","4"],
+                        
+                    },
+                "4":{
+                    "type": "sans_choix",
+                    "text":"Je suis venu voir le roi.. on m'a rapporté qu'il cachait quelque chose dans le château...",
+                    "goto": "5",
+                    "npc_update":["True","...","5"],
+                },
+                "5":{
+                    "type": "sans_choix",
+                    "text":"Quelque chose de si important que les survivants de mon village disent être le seul moyen de s'en sortir vivant",
+                    "goto": "6",
+                    "npc_update":["True","...","6"],
+                },
+                "6":{
+                    "type": "avec_choix",
+                    "text":"Mais pour cela, je dois trouver la manivelle permettant d'actionner la herse du château.",
+                    "choix":[
+                        {"index":1,
+                        "text": "As-tu une idée de où elle peut bien être?",
+                        "goto":"7",
+                        "npc_update":["True","...","7"],
+                        }
+                    ]
+                },
+                "7":{
+                    "type": "sans_choix",
+                    "text":"Oui, quelque part près de là où les âmes siègent, à en croire ma carte. Tiens, je te la mets dans ton inventaire!",
+                    "goto": "8",
+                    "npc_update":["True","...","8"],
+                    "add_item":("note#1",1)
+                },
+                "8":{
+                    "type": "sans_choix",
+                    "text":"Trouve la manivelle, et nous pourrons découvrir les mystères enfuis sous ce château!",
+                    "goto": "-1",
+                    "npc_update":["True","...","-1"]
+                },
+                "9":{
+                    "type": "sans_choix",
+                    "text":"J'ai, à vrai dire, aussi une mission...",
+                    "goto": "10",
+                    "npc_update":["True","...","10"],
+                },
+                "10":{
+                    "type": "sans_choix",
+                    "text":"et je pense que nos missions sont étroitement liées.",
+                    "goto": "4",
+                    "npc_update":["True","...","4"],
+                },
+            },
+        
+    
 }
+
+
 
 #misc
 button_fillcolors = {'normal': (0,0,0,0),
@@ -472,6 +556,7 @@ item_names_render = {
     "speed_potion":"Potion de vitesse",
     "manivelle":"Manivelle",
     "strength_potion":"Potion de force",
+    "pelle":"Pelle",
     "note":"Note",
     "invincibility_potion":"Potion d'invincibilité",
 }

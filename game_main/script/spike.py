@@ -44,7 +44,7 @@ class Spike(Entity):
             self.trigger_cooldown = 1
 
             # joue son trigger
-            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "spike\\trigger.mp3")))
+            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "spike\\trigger.mp3")))
             actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
 
@@ -73,7 +73,7 @@ class Spike(Entity):
                 self.animation_counter_fps = 1
                 self.action = "going_out"
                 # joue son going out
-                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "spike\\going_out.mp3")))
+                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "spike\\going_out.mp3")))
                 actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
 
@@ -92,7 +92,7 @@ class Spike(Entity):
             if self.trigger_cooldown // FPS == 2:
                 self.action = "retrieving"
                 # joue son going retrieving
-                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "spike\\retrieving.mp3")))
+                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "spike\\retrieving.mp3")))
                 actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
 

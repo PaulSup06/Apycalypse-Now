@@ -48,7 +48,7 @@ class Lever(Entity):
             self.activated = self.activated == False
             
             # joue son trigger
-            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\lever.mp3")))
+            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "switch\\lever.mp3")))
             actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
             self.function_to_call(*self.args)
@@ -110,7 +110,7 @@ class PressurePlate(Entity):
                 self.activated = True
                 self.is_animating = True
                 # joue son trigger
-                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\pressureplate.mp3")))
+                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "switch\\pressureplate.mp3")))
                 actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
                 
                 self.function_to_call(*self.args)
@@ -121,7 +121,7 @@ class PressurePlate(Entity):
                 self.activated = False
                 self.is_animating = True
                 # joue son trigger
-                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\pressure_plate_up.mp3")))
+                pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "switch\\pressure_plate_up.mp3")))
                 actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
                 self.animate()
                 
@@ -206,7 +206,7 @@ class Manivelle(Entity):
             self.action = "manivelle"
             self.image = self.textures[1]
             # joue son trigger
-            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\manivelle_place.mp3")))
+            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "switch\\manivelle_place.mp3")))
             actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
             return "remove_manivelle_from_player_inventory"
@@ -220,8 +220,9 @@ class Manivelle(Entity):
             self.action = "turning"
             self.activated = True
             self.animation_counter_fps =  1
+            
             # joue son trigger
-            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(sound_folder, "switch\\manivelle.mp3")))
+            pygame.mixer.Channel(actual_sound_channel).play(pygame.mixer.Sound(os.path.join(music_folder, "switch\\manivelle.mp3")))
             actual_sound_channel = 1 if actual_sound_channel >= 999 else actual_sound_channel + 1
 
             self.function_to_call(*self.args)

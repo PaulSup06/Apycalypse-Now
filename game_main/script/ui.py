@@ -29,7 +29,11 @@ class UI:
         """
         self.current_npc = npc_name
         self.ongoing_dialog = True
-        
+
+        # évite un key error et reprend le dialogue depuis le début         
+        if dialogue_id == "-1":
+            dialogue_id = "1"
+
         self.current_dialog = npc_dialogs[self.current_npc][dialogue_id]
         self.current_dialog_text = self.current_dialog["text"].splitlines()
         self.current_dialog_len = {i:len(self.current_dialog_text[i]) for i in range(len(self.current_dialog_text))}
@@ -209,6 +213,12 @@ class UI:
         
         return : dict
         """
+        # gère l'ajout des items dans l'inventaire
+        # note: l'ajout ne se fera pas si add_item est dans le dernier dialogue
+        if "add_item" in self.current_dialog:
+            self.main_elmt.inventaire.add_item(self.current_dialog["add_item"][0], self.current_dialog["add_item"][1])
+
+
         if self.current_dialog['type']=="sans_choix":
             if self.current_dialog["goto"] == "-1":
                 callback_dialog = self.current_dialog

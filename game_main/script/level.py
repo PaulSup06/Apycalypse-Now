@@ -103,9 +103,9 @@ class Level:
             if layer.name == "triggers":
                 for trigger in layer:
                     trigger_args = trigger.properties["args"]
-                    trigger_args = convert_to_tuple(trigger_args)
-                    
-                    Trigger(trigger.x,trigger.y, [self.trigger_blocks], None, trigger.properties["function"], trigger.width, trigger.height, *trigger_args)
+                    trigger_args = convert_to_tuple(trigger_args)                   
+
+                    Trigger(trigger.x,trigger.y, [self.trigger_blocks], None, trigger.properties["function"], trigger.width, trigger.height, *trigger_args, no_deactivation=trigger.properties["function"] == "key_to_interact")
             
             if layer.name == "switches":
                 for switch in layer:
@@ -152,6 +152,10 @@ class Level:
         # ajoute les trajectoires aux npc
         #for npc in npcs:
         #    npc.path = npc_path[npc.name]
+
+    def place_item_on_map(self, x, y, name):
+        Item(x, y, self.item_imgs[name], self.items, name, 1)
+
 
     def trouver_chemin(self, coordonnees, coordonnee_depart):
         """Algorithme de parcours en profondeur (DFS)
