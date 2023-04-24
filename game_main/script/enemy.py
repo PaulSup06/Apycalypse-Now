@@ -91,7 +91,7 @@ class Enemy(Entity):
                 self.movement.y = player_pos[1] - self.y
                 self.movement = self.movement.normalize()
             elif self.movement_type == "static":
-                self.movement = (0,0)
+                self.movement = pygame.Vector2(0,0)
             
             if not self.check_collision(self.collision_blocks, "horizontal", self.movement.x * self.speed):
                 self.x += self.movement.x * self.speed

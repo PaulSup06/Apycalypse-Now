@@ -103,6 +103,13 @@ enemy_drops = {
                             "drop_rate":25,
                             "drop_count":1,                                    
                         }
+                ],
+                "tronc":[
+                    {
+                            "name":"life_potion",
+                            "drop_rate":10,
+                            "drop_count":1,                                    
+                        },
                 ]
                 }
                        
