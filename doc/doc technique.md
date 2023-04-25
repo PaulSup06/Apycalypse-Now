@@ -53,7 +53,7 @@ La classe Game est la classe principale du jeu, qui gère l'initialisation du je
 - **clock** : objet Pygame Clock pour gérer la vitesse de rafraîchissement du jeu
 - **player** : objet Player représentant le personnage du joueur
 - **level** : objet Level représentant le niveau actuel
-- **inventarie** : objet Inventory 
+- **inventaire** : objet Inventory 
 - **ui** : objet UI, interface et affichage indépendant du niveau
 - **running** : booléen gérant l’exécution de la boucle de jeu principale
 - **game\_state** : str gérant le status du jeu

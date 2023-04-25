@@ -1140,7 +1140,7 @@
     <property name="type" value="1"/>
    </properties>
   </object>
-  <object id="73" name="wall_lever" gid="1502" x="1473.33" y="3729.33" width="64" height="64">
+  <object id="73" name="wall_lever" gid="1502" x="1473.83" y="3736.33" width="64" height="64">
    <properties>
     <property name="args" value="(10),(100001,100002,100004),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>
@@ -1149,7 +1149,7 @@
     <property name="type" value="1"/>
    </properties>
   </object>
-  <object id="74" name="wall_lever" gid="1502" x="1532" y="3728" width="64" height="64">
+  <object id="74" name="wall_lever" gid="1502" x="1531.5" y="3738" width="64" height="64">
    <properties>
     <property name="args" value="(10),(100001,100002,100004),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>
@@ -1158,7 +1158,7 @@
     <property name="type" value="1"/>
    </properties>
   </object>
-  <object id="75" name="wall_lever" gid="1502" x="1730.67" y="3730.67" width="64" height="64">
+  <object id="75" name="wall_lever" gid="1502" x="1731.17" y="3738.67" width="64" height="64">
    <properties>
     <property name="args" value="(10),(100001,100002,100004),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>
@@ -1167,7 +1167,7 @@
     <property name="type" value="1"/>
    </properties>
   </object>
-  <object id="76" name="wall_lever" gid="1502" x="1789.33" y="3730.67" width="64" height="64">
+  <object id="76" name="wall_lever" gid="1502" x="1789.33" y="3738.67" width="64" height="64">
    <properties>
     <property name="args" value="(10),(100001,100002,100004),(100003)"/>
     <property name="function_to_call" value="unlock_door"/>

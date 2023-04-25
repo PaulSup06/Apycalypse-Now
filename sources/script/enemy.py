@@ -152,7 +152,7 @@ class Enemy(Entity):
         drop_items = enemy_drops[self.name]
         for item in drop_items:
             tirage = random.randint(1,100)
-            if item["drop_rate"]<=tirage:
+            if item["drop_rate"]>=tirage:
                 offset = random.randint(-5,5)
                 positive_x = random.choice((-1,1))
                 positive_y = random.choice((-1,1))
