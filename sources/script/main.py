@@ -230,26 +230,6 @@ class Game:
                         if self.inventaire.enabled:
                             self.inventaire.move_cursor(event.key,self.settings)
 
-
-                    if event.key == pygame.K_f: #temporaire pour tests
-                        self.play_music("4.wav")
-                    if event.key == pygame.K_g: #temporaire pour tests
-                        self.play_music("5.wav")
-                    if event.key == pygame.K_h: #temporaire pour tests
-                        self.play_music("6.wav")
-                    if event.key == pygame.K_j: #temporaire pour tests
-                        self.play_music("7.wav")
-                    if event.key == pygame.K_k: #temporaire pour tests
-                        self.play_music("8.wav")
-                    elif event.key == pygame.K_y: #temporaire pour tests
-                        self.change_level(2)
-                    elif event.key==pygame.K_u:
-                        self.inventaire.add_item("pelle",2)
-                        self.inventaire.add_item("note#1", 1)
-                        self.inventaire.add_item("invincibility_potion",4)
-                        self.inventaire.add_item("manivelle",1)
-                        self.inventaire.add_item("speed_potion", 2)
-
                     elif self.waiting_for_key:
                         self.edit_key(event.key)
                         
