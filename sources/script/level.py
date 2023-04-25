@@ -37,6 +37,7 @@ class Level:
         self.spike_imgs = load_spike_imgs()
         self.switch_imgs = load_switches_imgs()
         self.door_imgs = load_door_imgs()
+        self.grille_imgs = load_grille_imgs()
         self.item_imgs = load_item_imgs()
         
         #pygame sprite groups
@@ -79,6 +80,8 @@ class Level:
                     
                     elif entity.name == "door":
                         Door(entity.x,entity.y,[self.collision_blocks,self.visible_blocks,self.doors],self.door_imgs,entity.properties["id"],entity.properties["locked"])
+                    elif entity.name == "grille":
+                        Door(entity.x,entity.y,[self.collision_blocks,self.visible_blocks,self.doors],self.grille_imgs,entity.properties["id"],entity.properties["locked"])
                     elif entity.name=="terminal":
                         Terminal(entity.x,entity.y,[self.visible_blocks,self.collision_blocks,self.terminals], entity.properties["id"],entity.properties["locked"])
                     elif entity.name=="spikes":
@@ -121,7 +124,7 @@ class Level:
                         PressurePlate(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs[f"pressure_plate{switch.properties['type']}"], function_to_call,self.game, "pressure_plate",switch.properties['id'],*args)
                         
                     elif switch.name == "manivelle":
-                        Manivelle(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs["manivelle"], function_to_call,self.game, "manivelle", switch.properties['id'], switch.properties["has_manivelle"],*args)
+                        Manivelle(x , y ,image, [self.collision_blocks,self.visible_blocks, self.switches], self.switch_imgs["manivelle"], function_to_call,self.game, "manivelle", switch.properties['id'], switch.properties["has_manivelle"],switch.properties.get("height"),*args)
                         
                     elif switch.name == "wall_lever":
                         Lever(x , y ,image, [self.visible_blocks, self.switches], self.switch_imgs["wall_lever"], function_to_call,self.game, "lever",switch.properties['id'],(y+switch.properties['height']*CASE_SIZE+1),*args)

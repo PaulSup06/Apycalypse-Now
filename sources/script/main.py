@@ -187,7 +187,7 @@ class Game:
                                             self.ui.load_dialog(*npc.interact())
                                         elif self.ui.ongoing_dialog:
                                             self.ui.finish_dialog()
-                                        else:
+                                        elif npc.is_talkable:
                                             fin_dialogue = self.ui.quit_dialog(npc.name)
                                             self.update_dialog_ended(fin_dialogue, npc.name)
                                             #handle dialogue ended (fin dialog = dict)
@@ -457,8 +457,7 @@ class Game:
                     try:
                         pos = int(pos[0]), int(pos[1])
                     except Exception as e:
-                        print(e,"Mauvaise position donnée... Changement de monde impossible")
-                        
+                        print(e,"Mauvaise position donnée... Changement de monde impossible")               
         #rend le paramètre optionnel en utilisant la valeur de la classe Game
         self.ui = UI(self)   #reset l'ui lors du chargement (fix bug ui ouvert lors de fermeture d'une précédente page)
         self.changing_world = False 

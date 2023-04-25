@@ -215,6 +215,12 @@ def load_door_imgs():
     
     return door_imgs
 
+def load_grille_imgs():
+    grille_imgs = []
+    for i in range(5):
+        grille_imgs.append(pygame.image.load(os.path.join(misc_folder,f"grille{i}.png")).convert_alpha())
+    
+    return grille_imgs
 def load_item_imgs():
     item_images = {}
     for file_name in os.listdir(items_folder):

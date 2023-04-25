@@ -1047,13 +1047,13 @@
  <objectgroup id="12" name="triggers">
   <object id="78" x="3972" y="6212" width="244" height="56">
    <properties>
-    <property name="args" value="(1),(2000,575)"/>
+    <property name="args" value="(1),(3200,344)"/>
     <property name="function" value="change_level"/>
    </properties>
   </object>
-  <object id="252" x="1543.33" y="697.333" width="244" height="56">
+  <object id="252" x="1544.78" y="695.333" width="244" height="56">
    <properties>
-    <property name="args" value="(4)(546,2838)m"/>
+    <property name="args" value="(4)"/>
     <property name="function" value="change_level"/>
    </properties>
   </object>

@@ -152,7 +152,7 @@ class PressurePlate(Entity):
 
 
 class Manivelle(Entity):
-    def __init__(self, x, y, image, groupes, textures, function_to_call, main_elmt, name, id,manivelle=True, *args):
+    def __init__(self, x, y, image, groupes, textures, function_to_call, main_elmt, name, id,manivelle=True,height=0, *args):
         """Enemy héritant de la classe Entité, est hostile au joueur
 
         Args:
@@ -181,6 +181,7 @@ class Manivelle(Entity):
         self.player_near = False
         self.is_off = True
         
+        self.basey = self.y + (height+ 1)*CASE_SIZE
         self.have_manivelle = False
 
     def handle(self,player,surface, offset, settings, have_manivelle):
