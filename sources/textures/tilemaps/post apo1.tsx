@@ -175,6 +175,12 @@
  <tile id="457" probability="0.05"/>
  <tile id="458" probability="0.05"/>
  <tile id="459" probability="0.05"/>
+ <tile id="500" class="h3"/>
+ <tile id="501" class="h3"/>
+ <tile id="540" class="h2"/>
+ <tile id="541" class="h2"/>
+ <tile id="580" class="h1"/>
+ <tile id="581" class="h1"/>
  <tile id="586" class="h3"/>
  <tile id="589" class="h11"/>
  <tile id="590" class="h11"/>

@@ -1207,7 +1207,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="15" name="collision" visible="0">
+ <objectgroup id="15" name="collision">
   <object id="144" x="4098" y="3844" width="114" height="764"/>
   <object id="145" x="3580" y="4038" width="120" height="564"/>
   <object id="148" x="3970" y="6357" width="252" height="41"/>
@@ -1300,11 +1300,11 @@
   <object id="249" x="1798.67" y="4" width="50.6667" height="1014.67"/>
   <object id="250" x="1476" y="-1.13687e-13" width="53.3333" height="1028"/>
   <object id="251" x="1534.67" y="8" width="272" height="64"/>
-  <object id="268" x="3616.67" y="5049.33" width="90" height="91.3333"/>
+  <object id="268" x="3616.67" y="5035.33" width="90" height="105.333"/>
   <object id="269" x="3456.5" y="3451" width="124.5" height="46"/>
-  <object id="270" x="3746.5" y="3710.5" width="86" height="88"/>
+  <object id="270" x="3746.5" y="3688.5" width="86" height="110"/>
   <object id="271" x="4039" y="4989" width="178" height="40"/>
-  <object id="272" x="4259" y="5176" width="86" height="99"/>
+  <object id="272" x="4259" y="5154" width="86" height="121"/>
   <object id="273" x="4609.33" y="5497.33" width="125.333" height="40"/>
   <object id="274" x="2428" y="3120" width="129.333" height="56"/>
   <object id="276" x="3649.33" y="5438.67" width="124.667" height="35.3333"/>

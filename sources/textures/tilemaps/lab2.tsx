@@ -11,8 +11,8 @@
  <tile id="29" class="h1"/>
  <tile id="30" class="h1"/>
  <tile id="31" class="h1"/>
- <tile id="46" class="h1"/>
- <tile id="47" class="h1"/>
+ <tile id="46" class="h2"/>
+ <tile id="47" class="h2"/>
  <tile id="62" class="h1"/>
  <tile id="63" class="h1"/>
  <tile id="66" class="h2"/>
@@ -23,8 +23,8 @@
  <tile id="81" class="h2"/>
  <tile id="82" class="h2"/>
  <tile id="93" class="h1"/>
- <tile id="94" class="h1"/>
- <tile id="95" class="h1"/>
+ <tile id="94" class="h2"/>
+ <tile id="95" class="h2"/>
  <tile id="96" class="h1"/>
  <tile id="97" class="h1"/>
  <tile id="98" class="h1"/>
