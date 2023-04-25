@@ -79,6 +79,8 @@ class Game:
 
         #gestion des thèmes (à déplacer ??)
         theme_main_screen = pygame_menu.themes.THEME_ORANGE.copy()
+        theme_main_screen.widget_background_color =(0, 0, 0, 100)
+        theme_main_screen.widget_font_color =(255, 255, 255)
         theme_main_screen.background_color = self.menu_pg_pymenu
         theme_main_screen.title_bar_style = pygame_menu.widgets.MENUBAR_STYLE_ADAPTIVE
         theme_main_screen.title = False
