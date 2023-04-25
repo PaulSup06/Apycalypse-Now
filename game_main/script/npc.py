@@ -64,8 +64,8 @@ class Npc(Entity):
             surface.blit(font2.render(f"[{pygame.key.name(int(settings['k_interact'])).upper()}] pour parler" ,1,"black"), (self.x + self.surface.width + 5 - offset.x, self.y - 5 + indicator_rect.height - offset.y))
 
     def interact(self):
-        if self.is_talkable:
-            return self.next_dialog, self.name
+
+        return self.next_dialog, self.name
     
     def drop_item(self, item_name, count,item_group):
         Item(self.rect.centerx,self.rect.bottom + 20, self.item_imgs[item_name], item_group,item_name, count)

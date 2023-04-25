@@ -181,7 +181,7 @@ class Game:
                             else:
                                 for npc in self.level.npcs:
                                     if npc.check_distance_to(self.player.rect.center,interact_distance):
-                                        if not self.ui.current_dialog:
+                                        if not self.ui.current_dialog and npc.is_talkable:
                                             self.ui.load_dialog(*npc.interact())
                                         elif self.ui.ongoing_dialog:
                                             self.ui.finish_dialog()

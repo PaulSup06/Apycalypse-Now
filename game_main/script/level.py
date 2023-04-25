@@ -103,8 +103,7 @@ class Level:
             if layer.name == "triggers":
                 for trigger in layer:
                     trigger_args = trigger.properties["args"]
-                    trigger_args = convert_to_tuple(trigger_args)                   
-
+                    trigger_args = convert_to_tuple(trigger_args)
                     Trigger(trigger.x,trigger.y, [self.trigger_blocks], None, trigger.properties["function"], trigger.width, trigger.height, *trigger_args, no_deactivation=trigger.properties["function"] == "key_to_interact")
             
             if layer.name == "switches":
