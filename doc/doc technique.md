@@ -256,7 +256,7 @@ Page web interactif avec laquelle l’utilisateur peut interagir en jeu.
 
 - **answers:** Tableau contenant les réponses aux énigmes, dans l’ordre des champs de saisie.
 
-- **```<p id="code1\_text"></p>```** : Paragraphe contenant l’énigme. Les zones de saisie sont exprimées par des ```@’``` qui seront remplacé automatiquement lors de l’affichage. Ainsi, le code est très modulable et il suffit de changer le texte de l’énigme et le tableau de ses réponses.
+- **```<p id="code1\_text"></p>```** : Paragraphe contenant l’énigme. Les zones de saisie sont exprimées par des ```@``` qui seront remplacé automatiquement lors de l’affichage. Ainsi, le code est très modulable et il suffit de changer le texte de l’énigme et le tableau de ses réponses.
 
 ## **Méthodes**
 
@@ -284,3 +284,29 @@ Page web interactif avec laquelle l’utilisateur peut interagir en jeu.
 Le code d’affichage fonctionne en « file indienne ». Chaque fonction appelé possède un argument ‘whatNext’ qu’il appellera lors de la fin de son exécution. Ainsi, chaque élément apparaisse les uns après les autres pour un effet « terminal »
 
 Voici, dans l’ordre, le chemin d’exécution des fonctions. Le code est simple à comprendre et très facilement modulable pour créé tout type de terminaux.
+```html
+<script>
+            opacityAnim("recupServText");
+
+            // Affichage du curseur
+            typeCursorForMs("#recupServText", ">", () => {
+                // Affichage du texte
+                typeText("#recupServText", " Récupération du code du serveur", () => {
+                    // Affichage du curseur
+                    typeCursorForMs("#servProgressText", ">", () => {
+                        // Affichage d'une barre de progression
+                        progressBarText("#servProgressText", () => {
+                            // Affiche du curseur
+                            typeCursorForMs("#code_text", ">", () => {
+                                // Affichage du code qui se trouve dans la balise <p> d'id "code1_text"
+                                code = document.getElementById("code1_text").innerHTML;
+                                typeText("#code_text", code, () => {
+                                }, false, true);
+                            }, 3);
+                        });
+                    });
+                }, false);
+            });
+            
+        </script>
+```
