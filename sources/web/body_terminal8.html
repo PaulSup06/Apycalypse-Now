@@ -148,7 +148,7 @@
     let debug = false;
 
     /** 
-    * Créé une pause dans le code
+    * Créer une pause dans le code
     * @param {int} milliseconds - Temps en miliseconde 
     */      
     function delay(milliseconds) {
@@ -365,7 +365,7 @@
     }
 
     // Réponse du code à compléter
-    answers = ["\"sécurité\"", "mkdir", "touch", "mv", "pass.conf"];
+    answers = ["\"sécurité\"", "mkdir", "touch", "rm", "history.hs"];
     answers_bool = [false, false, false, false, false];
 
     /** 
@@ -417,17 +417,17 @@
  Sécurité du serveur : Mauvaise.                                                    
  Opération sur le système de fichiers requise.                                      
                                                                                     
- # créé une variable qui a pour valeur "sécurité"                          
+ # Créer une variable qui a pour valeur "sécurité"                          
  » foldername = @                                                                  
                                                                                     
- # créé un dossier du nom de "sécurité"                                             
+ # Création d'un dossier du nom de "sécurité"                                             
  » @ foldername                                                                   
- # créé le fichier "firewall.conf"                                                  
+ # Création du fichier "firewall.conf"                                                  
  » @ "${foldername}/firewall.conf"                                               
- # ajoute son IP au fichier                                                         
- » $(hostname -I) »» "${foldername}/firewall.conf"                              
- # renomme le fichier "firewall.conf" en "pass.conf"                                
- » @ "${foldername}/firewall.conf" "${foldername}/@"                        
+ # ajout de son IP au fichier                                                         
+ » $(hostname -I) » "${foldername}/firewall.conf"                              
+ # suppression de nos traces en supprimant "history.hs"                              
+ » @ @                     
 </p>
 
     <div id="computer_screen_py" style="visibility: visible;">
