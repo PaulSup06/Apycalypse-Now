@@ -748,7 +748,7 @@
   <object id="6" name="door" gid="1168" x="4160" y="5824" width="64" height="64">
    <properties>
     <property name="id" value="1"/>
-    <property name="locked" type="bool" value="false"/>
+    <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
   <object id="7" name="player" gid="1014" x="4066" y="6127" width="64" height="64"/>
@@ -766,7 +766,7 @@
   <object id="28" name="door" gid="1168" x="3840" y="4928" width="64" height="64">
    <properties>
     <property name="id" value="2"/>
-    <property name="locked" type="bool" value="false"/>
+    <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
   <object id="32" name="terminal" gid="1162" x="3840" y="4096" width="64" height="64">
@@ -778,7 +778,7 @@
   <object id="33" name="door" gid="1168" x="3712" y="4096" width="64" height="64">
    <properties>
     <property name="id" value="8"/>
-    <property name="locked" type="bool" value="false"/>
+    <property name="locked" type="bool" value="true"/>
    </properties>
   </object>
   <object id="34" name="door" gid="1168" x="3968" y="4096" width="64" height="64">
