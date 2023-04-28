@@ -56,12 +56,16 @@
  <tile id="141" class="h2"/>
  <tile id="142" class="h2"/>
  <tile id="143" class="h2"/>
+ <tile id="154" class="h2"/>
+ <tile id="155" class="h2"/>
  <tile id="157" class="h1"/>
  <tile id="158" class="h1"/>
  <tile id="159" class="h1"/>
  <tile id="160" class="h3"/>
  <tile id="161" class="h3"/>
  <tile id="162" class="h3"/>
+ <tile id="170" class="h1"/>
+ <tile id="171" class="h1"/>
  <tile id="173" class="h2"/>
  <tile id="174" class="h2"/>
  <tile id="175" class="h2"/>
