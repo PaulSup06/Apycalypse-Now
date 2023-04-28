@@ -19,7 +19,7 @@
 
 ## Guide d’exécution :
 
-Après avoir vérifié que vous remplissez les prérequis d’installation, lancez le fichier ***main.py*** avec un interpréteur python. Une fenêtre pygame doit s’ouvrir et un menu apparaître. Lors d’une première exécution, cliquez simplement sur « Nouvelle partie ». Vous voilà maintenant en jeu. Les touches de déplacement par défaut sont les touches Z,Q,S,D du clavier AZERY. Vous trouverez les autres touches dans les paramètres du jeu, toutes sont modifiables.
+Après avoir vérifié que vous remplissez les prérequis d’installation, lancez le fichier ***main.py*** avec un interpréteur python. Une fenêtre pygame doit s’ouvrir et un menu apparaître. Lors d’une première exécution, cliquez simplement sur « Nouvelle partie ». Vous voilà maintenant en jeu. Les touches de déplacement par défaut sont les touches Z,Q,S,D du clavier AZERTY. Vous trouverez les autres touches dans les paramètres du jeu, toutes sont modifiables.
 
 ## Remarques particulières :
 
