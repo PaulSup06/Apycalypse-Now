@@ -3,11 +3,11 @@
 
 ## Prérequis d’installation :
 
-- **Python 3.8 ou plus récent**
+- **Python 3.8 ou plus récent** *(installé depuis la version site python.org, car nous avons eu des problèmes avec la version Microsoft Store)*
 - **Windows 10/11**
 - **Dossier sources** 
 - **Modules python :**
-  - *pygame* (2.3.0 ou +) installée depuis la version site python.org, car nous avons eu des problèmes avec la version Microsoft Store
+  - *pygame* (2.3.0 ou +) 
   - *pywebview* (4.0.2 ou +) qui a elle-même des prérequis :
     - *.NET Framework* (4.6.2 ou +)
     - [*Edge Runtime*](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)

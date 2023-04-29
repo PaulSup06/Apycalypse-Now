@@ -12,22 +12,22 @@
 
 # Guide d’utilisation : 
 ### Prérequis d’installation :
-*	Python 3.8 ou plus récent
-*	Windows 10/11
-*	Dossier sources 
-*	Modules python :
-    *	pygame (2.3.0 ou +) installée depuis la version site python.org, car nous avons eu des problèmes avec la version Microsoft Store
-    *	pywebview (4.0.2 ou +) qui a elle-même des prérequis :
-        *	.NET Framework (4.6.2 ou +)
-        *	Edge Runtime  (https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
-        *	wheel library for python
-    *	pygame_menu (4.4.0 ou +)
-    *	pytmx (3.31 ou +)
-    *	Les modules built-in de python : datetime, os, sys, csv, json, random
-*	Vérifier le niveau de mise à l’échelle de Windows (voir remarques particulières).
+- **Python 3.8 ou plus récent** *(installé depuis la version site python.org, car nous avons eu des problèmes avec la version Microsoft Store)*
+- **Windows 10/11**
+- **Dossier sources** 
+- **Modules python :**
+  - *pygame* (2.3.0 ou +) 
+  - *pywebview* (4.0.2 ou +) qui a elle-même des prérequis :
+    - *.NET Framework* (4.6.2 ou +)
+    - [*Edge Runtime*](https://developer.microsoft.com/en-us/microsoft-edge/webview2/)
+    - *wheel* library for python
+  - *pygame\_menu* (4.4.0 ou +)
+  - *pytmx* (3.31 ou +)
+- Les modules built-in de python : *datetime, os, sys, csv, json, random*
+- Vérifier le niveau de mise à l’échelle de Windows (voir remarques particulières).
 
 ### Guide d’exécution :
-Après avoir vérifié que vous remplissez les prérequis d’installation, lancez le fichier main.py avec un interpréteur python. Une fenêtre pygame doit s’ouvrir et un menu apparaître. Lors d’une première exécution, cliquez simplement sur « Nouvelle partie ». Vous voilà maintenant en jeu. Les touches de déplacement par défaut sont les touches Z,Q,S,D du clavier AZERY. Vous trouverez les autres touches dans les paramètres du jeu, toutes sont modifiables.
+Après avoir vérifié que vous remplissez les prérequis d’installation, lancez le fichier main.py avec un interpréteur python. Une fenêtre pygame doit s’ouvrir et un menu apparaître. Lors d’une première exécution, cliquez simplement sur « Nouvelle partie ». Vous voilà maintenant en jeu. Les touches de déplacement par défaut sont les touches Z,Q,S,D du clavier AZERTY. Vous trouverez les autres touches dans les paramètres du jeu, toutes sont modifiables.
 
 ### Remarques particulières :
 Il se peut que l’affichage pygame ne soit pas en plein écran et soit trop petit ou trop grand par rapport à votre écran. Il se peut également qu’à la fermeture d’un terminal la fenêtre change de dimension, devenant la plupart du temps plus petite qu’à l’origine. Dans ce cas, modifiez la mise à l’échelle Windows et paramétrez sa valeur à 100%, cela devrait régler le problème. Enfin, nous avons constaté un bug au niveau de la dernière porte verrouillée du labo, si malgré que le bon code soit rentré avec les leviers la porte refuse de s'ouvrir, veuillez faire une sauvegarde et recharger le jeu.
