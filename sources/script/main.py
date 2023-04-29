@@ -336,8 +336,6 @@ class Game:
                     self.screen.blit(button.image,(button.x,button.y))        
 
             #========================================================================================
-            
-            debug(("FPS : " + str(round(self.clock.get_fps(),1)),))
 
             # message debug
             if self.debug_text_showing:

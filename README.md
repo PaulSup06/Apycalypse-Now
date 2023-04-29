@@ -32,6 +32,10 @@ Après avoir vérifié que vous remplissez les prérequis d’installation, lanc
 ### Remarques particulières :
 Il se peut que l’affichage pygame ne soit pas en plein écran et soit trop petit ou trop grand par rapport à votre écran. Il se peut également qu’à la fermeture d’un terminal la fenêtre change de dimension, devenant la plupart du temps plus petite qu’à l’origine. Dans ce cas, modifiez la mise à l’échelle Windows et paramétrez sa valeur à 100%, cela devrait régler le problème. Enfin, nous avons constaté un bug au niveau de la dernière porte verrouillée du labo, si malgré que le bon code soit rentré avec les leviers la porte refuse de s'ouvrir, veuillez faire une sauvegarde et recharger le jeu.
 
+Nous vous conseillons fortement de ne pas vous arrêter à une première impression et de continuer jusqu'au laboratoire (3ème monde) afin de découvrir la totalité des éléments inclus dans cette démo. Cela ne devrait pas excéder quelques minutes, cependant si vous le souhaitez vous pouvez vous y rendre directement en chargant la sauvegarde "Lab" présente dans les sauvegardes par défaut.
+
+De par le caractère peu adapté de python pour ce type de logiciels, il se peut que l'exécution soit ralentie ou peu fluide sur les plus petites configurations d'ordinateurs (en particulier dans le cas d'un manque de mémoire vive). Nous avons fait le maximum pour limiter cela mais ne pouvons pas dépacer les limitations d'un langage interprété. 
+
 ### Aide pour les touches :
 Les touches par défaut de notre jeu sont :
 * **Z** - Se déplacer vers le haut
