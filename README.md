@@ -52,7 +52,7 @@ Les touches par défaut de notre jeu sont :
 ## Ressources en ligne d'asset et textures :
 - [itch.io](https://itch.io/c/133871/tiled-resources) 
 - [opengameart](https://opengameart.org/)
-- [hamsterrpublic tilemaps](https://rpg.hamsterrepublic.com/ohrrpgce/Free_Tilemaps)
+- [hamsterrepublic tilemaps](https://rpg.hamsterrepublic.com/ohrrpgce/Free_Tilemaps)
 ## MUSIQUE :
 - [Dystopian pack by Tim Beek](https://timbeek.itch.io/dystopian)
 ### EFFET AUDIO:

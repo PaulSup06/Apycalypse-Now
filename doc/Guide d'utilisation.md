@@ -106,7 +106,7 @@ Il vous est bien entendu possible de rajouter des éléments au jeu de la même 
 
 [opengameart](https://opengameart.org/)
 
-[hamsterrpublic tilemaps](https://rpg.hamsterrepublic.com/ohrrpgce/Free_Tilemaps)
+[hamsterrepublic tilemaps](https://rpg.hamsterrepublic.com/ohrrpgce/Free_Tilemaps)
 
 ## **MUSIQUE :**
 
