@@ -226,7 +226,7 @@ class Game:
                         elif event.key == int(self.settings["k_inventory"]):
                             #change l'état de l'inventaire
                             self.inventaire.enabled = self.inventaire.enabled == False
-
+                        
                         if self.inventaire.enabled:
                             self.inventaire.move_cursor(event.key,self.settings)
 
@@ -733,7 +733,7 @@ class Game:
     #FONCTIONS LIEES AUX SWITCHES
     #=====================================================================
 
-    def unlock_door(self, door_to_unlock, active=(), inactive=()):
+    def unlock_door(self, door_to_unlock, active=None, inactive=None):
         """Déverrouille une porte en fonction de la position de switchs donnés
 
         Args:
@@ -744,13 +744,31 @@ class Game:
         Returns:
             bool: True si la porte a bien été ouverte, sinon false
         """
+        if not active:
+            active = ()
+        if not inactive:
+            inactive = ()
+
+        if isinstance(active,str):
+            try:
+                active = (int(active),)
+            except ValueError:
+                print(f"Erreur dans l'index donné au switch pour la porte {door_to_unlock}")
+        if isinstance(inactive,str):
+            try:
+                inactive = (int(inactive),)
+            except ValueError:
+                print(f"Erreur dans l'index donné au switch pour la porte {door_to_unlock}") 
+
         door_to_unlock = int(door_to_unlock)
         opening = True
         for switch in self.level.switches:
-            if switch.id in active and not switch.activated:
-                opening = False                
-            if switch.id in inactive and switch.activated:
-                opening = False
+            for el in active:           
+                if switch.id == el and not switch.activated:
+                    opening = False    
+            for el in inactive:          
+                if switch.id == el and switch.activated:
+                    opening = False
             
         for door in self.level.doors:
             if door.id == door_to_unlock:
@@ -761,7 +779,7 @@ class Game:
                     door.lock()
                     return False
 
-    def unlock_terminal(self, term_to_unlock, active=(), inactive=()):
+    def unlock_terminal(self, term_to_unlock, active=None, inactive=None):
         """Déverrouille un terminal en fonction de la position de switchs donnés
 
         Args:
@@ -772,14 +790,31 @@ class Game:
         Returns:
             bool: True si la porte a bien été ouverte, sinon false
         """
-        
+        if not active:
+            active = ()
+        if not inactive:
+            inactive = ()
+
+        if isinstance(active,str):
+            try:
+                active = (int(active),)
+            except ValueError:
+                print(f"Erreur dans l'index donné au switch pour le terminal {term_to_unlock}")
+        if isinstance(inactive,str):
+            try:
+                inactive = (int(inactive),)
+            except ValueError:
+                print(f"Erreur dans l'index donné au switch pour le terminal {term_to_unlock}") 
+                
         term_to_unlock = int(term_to_unlock)
         opening = True
         for switch in self.level.switches:
-            if switch.id in active and not switch.activated:
-                opening = False                
-            if switch.id in inactive and switch.activated:
-                opening = False
+            for el in active:
+                if switch.id == el and not switch.activated:
+                    opening = False                
+            for el in inactive:
+                if switch.id == el and switch.activated:
+                    opening = False
             
         for term in self.level.terminals:
             if term.id == term_to_unlock:
